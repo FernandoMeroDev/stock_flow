@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Products\Index as ProductIndex;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -22,3 +23,5 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/productos', ProductIndex::class)->name('products.index')->middleware(['auth']);

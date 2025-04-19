@@ -14,12 +14,32 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    <flux:navlist.item :href="route('products.index')" :current="request()->routeIs('products.index')" wire:navigate>{{ __('Productos') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
             <flux:spacer />
 
             <flux:navlist variant="outline">
+
+                <!-- Toggle Dark/Light Mode -->
+                <flux:navlist.item icon="folder-git-2" href="#">
+                    <flux:dropdown x-data align="end">
+                        <flux:button variant="subtle" square class="group" aria-label="Preferred color scheme">
+                            <flux:icon.sun x-show="$flux.appearance === 'light'" variant="mini" class="text-zinc-500 dark:text-white" />
+                            <flux:icon.moon x-show="$flux.appearance === 'dark'" variant="mini" class="text-zinc-500 dark:text-white" />
+                            <flux:icon.moon x-show="$flux.appearance === 'system' && $flux.dark" variant="mini" />
+                            <flux:icon.sun x-show="$flux.appearance === 'system' && ! $flux.dark" variant="mini" />
+                        </flux:button>
+                
+                        <flux:menu>
+                            <flux:menu.item icon="sun" x-on:click="$flux.appearance = 'light'">Light</flux:menu.item>
+                            <flux:menu.item icon="moon" x-on:click="$flux.appearance = 'dark'">Dark</flux:menu.item>
+                            <flux:menu.item icon="computer-desktop" x-on:click="$flux.appearance = 'system'">System</flux:menu.item>
+                        </flux:menu>
+                    </flux:dropdown>
+                </flux:navlist.item>
+
                 <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
                 {{ __('Repository') }}
                 </flux:navlist.item>
