@@ -40,4 +40,9 @@ class Edit extends Component
         $this->modal('edit-product')->close();
         $this->dispatch('edited');
     }
+
+    public function clearImg()
+    {
+        $this->form->clearImg();
+    }
 }

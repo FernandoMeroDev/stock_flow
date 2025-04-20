@@ -52,7 +52,17 @@ class UpdateForm extends Form
         }
     }
 
-    private function saveImg(): string
+    public function clearImg()
+    {
+        $this->reset('img');
+        if($this->product?->img){
+            Storage::delete('products/'.$this->product->img);
+            $this->product->img = null;
+            $this->product->save();
+        }
+    }
+
+    private function saveImg(): ?string
     {
         if($this->img){
             if($this->product->img)

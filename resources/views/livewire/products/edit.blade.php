@@ -9,7 +9,7 @@
             <flux:input wire:model="form.barcode" label="Código" placeholder="Código de barras" />
             <div class="flex justify-between items-end">
                 <flux:input type="file" wire:model="form.img" label="Imagen" />
-                <flux:button wire:click="$set('form.img', null)" icon="trash" size="xs" />
+                <flux:button wire:click="clearImg" icon="trash" size="xs" />
             </div>
             @if (
                 $form->img
@@ -20,7 +20,7 @@
                 )
             )
                 <x-products.img>
-                    <img id="productImg" src="{{ $form->img->temporaryUrl() }}" alt="Previsualización de la Imagen">
+                    <img id="productEditModalImg" src="{{ $form->img->temporaryUrl() }}" alt="Previsualización de la Imagen">
                 </x-products.img>
             @elseif($form->product?->img)
                 <x-products.img>
@@ -44,9 +44,7 @@
     <script>
         document.addEventListener('edit-product', () => {
             const img = document.getElementById('productEditModalImg');
-            if(img) {
-                img.style.display = 'none';
-            }
+            if(img) img.style.display = 'none';
             $wire.form.img = null;
         });
     </script>
