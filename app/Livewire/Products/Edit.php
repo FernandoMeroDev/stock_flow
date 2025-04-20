@@ -6,9 +6,12 @@ use App\Livewire\Forms\Products\UpdateForm;
 use App\Models\Product;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Edit extends Component
 {
+    use WithFileUploads;
+
     public UpdateForm $form;
 
     public function render()

@@ -7,6 +7,23 @@
             </div>
 
             <flux:input wire:model="form.name" label="Nombre" placeholder="Nombre del producto" />
+            <flux:input wire:model="form.barcode" label="Código" placeholder="Código de barras" />
+            <div class="flex justify-between items-end">
+                <flux:input type="file" wire:model="form.img" label="Imagen" />
+                <flux:button wire:click="$set('form.img', null)" icon="trash" size="xs" />
+            </div>
+            @if (
+                $form->img
+                && (
+                    $this->form->img?->getMimeType() == 'image/jpeg'
+                    || $this->form->img?->getMimeType() == 'image/png'
+                    || $this->form->img?->getMimeType() == 'image/webp'
+                )
+            ) 
+                <x-products.img>
+                    <img src="{{ $form->img->temporaryUrl() }}" alt="Previsualización de la Imagen">
+                </x-products.img>
+            @endif
 
             <div class="flex">
                 <flux:spacer />

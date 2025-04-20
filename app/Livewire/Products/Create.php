@@ -4,9 +4,12 @@ namespace App\Livewire\Products;
 
 use App\Livewire\Forms\Products\StoreForm;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Create extends Component
 {
+    use WithFileUploads;
+
     public StoreForm $form;
 
     public function render()
