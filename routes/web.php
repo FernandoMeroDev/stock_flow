@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\CreatePurchase\Index as CreatePurchase;
 use App\Livewire\Products\Index as ProductIndex;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
@@ -30,3 +31,5 @@ Route::get('/productos', ProductIndex::class)->name('products.index')->middlewar
 Route::get('/products/img/{file}', function($file){
     return Storage::get("products/$file");
 })->name('products.img')->middleware(['auth']);
+
+Route::get('/compra', CreatePurchase::class)->name('create-purchase')->middleware(['auth']);

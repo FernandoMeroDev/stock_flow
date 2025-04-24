@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Product extends Model
+class Invoice extends Model
 {
-    use HasFactory;
-
-    protected $fillable = ['name', 'img', 'barcode'];
+    protected $fillable = [
+        'id',
+        'issuance_date',
+        'number',
+        'type'
+    ];
 
     public function movements(): HasMany
     {
