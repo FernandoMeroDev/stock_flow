@@ -24,12 +24,17 @@ class SearchProduct extends Component
     public function updated($property)
     {
         if($property == 'search'){
-            $this->validate();
-            if(mb_strlen($this->search) > 0){
-                $this->products = Product::where('name', 'LIKE', '%'.$this->search.'%')->get();
-            } else {
-                $this->reset('products');
-            }
+            $this->searchProducts();
+        }
+    }
+
+    public function searchProducts()
+    {
+        $this->validate();
+        if(mb_strlen($this->search) > 0){
+            $this->products = Product::where('name', 'LIKE', '%'.$this->search.'%')->get();
+        } else {
+            $this->reset('products');
         }
     }
 }

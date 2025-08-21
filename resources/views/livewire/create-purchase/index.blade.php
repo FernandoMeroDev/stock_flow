@@ -19,32 +19,30 @@
             <x-table.th></x-table.th>
         </x-slot:thead>
 
-        @if($products)
-            @foreach ($products->keys() as $i)
-                @php $product = $products->get($i); @endphp
-                <x-table.tr wire:key="{{$product->id}}">
-                    <td class="p-3 max-w-60">
-                        {{$product->name}}
-                        <flux:input hidden value="{{$product->id}}" id="productIdInput{{$product->id}}" />
-                    </td>
-                    <td class="p-1">
-                        <flux:input value="{{$prices[$i] ?? 0}}" type="number" id="productPriceInput{{$product->id}}" />
-                    </td>
-                    <td class="p-1">
-                        <flux:input value="{{$amounts[$i] ?? 0}}" type="number" id="productAmountInput{{$product->id}}" />
-                    </td>
-                    <td>
-                        <flux:button icon="x-circle" wire:click="removeProduct({{$product->id}})"  />
-                    </td>
-                </x-table.tr>
-            @endforeach
-        @else
+        @forelse ($products->keys() as $i)
+            @php $product = $products->get($i); @endphp
+            <x-table.tr wire:key="{{$product->id}}">
+                <td class="p-3 max-w-60" x-on:click="$dispatch('edit-product', { product_id: {{$product->id}} })">
+                    {{$product->name}}
+                    <flux:input hidden wire:model="ids.{{$i}}" id="productIdInput{{$product->id}}" />
+                </td>
+                <td class="p-1">
+                    <flux:input wire:model="prices.{{$i}}" type="number" id="productPriceInput{{$product->id}}" />
+                </td>
+                <td class="p-1">
+                    <flux:input wire:model="amounts.{{$i}}" type="number" id="productAmountInput{{$product->id}}" />
+                </td>
+                <td>
+                    <flux:button icon="x-circle" wire:click="removeProduct({{$product->id}})"  />
+                </td>
+            </x-table.tr>
+        @empty
             <x-table.tr>
                 <td class="p-3">
                     No hay productos...
                 </td>
             </x-table.tr>
-        @endif
+        @endforelse
     </x-table>
 
     <livewire:create-purchase.search-product />

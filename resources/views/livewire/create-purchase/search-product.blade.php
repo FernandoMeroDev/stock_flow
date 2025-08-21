@@ -6,8 +6,12 @@
 
     <div class="flex">
         <flux:input wire:model.live.debounce.250ms="search" id="searchByNameInput" placeholder="Buscar por nombre..." class="mr-2" />
-        <flux:button>Nuevo</flux:button>
+        <flux:modal.trigger name="create-product">
+            <flux:button>Nuevo</flux:button>
+        </flux:modal.trigger>
     </div>
+
+    <livewire:products.create @created="searchProducts" />
 
     @script
     <script>
@@ -26,7 +30,7 @@
         <x-table class="w-full mb-3">
             @forelse ($products as $product)
                 <x-table.tr>
-                    <td class="p-3 max-w-60">
+                    <td class="p-3 max-w-60" x-on:click="$dispatch('edit-product', { product_id: {{$product->id}} })">
                         {{$product->name}}
                     </td>
                     <td class="flex justify-end">
@@ -42,4 +46,15 @@
             @endforelse
         </x-table>
     @endif
+
+    <livewire:products.edit @edited="$js.refreshWithParent" />
+
+    @script
+    <script>
+        $js('refreshWithParent', () => {
+            $wire.searchProducts();
+            $wire.$parent.$refresh();
+        });
+    </script>
+    @endscript
 </div>

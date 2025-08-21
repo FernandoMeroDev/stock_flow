@@ -13,6 +13,8 @@ class Index extends Component
     #[Locked]
     public Collection $products;
 
+    public $ids = [];
+
     public $prices = [];
 
     public $amounts = [];
@@ -41,6 +43,7 @@ class Index extends Component
                 }
             }
             $this->products->push($product);
+            $this->ids[] = $product->id;
             $this->prices[] = 0;
             $this->amounts[] = 1;
         }
@@ -52,8 +55,9 @@ class Index extends Component
         if($product){
             foreach($this->products->keys() as $i){
                 if($this->products->get($i)->id == $product->id){
-                    if($this->amounts[$i] < 1){
+                    if($this->amounts[$i] <= 1){
                         $this->products->pull($i);
+                        unset($this->ids[$i]);
                         unset($this->prices[$i]);
                         unset($this->amounts[$i]);
                     } else {
