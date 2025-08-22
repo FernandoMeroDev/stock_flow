@@ -6,9 +6,12 @@ use App\Livewire\Forms\Warehouses\UpdateForm;
 use App\Models\Shelf;
 use App\Models\Warehouse;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Edit extends Component
 {
+    use WithPagination;
+
     public UpdateForm $form;
 
     public function mount(Warehouse $warehouse)
