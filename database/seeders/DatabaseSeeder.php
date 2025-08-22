@@ -4,11 +4,18 @@ namespace Database\Seeders;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Warehouse;
+use Database\Factories\WarehouseFactory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    /**
+     * Specifies if create fake data in the Data Base for testing
+     */
+    private $create_fake_data = true;
+
     /**
      * Seed the application's database.
      */
@@ -21,6 +28,24 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        $this->call([ProductSeeder::class]);
+        if($this->create_fake_data)
+            $this->seedFakeData();
+        else
+            $this->seedRealData();
+    }
+
+    private function seedFakeData(): void
+    {
+        $this->call([
+            ProductSeeder::class,
+            WarehouseSeeder::class
+        ]);
+    }
+
+    private function seedRealData(): void
+    {
+        $this->call([
+            WarehouseSeeder::class
+        ]);
     }
 }

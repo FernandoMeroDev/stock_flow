@@ -8,6 +8,11 @@ use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
 {
+    /**
+     * Specifies if there are images in the private storage
+     */
+    private $with_images = false;
+
     private array $products = [
         // Nombre, Codigo, Imagen
         ['Ron San Miguel Silver', null, '1'],
@@ -32,7 +37,7 @@ class ProductSeeder extends Seeder
             Product::create([
                 'name' => $product[0],
                 'barcode' => $product[1],
-                'img' => $product[2] . '.jpg'
+                'img' => $this->with_images ? $product[2] . '.jpg' : null
             ]);
         }
     }

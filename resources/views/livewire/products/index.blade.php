@@ -27,6 +27,7 @@
             </x-table.tr>
         @empty
             <x-table.tr>
+                <td></td>
                 <td class="p-3">
                     No hay resultados...
                 </td>

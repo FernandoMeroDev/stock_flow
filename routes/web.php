@@ -2,6 +2,8 @@
 
 use App\Livewire\CreatePurchase\Index as CreatePurchase;
 use App\Livewire\Products\Index as ProductIndex;
+use App\Livewire\Warehouses\Index as WarehouseIndex;
+use App\Livewire\Warehouses\Edit as WarehouseEdit;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -33,3 +35,6 @@ Route::get('/products/img/{file}', function($file){
 })->name('products.img')->middleware(['auth']);
 
 Route::get('/compra', CreatePurchase::class)->name('create-purchase')->middleware(['auth']);
+
+Route::get('/bodegas', WarehouseIndex::class)->name('warehouses.index')->middleware(['auth']);
+Route::get('/bodegas/{warehouse}/editar', WarehouseEdit::class)->name('warehouses.edit')->middleware(['auth']);
