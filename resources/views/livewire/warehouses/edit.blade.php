@@ -29,7 +29,7 @@
                     </a>
                 </td>
                 <td class="p-3">
-                    {{$shelf->name}}
+                    {{$shelf->number}}
                 </td>
             </x-table.tr>
         @empty
@@ -42,5 +42,5 @@
         @endforelse
     </x-table>
 
-    {{-- <x-pagination :paginator="$shelves" /> --}}
+    <x-pagination :paginator="$shelves" />
 </div>
