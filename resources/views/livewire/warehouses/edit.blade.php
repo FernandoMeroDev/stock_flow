@@ -40,6 +40,16 @@
                 </td>
             </x-table.tr>
         @endforelse
+        <x-table.tr>
+            <td class="w-5 px-3 py-1">
+                <a href="#">
+                    <flux:button icon="plus"></flux:button>
+                </a>
+            </td>
+            <td class="p-3">
+                Nueva Percha
+            </td>
+        </x-table.tr>
     </x-table>
 
     <x-pagination :paginator="$shelves" />
