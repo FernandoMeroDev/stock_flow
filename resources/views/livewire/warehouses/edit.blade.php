@@ -42,7 +42,7 @@
         @endforelse
         <x-table.tr>
             <td class="w-5 px-3 py-1">
-                <a href="#">
+                <a href="{{route('shelves.create', $form->warehouse->id)}}">
                     <flux:button icon="plus"></flux:button>
                 </a>
             </td>
