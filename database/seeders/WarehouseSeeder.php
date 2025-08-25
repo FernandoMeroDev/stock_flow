@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Shelf;
+use App\Models\Shelves\Level;
 use App\Models\Warehouse;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -55,10 +56,16 @@ class WarehouseSeeder extends Seeder
             $warehouse_created = Warehouse::create(['name' => $warehouse['name']]);
             $shelves = $warehouse['shelves'];
             foreach($shelves as $shelf){
-                Shelf::create([
+                $shelf_created = Shelf::create([
                     'number' => $shelf['number'],
                     'warehouse_id' => $warehouse_created->id
                 ]);
+                for($i = 0; $i <= $shelf['levels']; $i++){
+                    Level::create([
+                        'number' => $i,
+                        'shelf_id' => $shelf_created->id
+                    ]);
+                }
             }
         }
     }
