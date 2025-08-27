@@ -19,17 +19,21 @@
             <x-table.th>
                 Perchas
             </x-table.th>
+            <x-table.th></x-table.th>
         </x-slot:thead>
 
         @forelse ($shelves as $shelf)
             <x-table.tr>
                 <td class="w-5 px-3 py-1">
-                    <a href="#">
+                    <a href="{{route('levels.edit', $shelf->levels->get(1)->id)}}">
                         <flux:button icon="pencil"></flux:button>
                     </a>
                 </td>
                 <td class="p-3">
                     {{$shelf->number}}
+                </td>
+                <td>
+                    {{$shelf->calc_products_total_count()->products_total_count}} productos
                 </td>
             </x-table.tr>
         @empty

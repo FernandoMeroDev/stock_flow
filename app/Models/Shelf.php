@@ -24,4 +24,14 @@ class Shelf extends Model
     {
         return $this->hasMany(Level::class, 'shelf_id', 'id');
     }
+
+    public function calc_products_total_count(): Shelf
+    {
+        $count = 0;
+        foreach($this->levels as $level){
+            $count += $level->calc_products_total_count()->products_total_count;
+        }
+        $this->products_total_count = $count;
+        return $this;
+    }
 }

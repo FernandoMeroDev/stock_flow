@@ -12,7 +12,7 @@ class UpdateForm extends Form
     #[Locked]
     public Warehouse $warehouse;
 
-    #[Validate('required|string|max:255')]
+    #[Validate('required|string|max:255', attribute: 'Nombre')]
     public $name;
 
     public function setWarehouse(Warehouse $warehouse)

@@ -5,6 +5,7 @@ use App\Livewire\Products\Index as ProductIndex;
 use App\Livewire\Warehouses\Index as WarehouseIndex;
 use App\Livewire\Warehouses\Edit as WarehouseEdit;
 use App\Livewire\Warehouses\Shelves\Create as ShelfCreate;
+use App\Livewire\Warehouses\Shelves\Levels\Edit\Main as LevelEdit;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -40,3 +41,4 @@ Route::get('/compra', CreatePurchase::class)->name('create-purchase')->middlewar
 Route::get('/bodegas', WarehouseIndex::class)->name('warehouses.index')->middleware(['auth']);
 Route::get('/bodegas/{warehouse}/editar', WarehouseEdit::class)->name('warehouses.edit')->middleware(['auth']);
 Route::get('/bodegas/{warehouse}/editar/perchas/crear', ShelfCreate::class)->name('shelves.create')->middleware(['auth']);
+Route::get('/niveles/{level}/editar', LevelEdit::class)->name('levels.edit')->middleware(['auth']);

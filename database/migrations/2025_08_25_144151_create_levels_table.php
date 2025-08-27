@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('number', unsigned: true);
 
-            $table->foreignId('shelf_id')->constrained('shelves');
+            $table->foreignId('shelf_id')->constrained('shelves')->onDelete('cascade');
         });
     }
 

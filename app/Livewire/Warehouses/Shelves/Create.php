@@ -17,7 +17,9 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.warehouses.shelves.create');
+        return view('livewire.warehouses.shelves.create', [
+            'last_shelf_number' => $this->form->warehouse->shelves()->orderBy('number', 'desc')->first()->number ?? 0
+        ]);
     }
 
     public function store()

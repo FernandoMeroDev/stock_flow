@@ -29,6 +29,14 @@ class StoreForm extends Form
         ];
     }
 
+    protected function validationAttributes() 
+    {
+        return [
+            'number' => 'Número',
+            'levels_count' => 'Pisos',
+        ];
+    }
+
     public function setWarehouse(Warehouse $warehouse)
     {
         $this->warehouse = $warehouse;
@@ -41,7 +49,7 @@ class StoreForm extends Form
             'number' => $this->number,
             'warehouse_id' => $this->warehouse->id
         ]);
-        for($i = 1; $i <= $this->levels_count; $i++){
+        for($i = 0; $i <= $this->levels_count; $i++){
             Level::create([
                 'number' => $i,
                 'shelf_id' => $shelf->id

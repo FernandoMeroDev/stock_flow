@@ -8,13 +8,13 @@ use Livewire\Form;
 
 class StoreForm extends Form
 {
-    #[Validate('required|string|max:500')]
+    #[Validate('required|string|max:500', attribute: 'Nombre')]
     public $name;
 
-    #[Validate('nullable|string|max:50')]
+    #[Validate('nullable|string|max:50', attribute: 'Imagen')]
     public $barcode;
 
-    #[Validate('nullable|image|max:5120')] // 5MB max
+    #[Validate('nullable|image|max:5120', attribute: 'Código')] // 5MB max
     public $img;
 
     public function store()

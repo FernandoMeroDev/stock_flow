@@ -13,13 +13,13 @@ class UpdateForm extends Form
     #[Locked]
     public ?Product $product = null;
 
-    #[Validate('required|string|max:500')]
+    #[Validate('required|string|max:500', attribute: 'Nombre')]
     public $name;
 
-    #[Validate('nullable|mimes:jpg,png,webp|max:5120')] // 5MB max
+    #[Validate('nullable|mimes:jpg,png,webp|max:5120', attribute: 'Imagen')] // 5MB max
     public $img = null;
 
-    #[Validate('nullable|string|max:50')]
+    #[Validate('nullable|string|max:50', attribute: 'Código')]
     public $barcode;
 
     public function setProduct(?Product $product)

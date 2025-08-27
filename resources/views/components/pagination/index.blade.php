@@ -4,7 +4,7 @@
 
 <div class="flex items-center">
     @if ($paginator->onFirstPage())
-        <flux:button class="mr-2"><</flux:button>
+        <flux:button class="mr-2" disabled><</flux:button>
     @else
         <flux:button x-on:click="$wire.previousPage('{{$paginator->getPageName()}}'); $el.disabled = true" class="mr-2"><</flux:button>
     @endif
@@ -23,7 +23,7 @@
     </flux:select>
 
     @if ($paginator->onLastPage())
-        <flux:button class="ml-2">></flux:button>    
+        <flux:button class="ml-2" disabled>></flux:button>    
     @else
         <flux:button x-on:click="$wire.nextPage('{{$paginator->getPageName()}}'); $el.disabled = true" class="ml-2">></flux:button>
     @endif
