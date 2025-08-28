@@ -4,7 +4,11 @@
             <x-table.th>
                 Percha {{$current_level->shelf->number}}
             </x-table.th>
-            <x-table.th></x-table.th>
+            <x-table.th>
+                <a href="{{route('shelves.edit', $current_level->shelf->id)}}">
+                    <flux:button icon="pencil"></flux:button>
+                </a>
+            </x-table.th>
         </x-slot:thead>
 
         @foreach ($current_level->shelf->levels()->orderBy('number', 'desc')->get() as $level)
@@ -16,7 +20,9 @@
                         </span>
                     </td>
                     <td>
-                        <span class="font-bold">[Actual]</span>
+                        <span class="font-bold">
+                        [Actual]
+                        </span>
                     </td>
                 @else
                     <td class="p-3">
