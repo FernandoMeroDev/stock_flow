@@ -44,6 +44,9 @@ class DragAndDropSystem {
         document.querySelectorAll('.livewireActionButton').forEach(button => {
             button.style.display = 'none';
         });
+        document.querySelectorAll('.open-product-edit-button').forEach(button => {
+            button.disabled = true;
+        });
         this.$wire.$dispatch('enabled-drag-and-drop');
     }
 

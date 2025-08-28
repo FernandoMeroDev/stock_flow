@@ -19,9 +19,15 @@
             <x-table.tr wire:key="product-{{$id}}" class="productRowDraggable" id="product-{{$id}}">
                 <td class="p-3">
                     <div class="flex flex-wrap items-center sm:justify-between">
-                        <span x-on:click="$dispatch('edit-product', { product_id: {{$id}} })">
+                        <button
+                            class="open-product-edit-button"
+                            x-on:click.prevent="
+                                if( ! $event.target.disabled ) 
+                                    $dispatch('edit-product', { product_id: {{$id}} })
+                            "
+                        >
                             {{$product['name']}}
-                        </span>
+                        </button>
                         <div class="flex mt-1 w-full justify-between sm:w-auto">
                             <flux:input
                                 placeholder="Cantidad"
