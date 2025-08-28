@@ -6,11 +6,15 @@
         <x-slot:thead>
             <x-table.th>
                 <div class="flex justify-between items-center">
-                    Productos
-                    <flux:button
-                        icon="arrow-path-rounded-square" id="ableDragAndDropButton" 
-                        disabled class="livewireActionButton"
-                    ></flux:button>
+                    <span>
+                        Productos
+                        <span wire:ignore id="unsaved_changes_indicator" class="hidden text-red-400">
+                            (Cambios sin guardar)
+                        </span>
+                    </span>
+                    @if( ! $drag_and_drop_enabled)
+                        <flux:button icon="arrow-path-rounded-square" id="ableDragAndDropButton" class="livewireActionButton"></flux:button>
+                    @endif
                 </div>
             </x-table.th>
         </x-slot:thead>
@@ -21,10 +25,12 @@
                     <div class="flex flex-wrap items-center sm:justify-between">
                         <button
                             class="open-product-edit-button"
-                            x-on:click.prevent="
-                                if( ! $event.target.disabled ) 
-                                    $dispatch('edit-product', { product_id: {{$id}} })
-                            "
+                            @if( ! $drag_and_drop_enabled)
+                                x-on:click.prevent="
+                                    if( ! $event.target.disabled ) 
+                                        $dispatch('edit-product', { product_id: {{$id}} })
+                                "
+                            @else x-on:click.prevent @endif
                         >
                             {{$product['name']}}
                         </button>
@@ -36,11 +42,13 @@
                                 id="product-{{$id}}"
                                 required min="1" max="9999"
                             />
-                            <flux:button
-                                class="ml-2 livewireActionButton"
-                                icon="trash"
-                                wire:click="remove({{$id}})"
-                            />
+                            @if( ! $drag_and_drop_enabled)
+                                <flux:button
+                                    class="ml-2 livewireActionButton"
+                                    icon="trash"
+                                    wire:click="remove({{$id}})"
+                                />
+                            @endif
                         </div>
                     </div>
                 </td>
@@ -67,10 +75,12 @@
             type="submit" 
             variant="primary" 
         >Guardar cambios</flux:button>
-        <flux:button 
-            class="livewireActionButton"
-            x-on:click="$wire.empty()"
-        >Vaciar</flux:button>
+        @if( ! $drag_and_drop_enabled)
+            <flux:button 
+                class="livewireActionButton"
+                x-on:click="$wire.empty()"
+            >Vaciar</flux:button>
+        @endif
     </div>
 
     @error('*')
@@ -81,4 +91,22 @@
 </form>
 
 <livewire:warehouses.shelves.levels.edit.shelf-navigation :level="$form->level" />
+
+@script
+<script>
+    const indicator = document.getElementById('unsaved_changes_indicator');
+    const preventUnload = (event) => {
+        event.preventDefault();
+        event.returnValue = 'Tienes cambios sin guardar, ¿quieres abandonar la página?';
+    };
+    $js('register_unsaved_changes', () => {
+        indicator.classList.remove('hidden');
+        window.addEventListener("beforeunload", preventUnload);
+    });
+    $js('remove_unsaved_changes', () => {
+        indicator.classList.add('hidden');
+        window.removeEventListener("beforeunload", preventUnload);
+    });
+</script>
+@endscript
 </div>

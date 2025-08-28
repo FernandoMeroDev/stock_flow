@@ -30,6 +30,7 @@ class Main extends Component
     {
         if(Arr::exists($this->form->products, $id))
             Arr::pull($this->form->products, $id);
+        $this->js('$js.register_unsaved_changes');
     }
 
     #[On('add-product')]
@@ -42,6 +43,7 @@ class Main extends Component
                 'count' => 0
             ];
         };
+        $this->js('$js.register_unsaved_changes');
     }
 
     #[Renderless]
@@ -49,6 +51,7 @@ class Main extends Component
     {
         if(Arr::exists($this->form->products, $id))
             $this->form->products[$id]['count'] = $count;
+        $this->js('$js.register_unsaved_changes');
     }
 
     #[Renderless]
@@ -62,7 +65,10 @@ class Main extends Component
             else
                 $valid = false;
         }
-        if($valid) $this->form->products = $products;
+        if($valid){
+            $this->form->products = $products;
+            $this->js('$js.register_unsaved_changes');
+        }
     }
 
     public function refresh_products(): void
@@ -80,7 +86,7 @@ class Main extends Component
 
     #[Renderless]
     #[On('enabled-drag-and-drop')]
-    public function registerDragAndDrop()
+    public function registerDragAndDropActivation()
     {
         $this->drag_and_drop_enabled = true;
     }
@@ -88,6 +94,7 @@ class Main extends Component
     public function update(): void
     {
         $this->form->update();
+        $this->js('$js.remove_unsaved_changes');
         if($this->drag_and_drop_enabled)
             $this->redirect(route('levels.edit', $this->form->level->id));
     }
@@ -95,5 +102,6 @@ class Main extends Component
     public function empty(): void
     {
         $this->form->empty();
+        $this->js('$js.register_unsaved_changes');
     }
 }

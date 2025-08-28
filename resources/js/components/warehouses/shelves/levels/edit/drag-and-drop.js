@@ -142,7 +142,6 @@ class DragAndDropSystem {
 
     init() {
         let button = document.getElementById('ableDragAndDropButton');
-        button.disabled = false;
         button.addEventListener('click', (event) => {
             event.preventDefault();
             event.target.disabled = true;
