@@ -8,7 +8,8 @@
                 <div class="flex justify-between items-center">
                     Productos
                     <flux:button
-                        icon="arrow-path-rounded-square" id="ableDragAndDropButton" class="livewireActionButton"
+                        icon="arrow-path-rounded-square" id="ableDragAndDropButton" 
+                        disabled class="livewireActionButton"
                     ></flux:button>
                 </div>
             </x-table.th>
