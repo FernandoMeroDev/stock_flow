@@ -28,7 +28,8 @@ class UpdateForm extends Form
     protected function validationAttributes() 
     {
         return [
-            'products.*' => 'Producto',
+            'products' => 'Productos',
+            'products.*' => 'Producto #:position',
             'products.*.count' => 'Cantidad del Producto',
         ];
     }

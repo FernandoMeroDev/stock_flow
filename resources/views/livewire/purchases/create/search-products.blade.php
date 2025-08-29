@@ -11,7 +11,7 @@
         </flux:modal.trigger>
     </div>
 
-    <livewire:products.create @created="searchProducts" />
+    <livewire:products.create @created="$refresh" />
 
     @script
     <script>
@@ -26,33 +26,33 @@
     </script>
     @endscript
 
-    @if($products)
-        <x-table class="w-full mb-3">
-            @forelse ($products as $product)
-                <x-table.tr>
-                    <td class="p-3 max-w-60" x-on:click="$dispatch('edit-product', { product_id: {{$product->id}} })">
-                        {{$product->name}}
-                    </td>
-                    <td class="flex justify-end">
-                        <flux:button icon="plus-circle" x-on:click="$dispatch('add-product', {id: {{$product->id}}})" />
-                    </td>
-                </x-table.tr>
-            @empty
-                <x-table.tr>
-                    <td class="p-3">
-                        No hay resultados...
-                    </td>
-                </x-table.tr>
-            @endforelse
-        </x-table>
-    @endif
+    <x-table class="w-full mb-3">
+        @forelse ($products as $product)
+            <x-table.tr>
+                <td class="p-3 max-w-60" x-on:click="$dispatch('edit-product', { product_id: {{$product->id}} })">
+                    {{$product->name}}
+                </td>
+                <td class="flex justify-end">
+                    <flux:button icon="plus" x-on:click="$dispatch('add-product', {id: {{$product->id}}})" />
+                </td>
+            </x-table.tr>
+        @empty
+            <x-table.tr>
+                <td class="p-3">
+                    No hay resultados...
+                </td>
+            </x-table.tr>
+        @endforelse
+    </x-table>
+
+    <x-pagination :paginator="$products" />
 
     <livewire:products.edit @edited="$js.refreshWithParent" />
 
     @script
     <script>
         $js('refreshWithParent', () => {
-            $wire.searchProducts();
+            $wire.$refresh();
             $wire.$parent.$refresh();
         });
     </script>

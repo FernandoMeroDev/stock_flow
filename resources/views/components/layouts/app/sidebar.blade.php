@@ -15,8 +15,7 @@
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item :href="route('products.index')" :current="request()->routeIs('products.index')">Productos</flux:navlist.item>
                     <flux:navlist.item :href="route('warehouses.index')" :current="request()->routeIs('warehouses.index')">Bodegas</flux:navlist.item>
-                    <flux:navlist.item :href="route('purchases.index')" :current="request()->routeIs('purchases.index')">Compras</flux:navlist.item>
-                    <flux:navlist.item :href="route('create-purchase')" :current="request()->routeIs('create-purchase')">Compra</flux:navlist.item>
+                    <flux:navlist.item :href="route('purchases.create')" :current="request()->routeIs('purchases.create')">Compras</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

@@ -1,12 +1,10 @@
 <div>
     <div class="flex mb-3">
         <flux:input type="text" placeholder="Buscar" wire:model.live="search" class="mr-2" />
-        <flux:modal.trigger name="create-purchase">
+        <a href="{{route('purchases.create')}}">
             <flux:button>Nuevo</flux:button>
-        </flux:modal.trigger>
+        </a>
     </div>
-
-    {{-- <livewire:products.create @created="$refresh" /> --}}
 
     <x-table class="w-full mb-3">
         <x-slot:thead>
@@ -22,7 +20,7 @@
         @forelse ($purchases as $purchase)
             <x-table.tr>
                 <td class="w-5 px-3 py-1">
-                    <flux:button icon="pencil" x-on:click="$dispatch('edit-purchase', { purchase_id: {{$purchase->id}} })"></flux:button>
+                    <flux:button icon="pencil" x-on:click="$dispatch('edit-purchase', { id: {{$purchase->id}} })"></flux:button>
                 </td>
                 <td class="p-3">
                     {{$purchase->product_name}}
@@ -43,5 +41,5 @@
 
     <x-pagination :paginator="$purchases" />
 
-    {{-- <livewire:products.edit @edited="$refresh" /> --}}
+    <livewire:purchases.edit @edited="$refresh" />
 </div>
