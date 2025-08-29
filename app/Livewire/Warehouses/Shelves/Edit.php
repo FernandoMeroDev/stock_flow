@@ -25,4 +25,11 @@ class Edit extends Component
         $this->form->update();
         $this->redirect(route('levels.edit', $this->form->shelf->levels()->get()->get(1)->id));
     }
+
+    public function delete()
+    {
+        $warehouse_id = $this->form->shelf->warehouse->id;
+        $this->form->shelf->delete();
+        $this->redirect(route('warehouses.edit', $warehouse_id));
+    }
 }
