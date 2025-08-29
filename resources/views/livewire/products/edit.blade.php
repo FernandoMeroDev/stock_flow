@@ -1,3 +1,5 @@
+@use('App\Models\Warehouse')
+
 <div>
     <flux:modal name="edit-product" class="md:w-96">
         <div class="space-y-6">
@@ -38,6 +40,42 @@
                     x-on:click="$wire.delete()"
                 >Eliminar</flux:button>
             </div>
+            @if($form->product)
+                @foreach(Warehouse::all() as $warehouse)
+                    <div>
+                        <flux:heading size="lg">{{$warehouse->name}}</flux:heading>
+                        <x-table class="w-full mb-3">
+                            <x-slot:thead>
+                                <x-table.th>Percha</x-table.th>
+                                <x-table.th>Piso</x-table.th>
+                                <x-table.th>Cantidad</x-table.th>
+                            </x-slot:thead>
+
+                            @forelse($form->product->warehouse_existences($warehouse) as $level_product)
+                                <x-table.tr>
+                                    <td class="text-lg p-3">
+                                        {{$level_product->shelf_number}}
+                                    </td>
+                                    <td class="text-lg p-3">
+                                        {{$level_product->level_number}}
+                                    </td>
+                                    <td class="text-lg p-3">
+                                        {{$level_product->count}}
+                                    </td>
+                                </x-table.tr>
+                            @empty
+                                <x-table.tr>
+                                    <td class="p-3">
+                                        No hay resultados...
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </x-table.tr>
+                            @endforelse
+                        </x-table>
+                    </div>
+                @endforeach
+            @endif
         </div>
     </flux:modal>
     @script
