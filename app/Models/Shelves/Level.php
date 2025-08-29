@@ -2,9 +2,9 @@
 
 namespace App\Models\Shelves;
 
+use App\Models\Model;
 use App\Models\Product;
 use App\Models\Shelf;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 

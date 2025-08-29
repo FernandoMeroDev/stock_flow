@@ -2,8 +2,8 @@
 
 namespace App\Models\Shelves;
 
+use App\Models\Model;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LevelProduct extends Model
