@@ -4,7 +4,7 @@
     <x-table class="w-full mb-3">
         <x-slot:thead>
             <x-table.th>
-                Productos
+                Producto
             </x-table.th>
             <x-table.th>
                 Cantidad

@@ -36,4 +36,10 @@ class Index extends Component
 
         return $purchases;
     }
+
+    public function delete()
+    {
+        foreach(Purchase::all() as $purchase)
+                $purchase->delete();
+    }
 }

@@ -42,4 +42,8 @@
     <x-pagination :paginator="$purchases" />
 
     <livewire:purchases.edit @edited="$refresh" />
+
+    <flux:button wire:click="delete" variant="danger" class="mt-4">
+        Eliminar Todas
+    </flux:button>
 </div>
