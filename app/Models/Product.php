@@ -13,7 +13,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'img', 'barcode'];
+    protected $fillable = ['name', 'img', 'barcode', 'price'];
 
     public function levels(): BelongsToMany
     {
@@ -38,5 +38,10 @@ class Product extends Model
             ->where("$level_product.product_id", $this->id)
             ->where("$warehouses.id", $warehouse->id)
             ->get();
+    }
+
+    public function inventories(): BelongsToMany
+    {
+        return $this->belongsToMany(Inventory::class);
     }
 }

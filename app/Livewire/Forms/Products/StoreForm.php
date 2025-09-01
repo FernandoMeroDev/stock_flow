@@ -17,9 +17,14 @@ class StoreForm extends Form
     #[Validate('nullable|image|max:5120', attribute: 'Código')] // 5MB max
     public $img;
 
+    #[Validate('nullable|decimal:0,3|min:0.001|max:9999.999', attribute: 'Precio')]
+    public $price;
+
     public function store()
     {
         $this->validate();
+        if( ! $this->price  )
+            $this->price = null;
         $inputs = $this->except('img');
         $inputs['img'] = $this->saveImg();
         Product::create($inputs);

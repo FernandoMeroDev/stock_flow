@@ -22,6 +22,9 @@ class UpdateForm extends Form
     #[Validate('nullable|string|max:50', attribute: 'Código')]
     public $barcode;
 
+    #[Validate('nullable|decimal:0,3|min:0.001|max:9999.999', attribute: 'Precio')]
+    public $price;
+
     public function setProduct(?Product $product)
     {
         if($product){
@@ -30,6 +33,7 @@ class UpdateForm extends Form
             $this->barcode = $product->barcode;
             if(is_null($this->product->img))
                 $this->img = null;
+            $this->price = $product->price;
         }
     }
 
@@ -37,6 +41,8 @@ class UpdateForm extends Form
     {
         $this->validate();
         if($this->product){
+            if( ! $this->price  )
+                $this->price = null;
             $inputs = $this->except(['img', 'img_path']);
             $inputs['img'] = $this->saveImg();
             $this->product->update($inputs);

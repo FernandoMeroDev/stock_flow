@@ -16,6 +16,7 @@
                     <flux:navlist.item :href="route('products.index')" :current="request()->routeIs('products.index')">Productos</flux:navlist.item>
                     <flux:navlist.item :href="route('warehouses.index')" :current="request()->routeIs('warehouses.index')">Bodegas</flux:navlist.item>
                     <flux:navlist.item :href="route('purchases.create')" :current="request()->routeIs('purchases.create')">Compras</flux:navlist.item>
+                    <flux:navlist.item :href="route('inventories.index')" :current="request()->routeIs('inventories.index')">Inventarios</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

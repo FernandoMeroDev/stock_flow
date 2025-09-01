@@ -8,6 +8,7 @@ use App\Livewire\Warehouses\Shelves\Edit as ShelfEdit;
 use App\Livewire\Warehouses\Shelves\Levels\Edit\Main as LevelEdit;
 use App\Livewire\Purchases\Index as PurchaseIndex;
 use App\Livewire\Purchases\Create\Main as PurchaseCreate;
+use App\Livewire\Inventories\Index as InventoryIndex;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -48,3 +49,5 @@ Route::get('/niveles/{level}/editar', LevelEdit::class)->name('levels.edit')->mi
 
 Route::get('/compras', PurchaseIndex::class)->name('purchases.index')->middleware(['auth']);
 Route::get('/compras/crear', PurchaseCreate::class)->name('purchases.create')->middleware(['auth']);
+
+Route::get('/inventarios', InventoryIndex::class)->name('inventories.index')->middleware(['auth']);

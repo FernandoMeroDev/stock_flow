@@ -2,10 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Product;
 use App\Models\User;
-use App\Models\Warehouse;
-use Database\Factories\WarehouseFactory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -39,7 +36,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ProductSeeder::class,
             WarehouseSeeder::class,
-            PurchaseSeeder::class
+            PurchaseSeeder::class,
+            InventorySeeder::class
         ]);
     }
 
