@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Livewire\Purchases\Create;
+namespace App\Livewire\Movements\Create;
 
-use App\Livewire\Forms\Purchases\StoreForm;
+use App\Livewire\Forms\Movements\StoreForm;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\On;
@@ -19,7 +19,7 @@ class Main extends Component
 
     public function render()
     {
-        return view('livewire.purchases.create.main');
+        return view('livewire.movements.create.main');
     }
 
     #[On('add-product')]
@@ -30,7 +30,10 @@ class Main extends Component
             : Product::find($id);
         if($product){
             foreach($this->form->products->keys() as $i){
-                if($this->form->products->get($i)->id == $product->id){
+                if(
+                    $this->form->products->get($i)->id == $product->id
+                    && $this->form->types[$i] == 'i'
+                ){
                     $this->form->amounts[$i] += 1;
                     return;
                 }
@@ -38,6 +41,7 @@ class Main extends Component
             $this->form->products->push($product);
             $this->form->ids[] = $product->id;
             $this->form->amounts[] = 1;
+            $this->form->types[] = 'i';
         }
     }
 
@@ -51,6 +55,7 @@ class Main extends Component
                         $this->form->products->pull($i);
                         unset($this->form->ids[$i]);
                         unset($this->form->amounts[$i]);
+                        unset($this->form->types[$i]);
                     } else {
                         $this->form->amounts[$i] -= 1;
                     }

@@ -1,7 +1,7 @@
 <div>
     <div class="flex mb-3">
         <flux:input type="text" placeholder="Buscar" wire:model.live="search" class="mr-2" />
-        <a href="{{route('purchases.create')}}">
+        <a href="{{route('movements.create')}}">
             <flux:button>Nuevo</flux:button>
         </a>
     </div>
@@ -10,23 +10,26 @@
         <x-slot:thead>
             <x-table.th></x-table.th>
             <x-table.th>
-                Compras
+                Movimiento
             </x-table.th>
             <x-table.th>
                 Cantidad
             </x-table.th>
         </x-slot:thead>
 
-        @forelse ($purchases as $purchase)
+        @forelse ($movements as $movement)
             <x-table.tr>
                 <td class="w-5 px-3 py-1">
-                    <flux:button icon="pencil" x-on:click="$dispatch('edit-purchase', { id: {{$purchase->id}} })"></flux:button>
+                    <flux:button icon="pencil" x-on:click="$dispatch('edit-movement', { id: {{$movement->id}} })"></flux:button>
                 </td>
                 <td class="p-3">
-                    {{$purchase->product_name}}
+                    {{$movement->product_name}}
                 </td>
                 <td class="p-3">
-                    {{$purchase->count}}
+                    {{$movement->count}} <br class="sm:hidden">
+                    <span class="sm:ml-4">
+                        ({{ match($movement->type) {'i' => 'Entradas', 'o' => 'Salidas'} }})
+                    </span>
                 </td>
             </x-table.tr>
         @empty
@@ -39,11 +42,11 @@
         @endforelse
     </x-table>
 
-    <x-pagination :paginator="$purchases" />
+    <x-pagination :paginator="$movements" />
 
-    <livewire:purchases.edit @edited="$refresh" />
+    <livewire:movements.edit @edited="$refresh" />
 
     <flux:button wire:click="delete" variant="danger" class="mt-4">
-        Eliminar Todas
+        Eliminar Todos
     </flux:button>
 </div>

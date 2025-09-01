@@ -20,9 +20,9 @@ class Product extends Model
         return $this->belongsToMany(Level::class)->withPivot(['count']);
     }
 
-    public function purchases(): HasMany
+    public function movements(): HasMany
     {
-        return $this->hasMany(Purchase::class);
+        return $this->hasMany(Movement::class);
     }
 
     public function warehouse_existences(Warehouse $warehouse): Collection

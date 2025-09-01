@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Purchase extends Model
+class Movement extends Model
 {
-    protected $fillable = ['count', 'product_id'];
+    protected $fillable = ['type', 'count', 'product_id'];
 
     public $timestamps = false;
 

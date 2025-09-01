@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchases', function (Blueprint $table) {
+        Schema::create('movements', function (Blueprint $table) {
             $table->id();
+            $table->char('type', 1);
             $table->integer('count', unsigned: true);
 
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');

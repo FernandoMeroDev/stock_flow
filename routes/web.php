@@ -6,8 +6,8 @@ use App\Livewire\Warehouses\Edit as WarehouseEdit;
 use App\Livewire\Warehouses\Shelves\Create as ShelfCreate;
 use App\Livewire\Warehouses\Shelves\Edit as ShelfEdit;
 use App\Livewire\Warehouses\Shelves\Levels\Edit\Main as LevelEdit;
-use App\Livewire\Purchases\Index as PurchaseIndex;
-use App\Livewire\Purchases\Create\Main as PurchaseCreate;
+use App\Livewire\Movements\Index as MovementIndex;
+use App\Livewire\Movements\Create\Main as MovementCreate;
 use App\Livewire\Inventories\Index as InventoryIndex;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
@@ -47,7 +47,7 @@ Route::get('/perchas/{shelf}/editar', ShelfEdit::class)->name('shelves.edit')->m
 
 Route::get('/niveles/{level}/editar', LevelEdit::class)->name('levels.edit')->middleware(['auth']);
 
-Route::get('/compras', PurchaseIndex::class)->name('purchases.index')->middleware(['auth']);
-Route::get('/compras/crear', PurchaseCreate::class)->name('purchases.create')->middleware(['auth']);
+Route::get('/movimientos', MovementIndex::class)->name('movements.index')->middleware(['auth']);
+Route::get('/movimientos/crear', MovementCreate::class)->name('movements.create')->middleware(['auth']);
 
 Route::get('/inventarios', InventoryIndex::class)->name('inventories.index')->middleware(['auth']);
