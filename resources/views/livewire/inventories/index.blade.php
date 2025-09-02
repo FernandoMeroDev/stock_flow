@@ -17,7 +17,7 @@
                 <x-table.tr>
                     <td class="w-5 px-3 py-1">
                         <div class="flex space-x-1">
-                            <a href="#">
+                            <a href="{{route('inventories.edit', $inventory->id)}}">
                                 <flux:button icon="pencil"></flux:button>
                             </a>
                             <a href="#">

@@ -19,4 +19,12 @@ class StoreRequest extends FormRequest
             'empty_movements' => 'sometimes|accepted'
         ];
     }
+
+    public function attributes(): array
+    {
+        return [
+            'saved_at' => 'Fecha',
+            'empty_movements' => 'Vaciar Movimientos'
+        ];
+    }
 }

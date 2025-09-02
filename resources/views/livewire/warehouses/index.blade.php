@@ -29,7 +29,7 @@
 
     <x-pagination :paginator="$warehouses" />
 
-    <form wire:ignore action="{{route('inventories.store')}}" method="POST" class="my-10 space-y-5">
+    <form wire:ignore action="{{route('inventories.store')}}" method="POST" class="my-10 space-y-3">
         <div>
             <flux:heading size="lg">Guardar Inventario</flux:heading>
             <flux:text>
@@ -53,6 +53,13 @@
             Guardar
         </flux:button>
     </form>
+
+    <div class="mb-3">
+        <flux:heading size="lg">Inventarios</flux:heading>
+        <flux:text>
+            Consulte los inventarios guardados en la base de datos.
+        </flux:text>
+    </div>
 
     <livewire:inventories.index />
 

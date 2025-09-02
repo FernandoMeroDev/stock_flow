@@ -10,6 +10,7 @@ use App\Livewire\Warehouses\Shelves\Levels\Edit\Main as LevelEdit;
 use App\Livewire\Movements\Index as MovementIndex;
 use App\Livewire\Movements\Create\Main as MovementCreate;
 use App\Livewire\Inventories\Index as InventoryIndex;
+use App\Livewire\Inventories\Edit\Main as InventoryEdit;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -53,3 +54,4 @@ Route::get('/movimientos/crear', MovementCreate::class)->name('movements.create'
 
 Route::get('/inventarios', InventoryIndex::class)->name('inventories.index')->middleware(['auth']);
 Route::post('/inventarios', InventoryStore::class)->name('inventories.store')->middleware(['auth']);
+Route::get('/inventarios/{inventory}/editar', InventoryEdit::class)->name('inventories.edit')->middleware(['auth']);
