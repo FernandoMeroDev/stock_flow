@@ -20,7 +20,7 @@
                             <a href="{{route('inventories.edit', $inventory->id)}}">
                                 <flux:button icon="pencil"></flux:button>
                             </a>
-                            <a href="#">
+                            <a href="{{route('inventories.download', $inventory->id)}}">
                                 <flux:button icon="arrow-down-tray"></flux:button>
                             </a>
                         </div>
