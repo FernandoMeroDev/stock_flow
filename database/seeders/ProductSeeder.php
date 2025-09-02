@@ -38,7 +38,7 @@ class ProductSeeder extends Seeder
                 'name' => $product[0],
                 'barcode' => $product[1],
                 'img' => $this->with_images ? $product[2] . '.jpg' : null,
-                'price' => 0.001
+                'price' => null
             ]);
         }
     }

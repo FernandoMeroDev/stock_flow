@@ -37,7 +37,7 @@ class InventorySeeder extends Seeder
             );
             $inventory_product = InventoryProduct::create([
                 'name' => $product->name,
-                'price' => $product->price ?? 0.001,
+                'price' => $product->price ?? 0,
                 'incoming_count' => 10,
                 'outgoing_count' => 10,
                 'product_id' => $product->id,

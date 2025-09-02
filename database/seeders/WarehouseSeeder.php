@@ -76,6 +76,7 @@ class WarehouseSeeder extends Seeder
                         'number' => $i,
                         'shelf_id' => $shelf_created->id
                     ]);
+                    if($this->products_count < 1) continue;
                     for($j = 0; $j < $this->products_per_level; $j++)
                         LevelProduct::create([
                             'count' => fake()->numberBetween(1, 12),

@@ -42,7 +42,7 @@ class Index extends Component
             $inventories->where('saved_at', '>=', $this->safe_filters['date_from'] . ' 00:00:01');
         if(isset($this->safe_filters['date_to']))
             $inventories->where('saved_at', '<=', $this->safe_filters['date_to'] . ' 23:59:59');
-        $inventories = $inventories->orderBy('saved_at')->paginate(15, pageName: 'inventories_page');
+        $inventories = $inventories->orderBy('saved_at', 'desc')->paginate(15, pageName: 'inventories_page');
 
         if($inventories->isEmpty() && $inventories->currentPage() !== 1)
             $this->resetPage('inventories_page');

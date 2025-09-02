@@ -12,7 +12,7 @@ class Stock extends Model
     protected $fillable = [
         'count',
         'warehouse_id',
-        'inventory_id'
+        'inventory_product_id'
     ];
 
     public $timestamps = false;

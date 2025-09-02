@@ -16,9 +16,14 @@
             @forelse ($inventories as $inventory)
                 <x-table.tr>
                     <td class="w-5 px-3 py-1">
-                        <a href="#">
-                            <flux:button icon="pencil"></flux:button>
-                        </a>
+                        <div class="flex space-x-1">
+                            <a href="#">
+                                <flux:button icon="pencil"></flux:button>
+                            </a>
+                            <a href="#">
+                                <flux:button icon="arrow-down-tray"></flux:button>
+                            </a>
+                        </div>
                     </td>
                     <td class="p-3">
                         {{$inventory->saved_at}}

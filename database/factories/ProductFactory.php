@@ -18,7 +18,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'price' => 0.001
+            'price' => null
         ];
     }
 }

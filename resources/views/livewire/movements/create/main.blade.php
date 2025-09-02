@@ -47,10 +47,6 @@
 
     <div class="flex justify-between mt-4">
         <flux:button type="submit" variant="primary">Guardar</flux:button>
-
-        <a href="{{route('movements.index')}}">
-            <flux:button>Todos los Movimientos</flux:button>
-        </a>
     </div>
 
     @error('*')

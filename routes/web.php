@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Inventories\StoreController as InventoryStore;
 use App\Livewire\Products\Index as ProductIndex;
 use App\Livewire\Warehouses\Index as WarehouseIndex;
 use App\Livewire\Warehouses\Edit as WarehouseEdit;
@@ -51,3 +52,4 @@ Route::get('/movimientos', MovementIndex::class)->name('movements.index')->middl
 Route::get('/movimientos/crear', MovementCreate::class)->name('movements.create')->middleware(['auth']);
 
 Route::get('/inventarios', InventoryIndex::class)->name('inventories.index')->middleware(['auth']);
+Route::post('/inventarios', InventoryStore::class)->name('inventories.store')->middleware(['auth']);
