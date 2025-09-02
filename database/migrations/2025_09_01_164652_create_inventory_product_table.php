@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('incoming_count', unsigned: true);
             $table->integer('outgoing_count', unsigned: true);
 
-            $table->bigInteger('product_id', unsigned: true);
+            $table->bigInteger('product_id', unsigned: true)->nullable();
             $table->foreignId('inventory_id')->constrained('inventories')->onDelete('cascade');
         });
     }

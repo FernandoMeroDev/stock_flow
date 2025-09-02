@@ -33,7 +33,7 @@
         <x-table class="min-w-3xl w-full">
             <x-slot:thead>
                 <x-table.th></x-table.th>
-                <x-table.th>CÓDIGO</x-table.th>
+                <x-table.th>ID</x-table.th>
                 <x-table.th>Producto</x-table.th>
                 <x-table.th>Precio</x-table.th>
                 <x-table.th>Entradas</x-table.th>
@@ -78,13 +78,32 @@
             @empty
                 <x-table.tr>
                     <td></td>
+                    <td></td>
                     <td class="p-3">
                         No hay resultados...
                     </td>
                 </x-table.tr>
             @endforelse
+            <x-table.tr>
+                <td class="p-3">
+                    <flux:button x-on:click="$flux.modal('create-inventory-record').show()" icon="plus"></flux:button>
+                </td>
+                <td></td>
+                <td class="p-3">
+                    Nuevo Registro
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                @foreach($warehouses as $warehouse)
+                    <td></td>
+                @endforeach
+                <td></td>
+            </x-table.tr>
         </x-table>
     </div>
 
     <x-pagination :paginator="$inventory_records" />
+
+    <livewire:inventories.edit.records.create :$inventory @created="$refresh" />
 </div>
