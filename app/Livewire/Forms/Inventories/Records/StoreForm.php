@@ -34,9 +34,9 @@ class StoreForm extends Form
         $warehouses_ids = $warehouses->implode('id', ',');
         $warehouse_count = $warehouses->count();
         return [
-            'product_id' => ['nullable', 'integer', 'min:1', new UniqueProduct($this->inventory)],
+            'product_id' => ['required', 'integer', 'min:1', new UniqueProduct($this->inventory)],
             'name' => 'required|string|min:1|max:500',
-            'price' => 'nullable|decimal:0,3|min:0|max:9999.999',
+            'price' => 'required|decimal:0,3|min:0|max:9999.999',
             'incoming_count' => 'required|integer|min:0|max:9999',
             'outgoing_count' => 'required|integer|min:0|max:9999',
             'warehouse_existences' => "required|array:{$warehouses_ids}|size:{$warehouse_count}",
@@ -81,10 +81,10 @@ class StoreForm extends Form
         $this->validate();
         $inventory_product = InventoryProduct::create([
             'name' => $this->name,
-            'price' => $this->price ?? 0,
+            'price' => $this->price,
             'incoming_count' => $this->incoming_count,
             'outgoing_count' => $this->outgoing_count,
-            'product_id' => $this->product_id === '' ? null : $this->product_id,
+            'product_id' => $this->product_id,
             'inventory_id' => $this->inventory->id
         ]);
         foreach($this->warehouse_existences as $warehouse_id => $count){

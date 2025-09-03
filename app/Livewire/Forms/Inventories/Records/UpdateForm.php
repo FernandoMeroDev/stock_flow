@@ -32,12 +32,12 @@ class UpdateForm extends Form
         $warehouses_ids = $warehouses->implode('id', ',');
         $warehouse_count = $warehouses->count();
         return [
-            'product_id' => ['nullable', 'integer', 'min:1', new UniqueProduct(
+            'product_id' => ['required', 'integer', 'min:1', new UniqueProduct(
                 $this->inventory_product->inventory,
                 ignore: $this->inventory_product->product_id
             )],
             'name' => 'required|string|min:1|max:500',
-            'price' => 'nullable|decimal:0,3|min:0|max:9999.999',
+            'price' => 'required|decimal:0,3|min:0|max:9999.999',
             'incoming_count' => 'required|integer|min:0|max:9999',
             'outgoing_count' => 'required|integer|min:0|max:9999',
             'warehouse_existences' => "required|array:{$warehouses_ids}|size:{$warehouse_count}",
@@ -64,8 +64,9 @@ class UpdateForm extends Form
         if($product = Product::find($inventory_product->product_id))
             $this->setProduct($product);
         else {
+            $this->product_id = $inventory_product->product_id;
             $this->name = $inventory_product->name;
-            $this->price = $inventory_product->price ?? 0;
+            $this->price = $inventory_product->price;
         }
         $this->incoming_count = $inventory_product->incoming_count;
         $this->outgoing_count = $inventory_product->outgoing_count;
@@ -86,10 +87,10 @@ class UpdateForm extends Form
         $this->validate();
         $this->inventory_product->update([
             'name' => $this->name,
-            'price' => $this->price ?? 0,
+            'price' => $this->price,
             'incoming_count' => $this->incoming_count,
             'outgoing_count' => $this->outgoing_count,
-            'product_id' => $this->product_id === '' ? null : $this->product_id,
+            'product_id' => $this->product_id,
         ]);
         foreach($this->warehouse_existences as $warehouse_id => $count){
             $this->inventory_product->stocks()->where(

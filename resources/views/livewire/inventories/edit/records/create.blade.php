@@ -33,11 +33,11 @@
             </div>
 
             <div class="space-y-2">
-                <flux:input wire:model="form.product_id" label="IDENTIFICADOR" type="number" min="1" step="1" />
+                <flux:input wire:model="form.product_id" label="IDENTIFICADOR" required type="number" min="1" step="1" />
 
                 <flux:input wire:model="form.name" label="Nombre" required maxlength="500" />
 
-                <flux:input wire:model="form.price" label="Precio" type="number" min="0" step="0.001" max="9999.999" />
+                <flux:input wire:model="form.price" label="Precio" required type="number" min="0" step="0.001" max="9999.999" />
 
                 <flux:input wire:model="form.incoming_count" label="Entradas" type="number" required  min="0" step="1" max="9999" />
 
