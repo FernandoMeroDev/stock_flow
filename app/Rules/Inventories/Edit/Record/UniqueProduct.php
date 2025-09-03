@@ -12,9 +12,12 @@ class UniqueProduct implements ValidationRule
 {
     private Inventory $inventory;
 
-    public function __construct(Inventory $inventory)
+    private ?int $ignore_id;
+
+    public function __construct(Inventory $inventory, ?int $ignore = null)
     {
         $this->inventory = $inventory;
+        $this->ignore_id = $ignore;
     }
 
     /**
@@ -30,7 +33,7 @@ class UniqueProduct implements ValidationRule
             )->where(
                 'product_id', $product->id
             )->first();
-            if($inventory_product)
+            if($inventory_product && $this->ignore_id !== $inventory_product->product_id)
                 $fail('El producto ya fue registrado.');
         }
     }

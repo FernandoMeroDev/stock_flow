@@ -47,9 +47,9 @@
             @forelse($inventory_records as $inventory_record)
                 <x-table.tr>
                     <td class="p-3">
-                        <a href="#">
-                            <flux:button icon="pencil"></flux:button>
-                        </a>
+                        <flux:button
+                            x-on:click="$dispatch('edit-inventory-record', { id: {{$inventory_record->id}} })" icon="pencil"
+                        ></flux:button>
                     </td>
                     <td class="p-3">
                         {{$inventory_record->product_id}}
@@ -106,4 +106,6 @@
     <x-pagination :paginator="$inventory_records" />
 
     <livewire:inventories.edit.records.create :$inventory @created="$refresh" />
+
+    <livewire:inventories.edit.records.edit @edited="$refresh" />
 </div>

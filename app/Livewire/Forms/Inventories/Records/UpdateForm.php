@@ -2,19 +2,17 @@
 
 namespace App\Livewire\Forms\Inventories\Records;
 
-use App\Models\Inventory;
 use App\Models\InventoryProduct;
 use App\Models\Product;
-use App\Models\Stock;
 use App\Models\Warehouse;
 use App\Rules\Inventories\Edit\Record\UniqueProduct;
 use Livewire\Attributes\Locked;
 use Livewire\Form;
 
-class StoreForm extends Form
+class UpdateForm extends Form
 {
     #[Locked]
-    public Inventory $inventory;
+    public InventoryProduct $inventory_product;
 
     public $product_id;
 
@@ -34,7 +32,10 @@ class StoreForm extends Form
         $warehouses_ids = $warehouses->implode('id', ',');
         $warehouse_count = $warehouses->count();
         return [
-            'product_id' => ['nullable', 'integer', 'min:1', new UniqueProduct($this->inventory)],
+            'product_id' => ['nullable', 'integer', 'min:1', new UniqueProduct(
+                $this->inventory_product->inventory,
+                ignore: $this->inventory_product->product_id
+            )],
             'name' => 'required|string|min:1|max:500',
             'price' => 'nullable|decimal:0,3|min:0|max:9999.999',
             'incoming_count' => 'required|integer|min:0|max:9999',
@@ -57,16 +58,20 @@ class StoreForm extends Form
         ];
     }
 
-    public function setInventory(Inventory $inventory)
+    public function setInventoryRecord(InventoryProduct $inventory_product)
     {
-        $this->inventory = $inventory;
-    }
-
-    public function setWarehouseExistences()
-    {
-        foreach(Warehouse::all() as $warehouse){
-            $this->warehouse_existences[$warehouse->id] = 0;
+        $this->inventory_product = $inventory_product;
+        if($product = Product::find($inventory_product->product_id))
+            $this->setProduct($product);
+        else {
+            $this->name = $inventory_product->name;
+            $this->price = $inventory_product->price ?? 0;
         }
+        $this->incoming_count = $inventory_product->incoming_count;
+        $this->outgoing_count = $inventory_product->outgoing_count;
+        foreach($inventory_product->stocks as $stock)
+            $this->warehouse_existences[$stock->warehouse_id] = $stock->count;
+        $this->resetValidation();
     }
 
     public function setProduct(Product $product)
@@ -76,25 +81,25 @@ class StoreForm extends Form
         $this->price = $product->price ?? 0;
     }
 
-    public function store()
+    public function update()
     {
         $this->validate();
-        $inventory_product = InventoryProduct::create([
+        $this->inventory_product->update([
             'name' => $this->name,
             'price' => $this->price ?? 0,
             'incoming_count' => $this->incoming_count,
             'outgoing_count' => $this->outgoing_count,
             'product_id' => $this->product_id === '' ? null : $this->product_id,
-            'inventory_id' => $this->inventory->id
         ]);
         foreach($this->warehouse_existences as $warehouse_id => $count){
-            Stock::create([
-                'count' => $count,
-                'warehouse_id' => $warehouse_id,
-                'inventory_product_id' => $inventory_product->id
-            ]);
-            $this->warehouse_existences[$warehouse_id] = 0;
+            $this->inventory_product->stocks()->where(
+                'warehouse_id', $warehouse_id
+            )->first()->update(['count' => $count]);
         }
-        $this->resetExcept(['inventory', 'warehouse_existences']);
+    }
+
+    public function delete()
+    {
+        $this->inventory_product->delete();
     }
 }

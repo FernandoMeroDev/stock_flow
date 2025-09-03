@@ -30,17 +30,17 @@ class Create extends Component
         ]);
     }
 
-    public function query()
+    private function query()
     {
         $products = null;
         if( ! $this->search )
             $products = Product::where('id', 0); // Empty Eloquent collection
         else
             $products = Product::where('name','LIKE', "%$this->search%")->orderBy('name');
-        $products = $products->paginate(3, pageName: 'records.products_page');
+        $products = $products->paginate(3, pageName: 'records.create.products_page');
 
         if($products->isEmpty() && $products->currentPage() !== 1)
-            $this->resetPage('records.products_page');
+            $this->resetPage('records.create.products_page');
 
         return $products;
     }
