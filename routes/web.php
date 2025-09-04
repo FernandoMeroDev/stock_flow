@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 })->name('home');
 
 Route::view('dashboard', 'dashboard')
@@ -29,11 +29,11 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
+    Route::redirect('configuraciones', 'configuraciones/perfil');
 
-    Route::get('settings/profile', Profile::class)->name('settings.profile');
-    Route::get('settings/password', Password::class)->name('settings.password');
-    Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
+    Route::get('configuraciones/perfil', Profile::class)->name('settings.profile');
+    Route::get('configuraciones/contraseña', Password::class)->name('settings.password');
+    Route::get('configuraciones/apariencia', Appearance::class)->name('settings.appearance');
 });
 
 require __DIR__.'/auth.php';

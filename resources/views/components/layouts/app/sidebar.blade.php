@@ -12,7 +12,28 @@
             </a>
 
             <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Platform')" class="grid">
+                <flux:navlist.group class="grid">
+                    <x-slot:heading>
+                        <div class="flex items-center">
+                            <span>
+                                Apariencia
+                            </span>
+                            <flux:dropdown x-data align="end">
+                                <flux:button variant="subtle" square class="group" aria-label="Preferred color scheme">
+                                    <flux:icon.sun x-show="$flux.appearance === 'light'" variant="mini" class="text-zinc-500 dark:text-white" />
+                                    <flux:icon.moon x-show="$flux.appearance === 'dark'" variant="mini" class="text-zinc-500 dark:text-white" />
+                                    <flux:icon.moon x-show="$flux.appearance === 'system' && $flux.dark" variant="mini" />
+                                    <flux:icon.sun x-show="$flux.appearance === 'system' && ! $flux.dark" variant="mini" />
+                                </flux:button>
+                        
+                                <flux:menu>
+                                    <flux:menu.item icon="sun" x-on:click="$flux.appearance = 'light'">Light</flux:menu.item>
+                                    <flux:menu.item icon="moon" x-on:click="$flux.appearance = 'dark'">Dark</flux:menu.item>
+                                    <flux:menu.item icon="computer-desktop" x-on:click="$flux.appearance = 'system'">System</flux:menu.item>
+                                </flux:menu>
+                            </flux:dropdown>
+                        </div>
+                    </x-slot:heading>
                     <flux:navlist.item :href="route('products.index')" :current="request()->routeIs('products.index')">
                         Productos
                     </flux:navlist.item>
@@ -33,34 +54,22 @@
 
             <flux:spacer />
 
-            <flux:navlist variant="outline">
-
-                <!-- Toggle Dark/Light Mode -->
-                <flux:navlist.item icon="folder-git-2" href="#">
-                    <flux:dropdown x-data align="end">
-                        <flux:button variant="subtle" square class="group" aria-label="Preferred color scheme">
-                            <flux:icon.sun x-show="$flux.appearance === 'light'" variant="mini" class="text-zinc-500 dark:text-white" />
-                            <flux:icon.moon x-show="$flux.appearance === 'dark'" variant="mini" class="text-zinc-500 dark:text-white" />
-                            <flux:icon.moon x-show="$flux.appearance === 'system' && $flux.dark" variant="mini" />
-                            <flux:icon.sun x-show="$flux.appearance === 'system' && ! $flux.dark" variant="mini" />
-                        </flux:button>
-                
-                        <flux:menu>
-                            <flux:menu.item icon="sun" x-on:click="$flux.appearance = 'light'">Light</flux:menu.item>
-                            <flux:menu.item icon="moon" x-on:click="$flux.appearance = 'dark'">Dark</flux:menu.item>
-                            <flux:menu.item icon="computer-desktop" x-on:click="$flux.appearance = 'system'">System</flux:menu.item>
-                        </flux:menu>
-                    </flux:dropdown>
-                </flux:navlist.item>
-
-                <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                {{ __('Repository') }}
-                </flux:navlist.item>
-
-                <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits" target="_blank">
-                {{ __('Documentation') }}
-                </flux:navlist.item>
-            </flux:navlist>
+            {{-- <div>
+                <flux:dropdown x-data align="end">
+                    <flux:button variant="subtle" square class="group" aria-label="Preferred color scheme">
+                        <flux:icon.sun x-show="$flux.appearance === 'light'" variant="mini" class="text-zinc-500 dark:text-white" />
+                        <flux:icon.moon x-show="$flux.appearance === 'dark'" variant="mini" class="text-zinc-500 dark:text-white" />
+                        <flux:icon.moon x-show="$flux.appearance === 'system' && $flux.dark" variant="mini" />
+                        <flux:icon.sun x-show="$flux.appearance === 'system' && ! $flux.dark" variant="mini" />
+                    </flux:button>
+            
+                    <flux:menu>
+                        <flux:menu.item icon="sun" x-on:click="$flux.appearance = 'light'">Light</flux:menu.item>
+                        <flux:menu.item icon="moon" x-on:click="$flux.appearance = 'dark'">Dark</flux:menu.item>
+                        <flux:menu.item icon="computer-desktop" x-on:click="$flux.appearance = 'system'">System</flux:menu.item>
+                    </flux:menu>
+                </flux:dropdown>
+            </div> --}}
 
             <!-- Desktop User Menu -->
             <flux:dropdown position="bottom" align="start">
