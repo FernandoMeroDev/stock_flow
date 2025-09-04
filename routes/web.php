@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Inventories\StoreController as InventoryStore;
 use App\Http\Controllers\Inventories\DownloadController as InventoryDownload;
+use App\Http\Controllers\Sales\DownloadController as SaleDownload;
 use App\Livewire\Products\Index as ProductIndex;
 use App\Livewire\Warehouses\Index as WarehouseIndex;
 use App\Livewire\Warehouses\Edit as WarehouseEdit;
@@ -12,6 +13,7 @@ use App\Livewire\Movements\Index as MovementIndex;
 use App\Livewire\Movements\Create\Main as MovementCreate;
 use App\Livewire\Inventories\Index as InventoryIndex;
 use App\Livewire\Inventories\Edit\Main as InventoryEdit;
+use App\Livewire\Sales\Index\Main as SaleIndex;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -57,3 +59,5 @@ Route::get('/inventarios', InventoryIndex::class)->name('inventories.index')->mi
 Route::post('/inventarios', InventoryStore::class)->name('inventories.store')->middleware(['auth']);
 Route::get('/inventarios/{inventory}/editar', InventoryEdit::class)->name('inventories.edit')->middleware(['auth']);
 Route::get('/inventarios/{inventory}/descargar', InventoryDownload::class)->name('inventories.download')->middleware(['auth']);
+Route::get('/ventas', SaleIndex::class)->name('sales.index')->middleware(['auth']);
+Route::get('/ventas/descargar', SaleDownload::class)->name('sales.download')->middleware(['auth']);

@@ -35,7 +35,7 @@ class Index extends Component
         ]);
     }
 
-    private function query()
+    protected function query()
     {
         $inventories = Inventory::select('*');
         if(isset($this->safe_filters['date_from']))

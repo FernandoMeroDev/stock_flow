@@ -40,7 +40,7 @@ class DownloadController extends Controller
 
     private function createFilename(): string
     {
-        return 'reporte-' . date('Y_m_d_His') . '.csv';
+        return 'reporte-inventario-' . date('Y_m_d_His') . '.csv';
     }
 
     private function writeHeaders(): string

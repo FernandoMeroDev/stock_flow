@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
     /**
      * Specifies if create fake data in the Data Base for testing
      */
-    private $create_fake_data = true;
+    private $create_fake_data = false;
 
     /**
      * Seed the application's database.

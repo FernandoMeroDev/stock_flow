@@ -12,6 +12,11 @@ use Illuminate\Database\Seeder;
 
 class InventorySeeder extends Seeder
 {
+    /**
+     * Create many inventories registers with no data
+     */
+    private bool $fake_inventories = false;
+
     private int $inventory_product_count = 50;
 
     /**
@@ -23,14 +28,15 @@ class InventorySeeder extends Seeder
         $warehouses = Warehouse::all();
         
         $inventory = Inventory::create(['saved_at' => now()]);
-        // // Use this if you want to test Inventory.Index with many registers
-        // for($i = 0; $i < 19; $i++){
-        //     $inventory = Inventory::create([
-        //         'saved_at' => now()
-        //             ->subSeconds(fake()->numberBetween(1, 60))
-        //             ->subDays(fake()->numberBetween(1, 15))
-        //     ]);
-        // }
+        if($this->fake_inventories){
+            for($i = 0; $i < 29; $i++){
+                $inventory = Inventory::create([
+                    'saved_at' => now()
+                        ->subSeconds(fake()->numberBetween(1, 60))
+                        ->subDays(fake()->numberBetween(1, 15))
+                ]);
+            }
+        }
         for($i = 0; $i < $this->inventory_product_count; $i++){
             $product = Product::find(
                 fake()->numberBetween(1, $products_max_id)
