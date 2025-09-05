@@ -123,4 +123,17 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Application Administrator Account
+    |--------------------------------------------------------------------------
+    |
+    | Set the admin email and password for init the application.
+    |
+    */
+    'admin' => [
+        'email' => env('APP_ADMIN_EMAIL', 'admin@stockflow.test'),
+        'password' => env('APP_ADMIN_PASSWORD', 'password'),
+    ],
+
 ];

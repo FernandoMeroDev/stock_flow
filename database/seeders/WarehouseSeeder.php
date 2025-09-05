@@ -7,51 +7,19 @@ use App\Models\Shelf;
 use App\Models\Shelves\Level;
 use App\Models\Shelves\LevelProduct;
 use App\Models\Warehouse;
+use ErrorException;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class WarehouseSeeder extends Seeder
 {
+    private bool $seed_fake_data = true;
+
+    private $warehouses_count = 5;
+
     private int $products_per_level = 5;
 
     private int $products_count;
-
-    private $warehouses = [
-        [
-            'name' => 'Depósito',
-            'shelves' => [
-                ['number' => 1, 'levels' => 5],
-                ['number' => 2, 'levels' => 5],
-                ['number' => 3, 'levels' => 4],
-                ['number' => 4, 'levels' => 3],
-                ['number' => 5, 'levels' => 4],
-                ['number' => 6, 'levels' => 4],
-                ['number' => 7, 'levels' => 5],
-                ['number' => 8, 'levels' => 4],
-                ['number' => 9, 'levels' => 4],
-                ['number' => 10, 'levels' => 4],
-                ['number' => 11, 'levels' => 4],
-                ['number' => 12, 'levels' => 4],
-                ['number' => 13, 'levels' => 1],
-                ['number' => 14, 'levels' => 1],
-                ['number' => 15, 'levels' => 1],
-                ['number' => 16, 'levels' => 4],
-            ]
-        ],
-        [
-            'name' => 'Licorería',
-            'shelves' => [
-                ['number' => 1, 'levels' => 3],
-                ['number' => 2, 'levels' => 4],
-                ['number' => 3, 'levels' => 4],
-                ['number' => 4, 'levels' => 4],
-                ['number' => 5, 'levels' => 4],
-                ['number' => 6, 'levels' => 4],
-                ['number' => 7, 'levels' => 1],
-                ['number' => 8, 'levels' => 1],
-            ]
-        ]
-    ];
 
     public function __construct()
     {
@@ -61,9 +29,22 @@ class WarehouseSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function __invoke(array $parameters = [])
     {
-        foreach($this->warehouses as $warehouse){
+        if(isset($parameters['seed_fake_data']))
+            $this->seed_fake_data = $parameters['seed_fake_data'];
+
+        if($this->seed_fake_data){
+            $this->seedFakeData();
+        } else {
+            $this->seedRealData();
+        }
+    }
+
+    private function seedFakeData(): void
+    {
+        $warehouses = Warehouse::factory($this->warehouses_count)->create();
+        foreach($warehouses as $warehouse){
             $warehouse_created = Warehouse::create(['name' => $warehouse['name']]);
             $shelves = $warehouse['shelves'];
             foreach($shelves as $shelf){
@@ -85,6 +66,43 @@ class WarehouseSeeder extends Seeder
                         ]);
                 }
             }
+        }
+    }
+
+    private function seedRealData(): void
+    {
+        $path = database_path('seeders/data/warehouses.csv');
+
+        try {
+            if(($handle = fopen($path, "r")) !== false){
+
+                $headers = fgetcsv($handle);
+
+                $warehouse = null;
+
+                while (($row = fgetcsv($handle)) !== false) {
+                    $data = array_combine($headers, $row);
+                    
+                    if(is_null($warehouse) || $warehouse->name != $data['nombre_bodega']){
+                        $warehouse = Warehouse::create(['name' => $data['nombre_bodega']]);
+                    }
+
+                    $shelf = Shelf::create([
+                        'number' => $data['numero_percha'],
+                        'warehouse_id' => $warehouse->id
+                    ]);
+                    for($i = 0; $i <= $data['numero_pisos']; $i++){
+                        Level::create([
+                            'number' => $i,
+                            'shelf_id' => $shelf->id
+                        ]);
+                    }
+                }
+
+                fclose($handle);
+            }
+        } catch(ErrorException $error) {
+            dump($error->getMessage());
         }
     }
 }

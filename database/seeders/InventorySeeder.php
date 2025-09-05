@@ -12,23 +12,31 @@ use Illuminate\Database\Seeder;
 
 class InventorySeeder extends Seeder
 {
+    private bool $seed_fake_data = true;
+
     /**
      * Create many inventories registers with no data
      */
-    private bool $fake_inventories = false;
+    private bool $empty_inventories = true;
 
     private int $inventory_product_count = 50;
 
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function __invoke(array $parameters = [])
     {
+        if(isset($parameters['seed_fake_data']))
+            $this->seed_fake_data = $parameters['seed_fake_data'];
+
+        if( ! $this->seed_fake_data )
+            return;
+
         $products_max_id = Product::all()->count();
         $warehouses = Warehouse::all();
         
         $inventory = Inventory::create(['saved_at' => now()]);
-        if($this->fake_inventories){
+        if($this->empty_inventories){
             for($i = 0; $i < 29; $i++){
                 $inventory = Inventory::create([
                     'saved_at' => now()

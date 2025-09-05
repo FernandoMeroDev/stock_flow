@@ -9,6 +9,8 @@ use Illuminate\Database\Seeder;
 
 class MovementSeeder extends Seeder
 {
+    private bool $seed_fake_data = true;
+
     /**
      * Count of Movements to create
      */
@@ -17,8 +19,14 @@ class MovementSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function __invoke(array $parameters = [])
     {
+        if(isset($parameters['seed_fake_data']))
+            $this->seed_fake_data = $parameters['seed_fake_data'];
+
+        if( ! $this->seed_fake_data )
+            return;
+
         $max_products_id = Product::all()->count();
         for($i = 0; $i < $this->count; $i++){
             Movement::create([

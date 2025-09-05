@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,30 +22,16 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Administrador',
+            'email' => config('app.admin.email'),
+            'password' => Hash::make(config('app.admin.password'))
         ]);
 
-        if($this->create_fake_data)
-            $this->seedFakeData();
-        else
-            $this->seedRealData();
-    }
-
-    private function seedFakeData(): void
-    {
         $this->call([
             ProductSeeder::class,
             WarehouseSeeder::class,
             MovementSeeder::class,
             InventorySeeder::class
-        ]);
-    }
-
-    private function seedRealData(): void
-    {
-        $this->call([
-            WarehouseSeeder::class
-        ]);
+        ], parameters: ['seed_fake_data' => $this->create_fake_data]);
     }
 }
