@@ -46,7 +46,26 @@
 
     <livewire:movements.edit @edited="$refresh" />
 
-    <flux:button wire:click="delete" variant="danger" class="mt-4">
-        Eliminar Todos
-    </flux:button>
+    <div class="mt-3">
+        <flux:modal.trigger name="wipe-movements">
+            <flux:button variant="danger">
+                Eliminar Todos
+            </flux:button>
+        </flux:modal.trigger>
+    </div>
+
+    <flux:modal name="wipe-movements" class="md:w-96">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">Eliminar Movimientos</flux:heading>
+                <flux:text class="mt-2">
+                    ¿Está seguro de <strong class="text-red-400">eliminar TODOS</strong> los movimeintos?
+                </flux:text>
+            </div>
+            <div class="flex justify-between">
+                <flux:button x-on:click="$flux.modal('wipe-movements').close()" variant="primary">Cancelar</flux:button>
+                <flux:button wire:click="delete" variant="danger">Eliminar</flux:button>
+            </div>
+        </div>
+    </flux:modal>
 </div>

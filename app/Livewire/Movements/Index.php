@@ -41,5 +41,6 @@ class Index extends Component
     {
         foreach(Movement::all() as $movement)
                 $movement->delete();
+        $this->modal('wipe-movements')->close();
     }
 }
