@@ -1,9 +1,10 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/livewire-starter-kit",
+    "name": "fernando-mero-dev/stock-flow",
     "type": "project",
-    "description": "The official Laravel starter kit for Livewire.",
+    "description": "Application for Stock management.",
     "keywords": [
+        "stock",
         "laravel",
         "framework"
     ],
