@@ -21,10 +21,10 @@
 
         @forelse ($form->products as $id => $product)
             <x-table.tr wire:key="product-{{$id}}" class="productRowDraggable" id="product-{{$id}}">
-                <td class="p-3">
-                    <div class="flex flex-wrap items-center sm:justify-between">
+                <td class="max-w-full p-3">
+                    <div class="grid gap-2 grid-cols-1 sm:grid-cols-2">
                         <button
-                            class="open-product-edit-button"
+                            class="inline-block break-words open-product-edit-button"
                             @if( ! $drag_and_drop_enabled)
                                 x-on:click.prevent="
                                     if( ! $event.target.disabled ) 
