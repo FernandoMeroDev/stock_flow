@@ -53,6 +53,7 @@ class DragAndDropSystem {
     addDragAndDropEvents(element) {
         element.addEventListener('dragstart', (event) => {
             this.draggedElement = element;
+            event.dataTransfer.setData("text/plain", element.id);
         });
 
         element.addEventListener('dragover', (event) => {
