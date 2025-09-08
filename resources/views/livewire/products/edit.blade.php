@@ -52,7 +52,8 @@
                                 <x-table.th>Cantidad</x-table.th>
                             </x-slot:thead>
 
-                            @forelse($form->product->warehouse_existences($warehouse) as $level_product)
+                            @php $warehouse_existences = $form->product->warehouse_existences($warehouse) @endphp
+                            @forelse($warehouse_existences as $level_product)
                                 <x-table.tr>
                                     <td class="text-lg p-3">
                                         {{$level_product->shelf_number}}
@@ -73,6 +74,15 @@
                                     <td></td>
                                 </x-table.tr>
                             @endforelse
+                            <x-table.tr>
+                                <td class="text-lg p-3">
+                                    Total:
+                                </td>
+                                <td></td>
+                                <td class="text-lg p-3">
+                                    {{$warehouse_existences->sum('count')}}
+                                </td>
+                            </x-table.tr>
                         </x-table>
                     </div>
                 @endforeach

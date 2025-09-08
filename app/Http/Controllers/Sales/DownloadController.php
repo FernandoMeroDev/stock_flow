@@ -216,6 +216,7 @@ class DownloadController extends Controller
     private function writeRows(string $content, Collection $table): string
     {
         // ------------- Row n
+        $totals_estimated_cash = [];
         foreach($table as $product_id => $row){
             $content .= $product_id; // Column 1
             foreach($row as $saved_at => $inventory){
@@ -232,15 +233,39 @@ class DownloadController extends Controller
                 $content .= ',' . $this->checkNullData($inventory->get('outgoing_count'));
                 $content .= ',' . $this->checkNullData($inventory->get('sales'));
                 $content .= ',' . $this->checkNullData($inventory->get('estimated_cash'));
+                $totals_estimated_cash[$saved_at] = $this->sumEstimatedCash(
+                    $totals_estimated_cash, $saved_at, $inventory->get('estimated_cash') ?? 0
+                );
                 $content .= ',';
             }
             $content .= "\n";
         }
+        // ------------- Last Row (Totals Estimated Cash)
+        foreach($row as $saved_at => $inventory){
+            $content .= ',';
+            $content .= ',';
+            for($i = 0; $i < $this->warehouses_count; $i++)
+                $content .= ',';
+            $content .= ',';
+            $content .= ',';
+            $content .= ',';
+            $content .= ',Total:';
+            $content .= ',' . $totals_estimated_cash[$saved_at];
+            $content .= ',';
+        }
+        $content .= "\n";
         return $content;
     }
 
     private function checkNullData($value): mixed
     {
         return is_null($value) ? 'SIN DATOS' : $value;
+    }
+
+    private function sumEstimatedCash(array $totals, string $saved_at, float $cash): float
+    {
+        return isset($totals[$saved_at]) 
+            ? $totals[$saved_at] + $cash
+            : $cash;
     }
 }
