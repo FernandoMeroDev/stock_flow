@@ -5,7 +5,6 @@ namespace App\Livewire\Forms\Products;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Locked;
-use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class UpdateForm extends Form
@@ -13,17 +12,40 @@ class UpdateForm extends Form
     #[Locked]
     public ?Product $product = null;
 
-    #[Validate('required|string|max:500', attribute: 'Nombre')]
     public $name;
 
-    #[Validate('nullable|mimes:jpg,png,webp|max:5120', attribute: 'Imagen')] // 5MB max
-    public $img = null;
-
-    #[Validate('nullable|string|max:50', attribute: 'Código')]
     public $barcode;
 
-    #[Validate('nullable|decimal:0,3|min:0.001|max:9999.999', attribute: 'Precio')]
+    public $img = null;
+
     public $price;
+
+    protected function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'min:1', 'max:500', 'not_regex:/,/'],
+            'barcode' => 'nullable|string|max:50',
+            'img' => 'nullable|image|max:10240', // 10MB max
+            'price' => 'nullable|decimal:0,3|min:0.001|max:9999.999',
+        ];
+    }
+
+    protected function validationAttributes(): array
+    {
+        return [
+            'name' => 'Nombre',
+            'barcode' => 'Código de Barras',
+            'img' => 'Imagen',
+            'price' => 'Precio',
+        ];
+    }
+
+    protected function messages(): array
+    {
+        return [
+            'name.not_regex' => 'El nombre no puede contener comas.'
+        ];
+    }
 
     public function setProduct(?Product $product)
     {

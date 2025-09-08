@@ -29,10 +29,10 @@
     <x-table class="w-full mb-3">
         @forelse ($products as $product)
             <x-table.tr>
-                <td class="p-3 max-w-60" x-on:click="$dispatch('edit-product', { product_id: {{$product->id}} })">
+                <td class="p-3 max-w-60 break-words" x-on:click="$dispatch('edit-product', { product_id: {{$product->id}} })">
                     {{$product->name}}
                 </td>
-                <td class="flex justify-end">
+                <td class="py-3 flex justify-end">
                     <flux:button icon="plus" x-on:click="$dispatch('add-product', {id: {{$product->id}}})" />
                 </td>
             </x-table.tr>

@@ -1,7 +1,7 @@
 @use('App\Models\Warehouse')
 
 <div>
-    <flux:modal name="edit-product" class="md:w-96">
+    <flux:modal name="edit-product" class="max-w-full md:max-w-auto md:w-96">
         <div class="space-y-6">
             <div>
                 <flux:heading size="lg">Editar Producto</flux:heading>
@@ -10,7 +10,7 @@
             <flux:input wire:model="form.name" label="Nombre" placeholder="Nombre del producto" />
             <flux:input wire:model="form.barcode" label="Código" placeholder="Código de barras" />
             <flux:input wire:model="form.price" label="Precio" placeholder="Precio" type="number" min="0.001" step="0.001" max="9999.999" />
-            <div class="flex justify-between items-end">
+            <div class="overflow-x-scroll flex justify-between items-end">
                 <flux:input type="file" wire:model="form.img" label="Imagen" />
                 <flux:button wire:click="clearImg" icon="trash" size="xs" />
             </div>

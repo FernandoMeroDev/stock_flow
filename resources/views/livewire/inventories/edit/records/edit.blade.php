@@ -13,10 +13,10 @@
                 <x-table class="w-full">
                     @forelse ($products as $product)
                         <x-table.tr>
-                            <td class="p-3 max-w-60">
+                            <td class="p-3 max-w-60 break-words">
                                 {{$product->name}}
                             </td>
-                            <td class="flex justify-end">
+                            <td class="py-3 flex justify-end">
                                 <flux:button icon="plus" wire:click="setProduct({{$product->id}})" />
                             </td>
                         </x-table.tr>
@@ -46,7 +46,7 @@
                 @foreach($form->inventory_product?->stocks ?? [] as $stock)
                     <flux:input 
                         wire:model="form.warehouse_existences.{{$stock->warehouse_id}}" 
-                        label="{{$stock->warehouse->name}}" required type="number" min="1" step="1" max="9999.999"
+                        label="{{$stock->warehouse->name}}" required type="number" min="0" step="1" max="9999.999"
                     />
                 @endforeach
             </div>

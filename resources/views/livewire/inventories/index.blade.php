@@ -1,6 +1,6 @@
 <div>
     <div class="space-y-6">
-        <div class="flex flex-wrap space-y-2 sm:space-y-0 space-x-0 sm:space-x-2">
+        <div class="grid gap-2 sm:grid-cols-2">
             <flux:input wire:model.live="date_from" label="Consultar desde:" type="date" />
             <flux:input wire:model.live="date_to" label="Consultar hasta:" type="date" />
         </div>

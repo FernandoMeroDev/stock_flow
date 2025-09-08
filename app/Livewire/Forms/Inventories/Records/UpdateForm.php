@@ -26,7 +26,7 @@ class UpdateForm extends Form
 
     public $warehouse_existences = [];
 
-    protected function rules()
+    protected function rules(): array
     {
         $warehouses = Warehouse::all();
         $warehouses_ids = $warehouses->implode('id', ',');
@@ -36,16 +36,16 @@ class UpdateForm extends Form
                 $this->inventory_product->inventory,
                 ignore: $this->inventory_product->product_id
             )],
-            'name' => 'required|string|min:1|max:500',
+            'name' => ['required', 'string', 'min:1', 'max:500', 'not_regex:/,/'],
             'price' => 'required|decimal:0,3|min:0|max:9999.999',
             'incoming_count' => 'required|integer|min:0|max:9999',
             'outgoing_count' => 'required|integer|min:0|max:9999',
             'warehouse_existences' => "required|array:{$warehouses_ids}|size:{$warehouse_count}",
-            'warehouse_existences.*' => 'required|integer|min:1|max:9999'
+            'warehouse_existences.*' => 'required|integer|min:0|max:9999'
         ];
     }
 
-    protected function validationAttributes() 
+    protected function validationAttributes(): array
     {
         return [
             'product_id' => 'IDENTIFICADOR',
@@ -55,6 +55,13 @@ class UpdateForm extends Form
             'outgoing_count' => 'Salidas',
             'warehouse_existences' => 'Bodegas',
             'warehouse_existences.*' => 'Bodega #:position'
+        ];
+    }
+
+    protected function messages(): array
+    {
+        return [
+            'name.not_regex' => 'El nombre no puede contener comas.'
         ];
     }
 
