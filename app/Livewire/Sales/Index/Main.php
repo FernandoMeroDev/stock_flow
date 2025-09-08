@@ -2,38 +2,62 @@
 
 namespace App\Livewire\Sales\Index;
 
-use App\Livewire\Inventories\Index as InventoryIndex;
-use App\Models\Inventory;
+use App\Models\Sale;
+use Livewire\Attributes\Locked;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
+use Livewire\WithoutUrlPagination;
+use Livewire\WithPagination;
 
-class Main extends InventoryIndex
+class Main extends Component
 {
-    public $inventories_ids = [];
+    use WithPagination, WithoutUrlPagination;
+
+    #[Validate('date|before:date_to', attribute: 'Fecha Inicial')]
+    public $date_from;
+
+    #[Validate('date|before_or_equal:today|after:date_from', attribute: 'Fecha Final')]
+    public $date_to;
+
+    #[Locked]
+    public $safe_filters = [];
+
+    public function mount()
+    {
+        $this->date_from = date('Y-m-d', mktime(hour: 12, day: -7));
+        $this->date_to = date('Y-m-d');
+        $this->safe_filters['date_from'] = $this->date_from;
+        $this->safe_filters['date_to'] = $this->date_to;
+    }
 
     public function render()
     {
-        $this->reset('inventories_ids');
         return view('livewire.sales.index.main', [
-            'inventories' => $this->query()
+            'sales' => $this->query()
         ]);
     }
-
-    public function downloadSales()
+    
+    private function query()
     {
-        $this->validate(rules: [
-            'inventories_ids' => 'required|array|min:2',
-            'inventories_ids.*' => 'required|boolean:strict'
-        ], attributes: [
-            'inventories_ids' => 'Inventarios',
-            'inventories_ids.*' => 'Inventario #:position'
-        ]);
-        $inventories = [];
-        foreach($this->inventories_ids as $id => $checked)
-            if($checked) $inventories[] = $id;
-        $this->reset('inventories_ids');
-        $inventories = Inventory::whereIn('id', $inventories)->orderBy('saved_at')->get();
-        $this->redirect(route('sales.download', [
-            'inventory_a' => $inventories->get(0),
-            'inventory_b' => $inventories->get(1),
-        ]));
+        $sales = Sale::selectRaw('DISTINCT DATE(saved_at) as date');
+        if(isset($this->safe_filters['date_from']))
+            $sales->where('saved_at', '>=', $this->safe_filters['date_from'] . ' 00:00:01');
+        if(isset($this->safe_filters['date_to']))
+            $sales->where('saved_at', '<=', $this->safe_filters['date_to'] . ' 23:59:59');
+        $sales = $sales->orderBy('date', 'desc')->paginate(15, pageName: 'sales_page');
+
+        if($sales->isEmpty() && $sales->currentPage() !== 1)
+            $this->resetPage('sales_page');
+
+        return $sales;
+    }
+
+    public function updated($property)
+    {
+        if($property == 'date_from' || $property == 'date_to'){
+            $this->validate();
+            $this->safe_filters['date_from'] = $this->date_from;
+            $this->safe_filters['date_to'] = $this->date_to;
+        }
     }
 }

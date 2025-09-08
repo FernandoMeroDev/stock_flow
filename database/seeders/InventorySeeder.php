@@ -35,13 +35,14 @@ class InventorySeeder extends Seeder
         $products_max_id = Product::all()->count();
         $warehouses = Warehouse::all();
         
-        $inventory = Inventory::create(['saved_at' => now()]);
+        $datetime = now();
+        $inventory = Inventory::create(['saved_at' => $datetime]);
         if($this->empty_inventories){
             for($i = 0; $i < 29; $i++){
-                $inventory = Inventory::create([
-                    'saved_at' => now()
-                        ->subSeconds(fake()->numberBetween(1, 60))
-                        ->subDays(fake()->numberBetween(1, 15))
+                $datetime = $datetime->subSeconds(fake()->numberBetween(1, 60))
+                    ->subDays(fake()->numberBetween(1, 15));
+                Inventory::create([
+                    'saved_at' => $datetime
                 ]);
             }
         }

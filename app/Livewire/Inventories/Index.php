@@ -26,6 +26,8 @@ class Index extends Component
     {
         $this->date_from = date('Y-m-d', mktime(hour: 12, day: -7));
         $this->date_to = date('Y-m-d');
+        $this->safe_filters['date_from'] = $this->date_from;
+        $this->safe_filters['date_to'] = $this->date_to;
     }
 
     public function render()
