@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Inventories\StoreController as InventoryStore;
 use App\Http\Controllers\Inventories\DownloadController as InventoryDownload;
+use App\Http\Controllers\Sales\CalcController as SaleCalc;
 use App\Http\Controllers\Sales\DownloadController as SaleDownload;
 use App\Livewire\Products\Index as ProductIndex;
 use App\Livewire\Warehouses\Index as WarehouseIndex;
@@ -60,4 +61,5 @@ Route::post('/inventarios', InventoryStore::class)->name('inventories.store')->m
 Route::get('/inventarios/{inventory}/editar', InventoryEdit::class)->name('inventories.edit')->middleware(['auth']);
 Route::get('/inventarios/{inventory}/descargar', InventoryDownload::class)->name('inventories.download')->middleware(['auth']);
 Route::get('/ventas', SaleIndex::class)->name('sales.index')->middleware(['auth']);
+Route::get('/ventas/calcular', SaleCalc::class)->name('sales.calc')->middleware(['auth']);
 Route::get('/ventas/descargar', SaleDownload::class)->name('sales.download')->middleware(['auth']);

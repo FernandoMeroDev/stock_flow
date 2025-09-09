@@ -31,7 +31,7 @@ class CalcSales extends InventoryIndex
             if($checked) $inventories[] = $id;
         $this->reset('inventories_ids');
         $inventories = Inventory::whereIn('id', $inventories)->orderBy('saved_at')->get();
-        $this->redirect(route('sales.download', [
+        $this->redirect(route('sales.calc', [
             'inventory_a' => $inventories->get(0),
             'inventory_b' => $inventories->get(1),
         ]));

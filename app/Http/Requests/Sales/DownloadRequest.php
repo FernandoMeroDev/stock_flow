@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Sales;
 
-use App\Rules\Sales\Download\SavedAfter;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DownloadRequest extends FormRequest
@@ -15,8 +14,16 @@ class DownloadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'inventory_a' => 'required|integer|exists:inventories,id',
-            'inventory_b' => ['required', 'integer', 'exists:inventories,id', new SavedAfter('inventory_a')]
+            'download_date_from' => 'required|before:download_date_to',
+            'download_date_to' => 'required|before_or_equal:today|after:download_date_from'
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'download_date_from' => 'Fecha Desde',
+            'download_date_to' => 'Fecha Hasta'
         ];
     }
 }

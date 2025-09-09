@@ -1,7 +1,7 @@
 <div>
     <livewire:sales.index.calc-sales />
 
-    <form action="#" class="space-y-4">
+    <form action="{{route('sales.download')}}" class="space-y-4">
         <div class="mt-10">
             <flux:heading size="lg">Consultar Ventas</flux:heading>
             <flux:text class="mt-2">Seleccione dos días para descargar un reporte de las ventas en ellos.</flux:text>
