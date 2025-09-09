@@ -15,6 +15,7 @@ use App\Livewire\Movements\Create\Main as MovementCreate;
 use App\Livewire\Inventories\Index as InventoryIndex;
 use App\Livewire\Inventories\Edit\Main as InventoryEdit;
 use App\Livewire\Sales\Index\Main as SaleIndex;
+use App\Livewire\Sales\Day\Main as SaleDay;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -63,3 +64,4 @@ Route::get('/inventarios/{inventory}/descargar', InventoryDownload::class)->name
 Route::get('/ventas', SaleIndex::class)->name('sales.index')->middleware(['auth']);
 Route::get('/ventas/calcular', SaleCalc::class)->name('sales.calc')->middleware(['auth']);
 Route::get('/ventas/descargar', SaleDownload::class)->name('sales.download')->middleware(['auth']);
+Route::get('/ventas/{warehouse}/dia', SaleDay::class)->name('sales.day')->middleware(['auth']);

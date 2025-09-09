@@ -1,11 +1,14 @@
-<div class="mt-3 space-y-2">
+<div>
     <flux:input 
-        label="Buscar Productos"
-        x-data="searchByBarcodeInput" name="barcode" x-on:change="addProduct($event)" placeholder="Codigo de barras..." 
+        placeholder="Codigo de barras..." class="mb-1"
+        x-data="searchByBarcodeInput" name="barcode" x-on:change="addProduct($event)"
     />
 
     <div class="flex">
-        <flux:input wire:model.live.debounce.250ms="search" id="searchByNameInput" placeholder="Buscar por nombre..." class="mr-2" />
+        <flux:input 
+            placeholder="Buscar por nombre..."
+            wire:model.live.debounce.250ms="search" id="searchByNameInput" class="mr-1" 
+        />
         <flux:modal.trigger name="create-product">
             <flux:button>Nuevo</flux:button>
         </flux:modal.trigger>
@@ -26,9 +29,11 @@
     </script>
     @endscript
 
-    <x-products.search.table :$products />
+    @if($products->isNotEmpty())
+        <x-products.search.table :$products />
 
-    <x-pagination :paginator="$products" />
+        <x-pagination :paginator="$products" />
+    @endif
 
     <livewire:products.edit @edited="$js.refreshWithParent" />
 

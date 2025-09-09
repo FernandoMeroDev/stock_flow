@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Product;
 use App\Models\Sale;
+use App\Models\Warehouse;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -25,21 +26,25 @@ class SaleSeeder extends Seeder
             return;
         
         $max_products_id = Product::all()->count();
+        $max_warehouses_id = Warehouse::all()->count();
         $datetime = now();
         for($i = 0; $i < $this->sales_count; $i++){
             $product = Product::find(
                 fake()->numberBetween(1, $max_products_id)
             );
             $count = fake()->numberBetween(1, 10);
+            $cash = ($count * $product->price) == 0
+                ? 0.01
+                : $count * $product->price;
             Sale::create([
                 'name' => $product->name,
                 'count' => $count,
-                'cash' => $count * $product->price,
+                'cash' => $cash,
                 'saved_at' => $datetime,
                 'product_id' => $product->id,
+                'warehouse_id' => fake()->numberBetween(1, $max_warehouses_id),
             ]);
-            $datetime = $datetime->subSeconds(fake()->numberBetween(1, 60))
-                ->subDays(fake()->numberBetween(1, 15));
+            $datetime = $datetime->subMinutes(fake()->numberBetween(1, 60));
         }
     }
 }

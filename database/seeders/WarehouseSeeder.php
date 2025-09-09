@@ -15,7 +15,7 @@ class WarehouseSeeder extends Seeder
 {
     private bool $seed_fake_data = true;
 
-    private $warehouses_count = 5;
+    private $warehouses_count = 2;
 
     private int $products_per_level = 5;
 

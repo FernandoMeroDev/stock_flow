@@ -43,7 +43,7 @@
         @endforelse
     </x-table>
 
-    <livewire:movements.create.search-products />
+    <livewire:products.search />
 
     <div class="flex justify-between mt-4">
         <flux:button type="submit" variant="primary">Guardar</flux:button>
