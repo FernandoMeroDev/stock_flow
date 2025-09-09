@@ -44,6 +44,12 @@
         Total: ${{$total_cash}}
     </div>
 
+    @error('barcode')
+    <p class="text-red-400 font-bold mb-1">
+        {{$message}}
+    </p>
+    @enderror
+
     <div class="mb-3">
         <livewire:products.search @add-product="addProduct($event.detail.id, 'id')" />
     </div>

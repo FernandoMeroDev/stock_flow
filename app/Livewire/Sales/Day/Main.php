@@ -161,6 +161,9 @@ class Main extends Component
             } else {
                 $this->createSale($product, $present);
             }
+        } else {
+            if($type === 'barcode')
+                $this->addError('barcode', 'El Código del producto no esta registrado.');
         }
     }
 
