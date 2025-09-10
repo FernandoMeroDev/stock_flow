@@ -28,11 +28,7 @@
                 @endforeach
             </div>
 
-            <div class="flex justify-between">
-                <flux:button type="submit" variant="primary">Guardar cambios</flux:button>
-
-                <flux:button wire:click.prevent="delete" variant="danger">Eliminar</flux:button>
-            </div>
+            <x-edit.save-and-delete-buttons />
         </form>
     </flux:modal>
 </div>
