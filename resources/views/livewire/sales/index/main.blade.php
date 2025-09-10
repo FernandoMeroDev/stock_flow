@@ -4,7 +4,7 @@
 
     <hr class="my-10" />
 
-    <form action="{{route('sales.download')}}" class="space-y-4">
+    <form action="{{route('sales.download-multiple')}}" class="space-y-4">
         <div>
             <flux:heading size="lg">Consultar Ventas</flux:heading>
             <flux:text class="mt-2">Seleccione dos días para descargar un reporte de las ventas en ellos.</flux:text>
@@ -16,6 +16,7 @@
                     <flux:radio value="{{$warehouse->id}}" label="{{$warehouse->name}}" />
                 @endforeach
             </flux:radio.group>
+            <input hidden name="warehouse_id" value="{{$warehouse_id}}" />
         </div>
 
         <div class="grid gap-2 sm:grid-cols-2">
@@ -52,10 +53,13 @@
                             ])}}">
                                 <flux:button icon="pencil"></flux:button>
                             </a>
-                            <a href="#">
+                            <a href="{{route('sales.download-single', [
+                                'warehouse_id' => $warehouse_id,
+                                'date' => date('Y-m-d', strtotime($sale->date))
+                            ])}}">
                                 <flux:button icon="arrow-down-tray"></flux:button>
                             </a>
-                            <span>{{$sale->date}} 00:00:00</span>
+                            <span>{{$sale->date}}</span>
                         </div>
                     </td>
                 </x-table.tr>

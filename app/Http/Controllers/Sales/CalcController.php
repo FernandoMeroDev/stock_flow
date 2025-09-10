@@ -163,7 +163,7 @@ class CalcController extends Controller
 
     private function createFilename(): string
     {
-        return 'reporte-ventas-' . date('Y_m_d_His') . '.csv';
+        return 'reporte-ventas-calculadas-' . date('Y_m_d_His') . '.csv';
     }
 
     private function buildCSV(Collection $table): string

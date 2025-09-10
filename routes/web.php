@@ -63,5 +63,6 @@ Route::get('/inventarios/{inventory}/editar', InventoryEdit::class)->name('inven
 Route::get('/inventarios/{inventory}/descargar', InventoryDownload::class)->name('inventories.download')->middleware(['auth']);
 Route::get('/ventas', SaleIndex::class)->name('sales.index')->middleware(['auth']);
 Route::get('/ventas/calcular', SaleCalc::class)->name('sales.calc')->middleware(['auth']);
-Route::get('/ventas/descargar', SaleDownload::class)->name('sales.download')->middleware(['auth']);
+Route::get('/ventas/descargar', [SaleDownload::class, 'single'])->name('sales.download-single')->middleware(['auth']);
+Route::get('/ventas/descargar/multiples', [SaleDownload::class, 'multiple'])->name('sales.download-multiple')->middleware(['auth']);
 Route::get('/ventas/{warehouse}/dia', SaleDay::class)->name('sales.day')->middleware(['auth']);
