@@ -1,5 +1,7 @@
 <x-layouts.app :title="__('Dashboard')">
     <div class="flex flex-wrap justify-center sm:justify-evenly">
+        <x-dashboard.sales warehouse-name="Depósito" />
+        <x-dashboard.sales warehouse-name="Licorería" />
         <x-dashboard.card :href="route('products.index')">
             <x-svg.box class="w-32 h-32" />
             <p class="text-center">Productos</p>
