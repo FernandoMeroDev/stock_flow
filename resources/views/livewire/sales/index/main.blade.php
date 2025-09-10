@@ -2,8 +2,10 @@
 <div>
     <livewire:sales.index.calc-sales />
 
+    <hr class="my-10" />
+
     <form action="{{route('sales.download')}}" class="space-y-4">
-        <div class="mt-10">
+        <div>
             <flux:heading size="lg">Consultar Ventas</flux:heading>
             <flux:text class="mt-2">Seleccione dos días para descargar un reporte de las ventas en ellos.</flux:text>
         </div>
@@ -25,9 +27,7 @@
             <x-slot:thead>
                 <x-table.th text-align="center">Desde</x-table.th>
                 <x-table.th text-align="center">Hasta</x-table.th>
-                <x-table.th>
-                    Fecha
-                </x-table.th>
+                <x-table.th>Fecha</x-table.th>
             </x-slot:thead>
 
             @forelse($sales as $key => $sale)
@@ -35,13 +35,13 @@
                     <td class="p-3 text-center">
                         <input 
                             type="radio" name="download_date_from" class="w-5 h-5"
-                            value="{{$sale->date}}" id="download-date-from-{{$key}}" 
+                            value="{{$sale->date}}"
                         />
                     </td>
                     <td class="p-3 text-center">
                         <input 
                             type="radio" name="download_date_to" class="w-5 h-5"
-                            value="{{$sale->date}}" id="download-date-to-{{$key}}"
+                            value="{{$sale->date}}"
                         />
                     </td>
                     <td class="p-3">
@@ -55,12 +55,14 @@
                             <a href="#">
                                 <flux:button icon="arrow-down-tray"></flux:button>
                             </a>
-                            <span>{{$sale->date}}</span>
+                            <span>{{$sale->date}} 00:00:00</span>
                         </div>
                     </td>
                 </x-table.tr>
             @empty
                 <x-table.tr>
+                    <td></td>
+                    <td></td>
                     <td class="p-3">
                         No hay resultados...
                     </td>
