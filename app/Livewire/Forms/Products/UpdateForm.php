@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Locked;
 use Livewire\Form;
+use Illuminate\Validation\Rule;
 
 class UpdateForm extends Form
 {
@@ -24,7 +25,7 @@ class UpdateForm extends Form
     {
         return [
             'name' => ['required', 'string', 'min:1', 'max:500', 'not_regex:/,/'],
-            'barcode' => 'nullable|string|max:50',
+            'barcode' => ['nullable', 'string', 'max:50', Rule::unique('products', 'barcode')->ignore($this->product->id)],
             'img' => 'nullable|image|max:10240', // 10MB max
             'price' => 'nullable|decimal:0,3|min:0.001|max:9999.999',
         ];

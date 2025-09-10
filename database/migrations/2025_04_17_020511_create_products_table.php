@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 500);
             $table->string('img', 255)->nullable();
-            $table->string('barcode', 50)->nullable(); 
+            $table->string('barcode', 50)->nullable()->unique(); 
             $table->decimal('price', 7, 3)->nullable();
             $table->timestamps();
         });

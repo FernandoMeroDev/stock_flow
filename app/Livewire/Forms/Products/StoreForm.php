@@ -19,7 +19,7 @@ class StoreForm extends Form
     {
         return [
             'name' => ['required', 'string', 'min:1', 'max:500', 'not_regex:/,/'],
-            'barcode' => 'nullable|string|max:50',
+            'barcode' => 'nullable|string|max:50|unique:products,barcode',
             'img' => 'nullable|image|max:10240', // 10MB max
             'price' => 'nullable|decimal:0,3|min:0.001|max:9999.999',
         ];
