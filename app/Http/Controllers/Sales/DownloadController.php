@@ -63,6 +63,8 @@ class DownloadController extends Controller
 
         $content .= $this->writeSales($validated['date']);
 
+        $content = Str::replace('{{sum_totals_cash}}', $this->sum_totals_cash, $content);
+
         // Return Download
         return response($content, status: 200, headers: [
             'Content-Type' => 'text/csv',

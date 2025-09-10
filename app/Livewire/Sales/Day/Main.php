@@ -5,6 +5,7 @@ namespace App\Livewire\Sales\Day;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\Warehouse;
+use DateMalformedStringException;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -133,8 +134,12 @@ class Main extends Component
 
     private function formatDate(): string
     {
-        $formatter = new IntlDateFormatter('es_ES', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
-        return ucfirst($formatter->format(new DateTime($this->date)));
+        try {
+            $formatter = new IntlDateFormatter('es_ES', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
+            return ucfirst($formatter->format(new DateTime($this->date)));
+        } catch(DateMalformedStringException $error) {
+            return date('Y-m-d');
+        }
     }
 
     public function addProduct($primary_key, $type)
