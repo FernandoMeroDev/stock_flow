@@ -47,7 +47,8 @@ class StoreForm extends Form
         $this->validate();
         if( ! $this->price  )
             $this->price = null;
-        $inputs = $this->except('img');
+        $inputs = $this->except(['img']);
+        $inputs['barcode'] = $inputs['barcode'] === '' ? null : $inputs['barcode'];
         $inputs['img'] = $this->saveImg();
         Product::create($inputs);
         $this->reset();

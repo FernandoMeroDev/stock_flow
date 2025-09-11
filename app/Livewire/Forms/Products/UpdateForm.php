@@ -67,6 +67,7 @@ class UpdateForm extends Form
             if( ! $this->price  )
                 $this->price = null;
             $inputs = $this->except(['img', 'img_path']);
+            $inputs['barcode'] = $inputs['barcode'] === '' ? null : $inputs['barcode'];
             $inputs['img'] = $this->saveImg();
             $this->product->update($inputs);
             $this->reset();
