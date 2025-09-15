@@ -1,4 +1,4 @@
-<form wire:submit="store" class="space-y-2">
+<div class="space-y-2">
     <flux:heading>Crear Movimientos</flux:heading>
 
     <x-table class="w-full mb-3">
@@ -46,7 +46,7 @@
     <livewire:products.search />
 
     <div class="flex justify-between mt-4">
-        <flux:button type="submit" variant="primary">Guardar</flux:button>
+        <flux:button wire:click="store" variant="primary">Guardar</flux:button>
     </div>
 
     @error('*')
@@ -54,4 +54,4 @@
             {{$message}}
         </p>
     @enderror
-</form>
+    </div>

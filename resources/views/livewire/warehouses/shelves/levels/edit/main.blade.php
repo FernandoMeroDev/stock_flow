@@ -68,11 +68,9 @@
     @vite(['resources/js/components/warehouses/shelves/levels/edit/drag-and-drop.js'])
     @endassets
 
-    <livewire:products.edit @edited="refresh_products" />
-
     <div class="flex justify-between mt-4">
         <flux:button 
-            type="submit" 
+            :type="'submit'" 
             variant="primary" 
         >Guardar cambios</flux:button>
         @if( ! $drag_and_drop_enabled)
@@ -89,6 +87,8 @@
     </p>
     @enderror
 </form>
+
+<livewire:products.edit @edited="refresh_products" />
 
 <livewire:warehouses.shelves.levels.edit.shelf-navigation :level="$form->level" />
 

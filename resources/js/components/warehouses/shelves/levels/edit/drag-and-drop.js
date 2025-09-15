@@ -1,4 +1,7 @@
 class DragAndDropSystem {
+    // Activate Drag and Drop button
+    button = null;
+
     // Main Livewire component
     $wire = null;
 
@@ -18,12 +21,6 @@ class DragAndDropSystem {
     };
 
     enableDragAndDrop() {
-        // Find the Main Livewire component
-        this.$wire = Livewire.getByName('warehouses.shelves.levels.edit.main')[0];
-
-        // Unable Livewire actions to prevent livewire conflicts with HTML drag and drop API
-        this.disableActions();
-
         // Get Product Rows (TR elements)
         let productRows = document.querySelectorAll('.productRowDraggable');
 
@@ -31,6 +28,14 @@ class DragAndDropSystem {
             alert('Debe haber al menos dos productos');
             return;
         }
+
+        this.button.disabled = true;
+
+        // Find the Main Livewire component
+        this.$wire = Livewire.getByName('warehouses.shelves.levels.edit.main')[0];
+
+        // Unable Livewire actions to prevent livewire conflicts with HTML drag and drop API
+        this.disableActions();
 
         // Add Event listeners and insert spacers to Product Rows
         productRows.forEach((row) => {
@@ -142,10 +147,9 @@ class DragAndDropSystem {
     }
 
     init() {
-        let button = document.getElementById('ableDragAndDropButton');
-        button.addEventListener('click', (event) => {
+        this.button = document.getElementById('ableDragAndDropButton');
+        this.button.addEventListener('click', (event) => {
             event.preventDefault();
-            event.target.disabled = true;
             this.enableDragAndDrop();
         });
     }
