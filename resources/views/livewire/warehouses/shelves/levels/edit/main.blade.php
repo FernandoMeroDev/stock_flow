@@ -19,13 +19,12 @@
             </x-table.th>
         </x-slot:thead>
 
-        @php $i = 1 @endphp
         @forelse ($form->products as $id => $product)
             <x-table.tr wire:key="product-{{$id}}" class="productRowDraggable" id="product-{{$id}}">
                 <td class="max-w-full p-3">
                     <div class="grid gap-2 grid-cols-1 sm:grid-cols-2">
                         <button
-                            class="inline-block break-words open-product-edit-button"
+                            class="text-left inline-block break-words open-product-edit-button"
                             @if( ! $drag_and_drop_enabled)
                                 x-on:click.prevent="
                                     if( ! $event.target.disabled ) 
@@ -33,7 +32,7 @@
                                 "
                             @else x-on:click.prevent @endif
                         >
-                            <span class="text-red-500">{{$i}}</span> .- {{$product['name']}}
+                            {{$product['name']}}
                         </button>
                         <div class="flex mt-1 w-full justify-between sm:w-auto">
                             <flux:input
@@ -54,7 +53,6 @@
                     </div>
                 </td>
             </x-table.tr>
-            @php $i++ @endphp
         @empty
             <x-table.tr>
                 <td class="p-3">
