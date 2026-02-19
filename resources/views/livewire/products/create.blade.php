@@ -1,3 +1,4 @@
+@use('App\Models\CashBox')
 <div>
     <flux:modal name="create-product" class="max-w-full md:max-w-auto md:w-96">
         <div class="space-y-6">
@@ -29,6 +30,15 @@
                     <img src="{{ $form->img->temporaryUrl() }}" alt="Previsualización de la Imagen">
                 </x-products.img>
             @endif
+
+            <flux:select label="Caja" wire:model="form.cash_box_id">
+                <flux:select.option value="">Elije una caja...</flux:select.option>
+                @foreach(CashBox::all() as $cashBox)
+                    <flux:select.option value="{{$cashBox->id}}">
+                        {{$cashBox->name}}
+                    </flux:select.option>
+                @endforeach
+            </flux:select>
 
             <div class="flex">
                 <flux:spacer />

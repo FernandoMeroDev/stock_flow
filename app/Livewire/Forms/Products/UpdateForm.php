@@ -21,6 +21,8 @@ class UpdateForm extends Form
 
     public $price;
 
+    public $cash_box_id;
+
     protected function rules(): array
     {
         return [
@@ -28,6 +30,7 @@ class UpdateForm extends Form
             'barcode' => ['nullable', 'string', 'max:50', Rule::unique('products', 'barcode')->ignore($this->product?->id ?? 0)],
             'img' => 'nullable|image|max:10240', // 10MB max
             'price' => 'nullable|decimal:0,3|min:0.001|max:9999.999',
+            'cash_box_id' => 'required|exists:cash_boxes,id'
         ];
     }
 
@@ -57,6 +60,7 @@ class UpdateForm extends Form
             if(is_null($this->product->img))
                 $this->img = null;
             $this->price = $product->price;
+            $this->cash_box_id = $product->cash_box_id;
         }
     }
 

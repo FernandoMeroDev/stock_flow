@@ -16,6 +16,8 @@ class StoreForm extends Form
 
     public $price;
 
+    public $cash_box;
+
     protected function rules(): array
     {
         return [
@@ -23,6 +25,7 @@ class StoreForm extends Form
             'barcode' => 'nullable|string|max:50|unique:products,barcode',
             'img' => 'nullable|image|max:10240', // 10MB max
             'price' => 'required|decimal:0,2|min:0.01|max:9999.99',
+            'cash_box_id' => 'required|exists:cash_boxes,id'
         ];
     }
 
@@ -33,6 +36,7 @@ class StoreForm extends Form
             'barcode' => 'Código de Barras',
             'img' => 'Imagen',
             'price' => 'Precio',
+            'cash_box_id' => 'Caja'
         ];
     }
 

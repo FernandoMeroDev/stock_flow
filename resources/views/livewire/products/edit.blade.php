@@ -1,4 +1,5 @@
 @use('App\Models\Warehouse')
+@use('App\Models\CashBox')
 
 <div>
     <flux:modal name="edit-product" class="space-y-6 max-w-full md:max-w-auto md:w-96">
@@ -30,6 +31,15 @@
                     <img id="productEditModalImg" src="{{route('products.img', $form->product->img)}}" alt="Imagen del Producto">
                 </x-products.img>
             @endif
+
+            <flux:select label="Caja" wire:model="form.cash_box_id">
+                <flux:select.option value="">Elije una caja...</flux:select.option>
+                @foreach(CashBox::all() as $cashBox)
+                    <flux:select.option value="{{$cashBox->id}}">
+                        {{$cashBox->name}}
+                    </flux:select.option>
+                @endforeach
+            </flux:select>
 
             <x-edit.save-and-delete-buttons />
         </form>
