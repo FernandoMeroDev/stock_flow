@@ -33,15 +33,16 @@ class SaleSeeder extends Seeder
                 fake()->numberBetween(1, $max_products_id)
             );
             $count = fake()->numberBetween(1, 10);
-            $cash = ($count * $product->price) == 0
+            $presentation = $product->presentations->get(0);
+            $cash = ($count * $presentation->price) == 0
                 ? 0.01
-                : $count * $product->price;
+                : $count * $presentation->price;
             Sale::create([
-                'name' => $product->name,
+                'name' => $presentation->complete_name(),
                 'count' => $count,
                 'cash' => $cash,
                 'saved_at' => $datetime,
-                'product_id' => $product->id,
+                'presentation_id' => $presentation->id,
                 'warehouse_id' => fake()->numberBetween(1, $max_warehouses_id),
             ]);
             $datetime = $datetime->subMinutes(fake()->numberBetween(1, 60));

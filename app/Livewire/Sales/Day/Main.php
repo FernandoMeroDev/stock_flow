@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Sales\Day;
 
+use App\Models\Presentation;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\Warehouse;
@@ -142,29 +143,30 @@ class Main extends Component
         }
     }
 
-    public function addProduct($primary_key, $type)
+    public function addPresentation($primary_key, $type)
     {
         $this->validate();
         $product = null;
         switch($type){
             case 'id':
-                $product = Product::find($primary_key); break;
+                $presentation = Presentation::find($primary_key); break;
             case 'barcode':
-                $product = Product::where('barcode', $primary_key)->first(); break;
+                $product = Product::where('barcode', $primary_key)->first();
+                $presentation = $product?->presentations->get(0); break;
         }
-        if($product){
+        if($presentation){
             $present =  $this->date == date('Y-m-d');
             $last_sale = $this->querySales()->orderBy('saved_at', 'desc');
             if( ! $present ) $last_sale->orderBy('id', 'desc');
             $last_sale = $last_sale->first();
-            if($last_sale?->product_id == $product->id){
+            if($last_sale?->presentation_id == $presentation->id){
                 // Update Sale adding
                 $last_sale->update([
                     'count' => $last_sale->count + 1,
-                    'cash' => $last_sale->cash + ($product->price)
+                    'cash' => $last_sale->cash + ($presentation->price)
                 ]);
             } else {
-                $this->createSale($product, $present);
+                $this->createSale($presentation, $present);
             }
         } else {
             if($type === 'barcode')
@@ -172,15 +174,15 @@ class Main extends Component
         }
     }
 
-    private function createSale(Product $product, bool $present): void
+    private function createSale(Presentation $presentation, bool $present): void
     {
         $datetime =  $present ? now() : date('Y-m-d', strtotime($this->date)) . ' 23:59:59';
         Sale::create([
-            'name' => $product->name,
+            'name' => $presentation->complete_name(),
             'count' => 1,
-            'cash' => $product->price ?? 0.01,
+            'cash' => $presentation->price,
             'saved_at' => $datetime,
-            'product_id' => $product->id,
+            'presentation_id' => $presentation->id,
             'warehouse_id' => $this->warehouse_id
         ]);
     }

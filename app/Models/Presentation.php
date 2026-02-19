@@ -22,6 +22,11 @@ class Presentation extends Model
 
     public $timestamps = false;
 
+    public function complete_name(): string
+    {
+        return $this->name . ' ' . $this->product->name;
+    }
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);

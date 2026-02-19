@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('cash', 7, 2);
             $table->dateTime('saved_at');
 
-            $table->bigInteger('product_id', unsigned: true);
+            $table->bigInteger('presentation_id', unsigned: true);
             $table->foreignId('warehouse_id')->constrained('warehouses')->onDelete('cascade');
         });
     }
