@@ -8,12 +8,18 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'img', 'barcode', 'price'];
+    protected $fillable = ['name', 'img', 'barcode'];
+
+    public function presentations(): HasMany
+    {
+        return $this->hasMany(Presentation::class);
+    }
 
     public function levels(): BelongsToMany
     {

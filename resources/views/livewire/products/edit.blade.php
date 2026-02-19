@@ -1,7 +1,7 @@
 @use('App\Models\Warehouse')
 
 <div>
-    <flux:modal name="edit-product" class="max-w-full md:max-w-auto md:w-96">
+    <flux:modal name="edit-product" class="space-y-6 max-w-full md:max-w-auto md:w-96">
         <form wire:submit="update" class="space-y-6">
             <div>
                 <flux:heading size="lg">Editar Producto</flux:heading>
@@ -32,54 +32,64 @@
             @endif
 
             <x-edit.save-and-delete-buttons />
+        </form>
 
-            @if($form->product)
-                @foreach(Warehouse::all() as $warehouse)
-                    <div>
-                        <flux:heading size="lg">{{$warehouse->name}}</flux:heading>
-                        <x-table class="w-full mb-3">
-                            <x-slot:thead>
-                                <x-table.th>Percha</x-table.th>
-                                <x-table.th>Piso</x-table.th>
-                                <x-table.th>Cantidad</x-table.th>
-                            </x-slot:thead>
+        @if($form->product)
 
-                            @php $warehouse_existences = $form->product->warehouse_existences($warehouse) @endphp
-                            @forelse($warehouse_existences as $level_product)
-                                <x-table.tr>
-                                    <td class="text-lg p-3">
-                                        {{$level_product->shelf_number}}
-                                    </td>
-                                    <td class="text-lg p-3">
-                                        {{$level_product->level_number}}
-                                    </td>
-                                    <td class="text-lg p-3">
-                                        {{$level_product->count}}
-                                    </td>
-                                </x-table.tr>
-                            @empty
-                                <x-table.tr>
-                                    <td class="p-3">
-                                        No hay resultados...
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                </x-table.tr>
-                            @endforelse
+            <hr>
+
+            <livewire:products.presentations.index :product="$form->product" />
+
+            <hr>
+
+            <h2 class="font-bold text-xl">
+                Inventario
+            </h2>
+            @foreach(Warehouse::all() as $warehouse)
+                <div>
+                    <flux:heading size="lg">{{$warehouse->name}}</flux:heading>
+                    <x-table class="w-full mb-3">
+                        <x-slot:thead>
+                            <x-table.th>Percha</x-table.th>
+                            <x-table.th>Piso</x-table.th>
+                            <x-table.th>Cantidad</x-table.th>
+                        </x-slot:thead>
+
+                        @php $warehouse_existences = $form->product->warehouse_existences($warehouse) @endphp
+                        @forelse($warehouse_existences as $level_product)
                             <x-table.tr>
                                 <td class="text-lg p-3">
-                                    Total:
+                                    {{$level_product->shelf_number}}
                                 </td>
-                                <td></td>
                                 <td class="text-lg p-3">
-                                    {{$warehouse_existences->sum('count')}}
+                                    {{$level_product->level_number}}
+                                </td>
+                                <td class="text-lg p-3">
+                                    {{$level_product->count}}
                                 </td>
                             </x-table.tr>
-                        </x-table>
-                    </div>
-                @endforeach
-            @endif
-        </form>
+                        @empty
+                            <x-table.tr>
+                                <td class="p-3">
+                                    No hay resultados...
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </x-table.tr>
+                        @endforelse
+                        <x-table.tr>
+                            <td class="text-lg p-3">
+                                Total:
+                            </td>
+                            <td></td>
+                            <td class="text-lg p-3">
+                                {{$warehouse_existences->sum('count')}}
+                            </td>
+                        </x-table.tr>
+                    </x-table>
+                </div>
+            @endforeach
+        @endif
     </flux:modal>
     @script
     <script>

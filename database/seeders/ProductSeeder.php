@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Presentation;
 use App\Models\Product;
 use ErrorException;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,9 +20,18 @@ class ProductSeeder extends Seeder
         if(isset($parameters['seed_fake_data']))
             $this->seed_fake_data = $parameters['seed_fake_data'];
 
-        if($this->seed_fake_data)
-            Product::factory(20)->create();
-        else
+        if($this->seed_fake_data){
+            for($i = 0; $i < 20; $i++){
+                $product = Product::factory()->create();
+                Presentation::create([
+                    'name' => '1 Unidad',
+                    'units' => 1,
+                    'base' => true,
+                    'price' => fake()->randomFloat(2, 0.01, 999.99),
+                    'product_id' => $product->id
+                ]);
+            }
+        } else
             $this->seedRealData();
     }
 
@@ -36,9 +46,15 @@ class ProductSeeder extends Seeder
 
                 while (($row = fgetcsv($handle)) !== false) {
                     $data = array_combine($headers, $row);
-                    Product::create([
+                    $product = Product::create([
                         'name' => $data['nombre'],
-                        'price' => $data['precio'] == '' ? null : $data['precio'],
+                    ]);
+                    Presentation::create([
+                        'name' => '1 Unidad',
+                        'units' => 1,
+                        'base' => true,
+                        'price' => $data['precio'],
+                        'product_id' => $product->id
                     ]);
                 }
 

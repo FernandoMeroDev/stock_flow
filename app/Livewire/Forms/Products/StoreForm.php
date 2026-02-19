@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms\Products;
 
+use App\Models\Presentation;
 use App\Models\Product;
 use Livewire\Form;
 
@@ -21,7 +22,7 @@ class StoreForm extends Form
             'name' => ['required', 'string', 'min:1', 'max:500', 'not_regex:/,/'],
             'barcode' => 'nullable|string|max:50|unique:products,barcode',
             'img' => 'nullable|image|max:10240', // 10MB max
-            'price' => 'nullable|decimal:0,3|min:0.001|max:9999.999',
+            'price' => 'required|decimal:0,2|min:0.01|max:9999.99',
         ];
     }
 
@@ -50,7 +51,14 @@ class StoreForm extends Form
         $inputs = $this->except(['img']);
         $inputs['barcode'] = $inputs['barcode'] === '' ? null : $inputs['barcode'];
         $inputs['img'] = $this->saveImg();
-        Product::create($inputs);
+        $product = Product::create($inputs);
+        Presentation::create([
+            'name' => '1 Unidad',
+            'units' => 1,
+            'price' => $inputs['price'],
+            'base' => true,
+            'product_id' => $product->id
+        ]);
         $this->reset();
     }
 
