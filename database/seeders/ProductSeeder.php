@@ -67,7 +67,7 @@ class ProductSeeder extends Seeder
                         'cash_box_id' => $cash_boxes[fake()->numberBetween(0, count($cash_boxes) - 1)]->id
                     ]);
                     Presentation::create([
-                        'name' => '1 Unidad',
+                        'name' => '1 UNIDAD',
                         'units' => 1,
                         'base' => true,
                         'price' => $data['precio'],

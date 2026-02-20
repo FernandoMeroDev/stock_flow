@@ -85,29 +85,61 @@ class DownloadController extends Controller
 
     private function writeSales(string $day): string
     {
-        $sales = Sale::whereBetween('saved_at', [
+        $sales = Sale::join('presentations', 'presentations.id', '=', 'sales.presentation_id')
+        ->join(
+            'products', 'products.id', '=', 'presentations.product_id'
+        )->join(
+            'cash_boxes', 'products.cash_box_id', '=', 'cash_boxes.id'
+        )->select(
+            'sales.*',
+            'cash_boxes.name as cash_box_name'
+        )->whereBetween('saved_at', [
             $day . ' 00:00:01',
             $day . ' 23:59:59',
-        ])->where('warehouse_id', $this->warehouse->id)->get();
+        ])->where('warehouse_id', $this->warehouse->id)
+        ->orderBy('cash_box_name')
+        ->orderBy('saved_at')
+        ->get();
 
-        $content = $this->formatDate($day) . ",,\n";
+        $content = '---------------' . $this->formatDate($day) . ",,\n";
+
+        $total_cash = 0;
 
         if($sales->count() < 1){
             $content .= "No hay ventas en este día,,\n";
             $content .= ",,\n";
+            $content .= ",,\n";
             return $content;
+        } else {
+            $current_cash_box = $sales->get(0)->cash_box_name;
+            $cash_box_total = 0;
+
+            $content .= "$current_cash_box,,\n";
+            $content .= "Productos,Cantidad,Efectivo\n";
+
+            foreach($sales as $sale){
+
+                if($current_cash_box != $sale->cash_box_name){
+                    $content .= ",Total:,{$cash_box_total}\n";
+                    $current_cash_box = $sale->cash_box_name;
+                    $cash_box_total = 0;
+                    $content .= ",,\n";
+                    $content .= "$current_cash_box,,\n";
+                    $content .= "Productos,Cantidad,Efectivo\n";
+                }
+
+                $content .= $sale->name . ',';
+                $content .= $sale->count . ',';
+                $content .= $sale->cash . "\n";
+                $cash_box_total += $sale->cash;
+                $total_cash += $sale->cash;
+            }
+            $content .= ",Total:,{$cash_box_total}\n";
         }
 
-        $content .= "Productos,Cantidad,Efectivo\n";
-
-        $total_cash = 0;
-        foreach($sales as $sale){
-            $content .= $sale->name . ',';
-            $content .= $sale->count . ',';
-            $content .= $sale->cash . "\n";
-            $total_cash += $sale->cash;
-        }
-        $content .= ",Total:,{$total_cash}\n";
+        $content .= ",,\n";
+        $content .= ",Total del día:,{$total_cash}\n";
+        $content .= ",,\n";
         $content .= ",,\n";
 
         $this->sum_totals_cash += $total_cash;
