@@ -26,7 +26,7 @@ class Search extends Component
                     "CONCAT(presentations.name, ' ', products.name) LIKE ?", ["%$this->search%"]
                 )->orderBy('name');
         }
-        return $query->paginate(3, pageName: 'presentations_page');
+        return $query->paginate(10, pageName: 'presentations_page');
     }
 
     public function render()
