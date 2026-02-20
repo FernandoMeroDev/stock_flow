@@ -19,8 +19,6 @@ class UpdateForm extends Form
 
     public $img = null;
 
-    public $price;
-
     public $cash_box_id;
 
     protected function rules(): array
@@ -29,7 +27,6 @@ class UpdateForm extends Form
             'name' => ['required', 'string', 'min:1', 'max:500', 'not_regex:/,/'],
             'barcode' => ['nullable', 'string', 'max:50', Rule::unique('products', 'barcode')->ignore($this->product?->id ?? 0)],
             'img' => 'nullable|image|max:10240', // 10MB max
-            'price' => 'nullable|decimal:0,3|min:0.001|max:9999.999',
             'cash_box_id' => 'required|exists:cash_boxes,id'
         ];
     }
@@ -40,7 +37,6 @@ class UpdateForm extends Form
             'name' => 'Nombre',
             'barcode' => 'Código de Barras',
             'img' => 'Imagen',
-            'price' => 'Precio',
         ];
     }
 
@@ -59,7 +55,6 @@ class UpdateForm extends Form
             $this->barcode = $product->barcode;
             if(is_null($this->product->img))
                 $this->img = null;
-            $this->price = $product->price;
             $this->cash_box_id = $product->cash_box_id;
         }
     }
@@ -68,8 +63,6 @@ class UpdateForm extends Form
     {
         $this->validate();
         if($this->product){
-            if( ! $this->price  )
-                $this->price = null;
             $inputs = $this->except(['img', 'img_path']);
             $inputs['barcode'] = $inputs['barcode'] === '' ? null : $inputs['barcode'];
             $inputs['img'] = $this->saveImg();

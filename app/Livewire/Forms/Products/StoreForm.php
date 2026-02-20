@@ -16,7 +16,7 @@ class StoreForm extends Form
 
     public $price;
 
-    public $cash_box;
+    public $cash_box_id;
 
     protected function rules(): array
     {
