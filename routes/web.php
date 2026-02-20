@@ -4,6 +4,7 @@ use App\Http\Controllers\Inventories\StoreController as InventoryStore;
 use App\Http\Controllers\Inventories\DownloadController as InventoryDownload;
 use App\Http\Controllers\Sales\CalcController as SaleCalc;
 use App\Http\Controllers\Sales\DownloadController as SaleDownload;
+use App\Livewire\CashBoxes\Index as CashBoxIndex;
 use App\Livewire\Products\Index as ProductIndex;
 use App\Livewire\Warehouses\Index as WarehouseIndex;
 use App\Livewire\Warehouses\Edit as WarehouseEdit;
@@ -66,3 +67,5 @@ Route::get('/ventas/calcular', SaleCalc::class)->name('sales.calc')->middleware(
 Route::get('/ventas/descargar', [SaleDownload::class, 'single'])->name('sales.download-single')->middleware(['auth']);
 Route::get('/ventas/descargar/multiples', [SaleDownload::class, 'multiple'])->name('sales.download-multiple')->middleware(['auth']);
 Route::get('/ventas/{warehouse}/dia', SaleDay::class)->name('sales.day')->middleware(['auth']);
+
+Route::get('/cajas', CashBoxIndex::class)->name('cash-boxes.index')->middleware(['auth']);

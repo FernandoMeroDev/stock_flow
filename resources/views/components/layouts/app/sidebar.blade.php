@@ -49,6 +49,9 @@
                     <flux:navlist.item :href="route('warehouses.index')" :current="request()->routeIs('warehouses.index')">
                         Bodegas
                     </flux:navlist.item>
+                    <flux:navlist.item :href="route('cash-boxes.index')" :current="request()->routeIs('cash-boxes.index')">
+                        Cajas
+                    </flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
