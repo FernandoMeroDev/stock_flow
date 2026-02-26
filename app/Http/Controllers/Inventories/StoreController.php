@@ -27,7 +27,7 @@ class StoreController extends Controller
             $movements = $this->findMovements($product);
             $inventoryProduct = InventoryProduct::create([
                 'name' => $product->name,
-                'price' => $product->prosentations->get(0)->price ?? 0,
+                'price' => $product->presentations->get(0)?->price ?? 0,
                 'incoming_count' => $movements['incoming_count'],
                 'outgoing_count' => $movements['outgoing_count'],
                 'product_id' => $product->id,
