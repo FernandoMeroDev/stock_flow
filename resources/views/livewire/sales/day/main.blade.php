@@ -76,7 +76,7 @@
 
         @forelse($sales as $key => $sale)
             <x-table.tr wire:key="{{$sale['id']}}">
-                <td class="{{$sale['paid_in_cash'] ? 'bg-yellow-600 dark:bg-yellow-800' : ''}}">
+                <td class="{{ ! $sale['paid_in_cash'] ? 'bg-yellow-600 dark:bg-yellow-800' : ''}}">
                     <div class="grid gap-1 sm:grid-cols-2">
                         <span class="pl-1 flex items-center">
                             {{$sale['name']}}
