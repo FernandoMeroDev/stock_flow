@@ -7,7 +7,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Sale extends Model
 {
-    protected $fillable = ['name', 'count', 'cash', 'saved_at', 'presentation_id', 'warehouse_id'];
+    protected $fillable = [
+        'name',
+        'count',
+        'cash',
+        'paid_in_cash',
+        'saved_at',
+        'presentation_id',
+        'warehouse_id',
+    ];
 
     public $timestamps = false;
 

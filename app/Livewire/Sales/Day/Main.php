@@ -32,9 +32,12 @@ class Main extends Component
 
     private LengthAwarePaginator $paginator;
 
+    public $paid_in_cash = true;
+
     protected function rules(): array
     {
         return [
+            'paid_in_cash' => 'required|boolean',
             'date' => 'required|date_format:Y-m-d|before_or_equal:today',
             'sales.*.id' => 'required|exists:sales,id',
             'sales.*.count' => 'required|integer|min:0|max:9999',
@@ -89,6 +92,7 @@ class Main extends Component
                 'name' => $sale->name,
                 'count' => $sale->count,
                 'cash' => $sale->cash,
+                'paid_in_cash' => $sale->paid_in_cash
             ];
         }
     }
@@ -181,6 +185,7 @@ class Main extends Component
             'name' => $presentation->complete_name(),
             'count' => 1,
             'cash' => $presentation->price,
+            'paid_in_cash' => $this->paid_in_cash,
             'saved_at' => $datetime,
             'presentation_id' => $presentation->id,
             'warehouse_id' => $this->warehouse_id

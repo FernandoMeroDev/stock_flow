@@ -128,11 +128,15 @@ class DownloadController extends Controller
                     $content .= "Productos,Cantidad,Efectivo\n";
                 }
 
+                if( ! $sale->paid_in_cash )
+                    $content .= '[TRANSFERENCIA] ';
                 $content .= $sale->name . ',';
                 $content .= $sale->count . ',';
                 $content .= $sale->cash . "\n";
-                $cash_box_total += $sale->cash;
-                $total_cash += $sale->cash;
+                if($sale->paid_in_cash){
+                    $cash_box_total += $sale->cash;
+                    $total_cash += $sale->cash;
+                }
             }
             $content .= ",Total:,{$cash_box_total}\n";
         }

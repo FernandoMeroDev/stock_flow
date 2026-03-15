@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 500);
             $table->integer('count', unsigned: true);
             $table->decimal('cash', 7, 2);
+            $table->boolean('paid_in_cash')->default(true);
             $table->dateTime('saved_at');
 
             $table->bigInteger('presentation_id', unsigned: true);

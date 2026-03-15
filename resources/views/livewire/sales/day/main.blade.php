@@ -44,13 +44,26 @@
         Total: ${{$total_cash}}
     </div>
 
-    @error('barcode')
-    <p class="text-red-400 font-bold mb-1">
-        {{$message}}
-    </p>
-    @enderror
+    <div class="mb-3">
+        <flux:label>
+            Tipo de Pago
+        </flux:label>
+        <flux:select wire:model.live="paid_in_cash">
+            <flux:select.option value="1">Efectivo</flux:select.option>
+            <flux:select.option value="0">Transferencia</flux:select.option>
+        </flux:select>
+    </div>
 
     <div class="mb-3">
+        <flux:label>
+            Buscar Productos
+        </flux:label>
+        @error('barcode')
+        <p class="text-red-400 font-bold mb-1">
+            {{$message}}
+        </p>
+        @enderror
+
         <livewire:products.presentations.search @add-presentation="addPresentation($event.detail.id, 'id')" />
     </div>
 
@@ -62,8 +75,8 @@
         </x-slot:thead>
 
         @forelse($sales as $key => $sale)
-            <x-table.tr>
-                <td>
+            <x-table.tr wire:key="{{$sale['id']}}">
+                <td class="{{$sale['paid_in_cash'] ? 'bg-yellow-600 dark:bg-yellow-800' : ''}}">
                     <div class="grid gap-1 sm:grid-cols-2">
                         <span class="pl-1 flex items-center">
                             {{$sale['name']}}
