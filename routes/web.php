@@ -60,7 +60,7 @@ Route::get('/inventarios/{inventory}/descargar', InventoryDownload::class)->name
 Route::get('/ventas', SaleIndex::class)->name('sales.index')->middleware(['auth']);
 Route::get('/ventas/descargar', [SaleDownload::class, 'single'])->name('sales.download-single')->middleware(['auth']);
 Route::get('/ventas/descargar/multiples', [SaleDownload::class, 'multiple'])->name('sales.download-multiple')->middleware(['auth']);
-Route::get('/ventas/{warehouse}/dia', SaleDay::class)->name('sales.day')->middleware(['auth']);
+Route::livewire('/ventas/{warehouse}/dia', SaleDay::class)->name('sales.day')->middleware(['auth']);
 
 Route::get('/cajas', CashBoxIndex::class)->name('cash-boxes.index')->middleware(['auth']);
 
