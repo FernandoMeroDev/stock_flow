@@ -6,10 +6,6 @@
             <x-svg.box class="w-32 h-32" />
             <p class="text-center">Productos</p>
         </x-dashboard.card>
-        <x-dashboard.card :href="route('movements.index')">
-            <x-svg.movement class="w-32 h-32" />
-            <p class="text-center">Movimientos</p>
-        </x-dashboard.card>
         <x-dashboard.card :href="route('sales.index')">
             <x-svg.report-linechart class="w-32 h-32" />
             <p class="text-center">Ventas</p>
