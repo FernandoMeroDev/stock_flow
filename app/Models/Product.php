@@ -26,11 +26,6 @@ class Product extends Model
         return $this->belongsToMany(Level::class)->withPivot(['count']);
     }
 
-    public function movements(): HasMany
-    {
-        return $this->hasMany(Movement::class);
-    }
-
     public function warehouse_existences(Warehouse $warehouse): Collection
     {
         $level_product = LevelProduct::getTableName();

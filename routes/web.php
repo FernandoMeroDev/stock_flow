@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\DevController;
 use App\Http\Controllers\Inventories\StoreController as InventoryStore;
 use App\Http\Controllers\Inventories\DownloadController as InventoryDownload;
-use App\Http\Controllers\Sales\CalcController as SaleCalc;
 use App\Http\Controllers\Sales\DownloadController as SaleDownload;
 use App\Livewire\CashBoxes\Index as CashBoxIndex;
 use App\Livewire\Products\Index as ProductIndex;
@@ -11,8 +11,6 @@ use App\Livewire\Warehouses\Edit as WarehouseEdit;
 use App\Livewire\Warehouses\Shelves\Create as ShelfCreate;
 use App\Livewire\Warehouses\Shelves\Edit as ShelfEdit;
 use App\Livewire\Warehouses\Shelves\Levels\Edit\Main as LevelEdit;
-use App\Livewire\Movements\Index as MovementIndex;
-use App\Livewire\Movements\Create\Main as MovementCreate;
 use App\Livewire\Inventories\Index as InventoryIndex;
 use App\Livewire\Inventories\Edit\Main as InventoryEdit;
 use App\Livewire\Sales\Index\Main as SaleIndex;
@@ -55,17 +53,15 @@ Route::get('/perchas/{shelf}/editar', ShelfEdit::class)->name('shelves.edit')->m
 
 Route::get('/niveles/{level}/editar', LevelEdit::class)->name('levels.edit')->middleware(['auth']);
 
-Route::get('/movimientos', MovementIndex::class)->name('movements.index')->middleware(['auth']);
-Route::get('/movimientos/crear', MovementCreate::class)->name('movements.create')->middleware(['auth']);
-
 Route::get('/inventarios', InventoryIndex::class)->name('inventories.index')->middleware(['auth']);
 Route::post('/inventarios', InventoryStore::class)->name('inventories.store')->middleware(['auth']);
 Route::get('/inventarios/{inventory}/editar', InventoryEdit::class)->name('inventories.edit')->middleware(['auth']);
 Route::get('/inventarios/{inventory}/descargar', InventoryDownload::class)->name('inventories.download')->middleware(['auth']);
 Route::get('/ventas', SaleIndex::class)->name('sales.index')->middleware(['auth']);
-Route::get('/ventas/calcular', SaleCalc::class)->name('sales.calc')->middleware(['auth']);
 Route::get('/ventas/descargar', [SaleDownload::class, 'single'])->name('sales.download-single')->middleware(['auth']);
 Route::get('/ventas/descargar/multiples', [SaleDownload::class, 'multiple'])->name('sales.download-multiple')->middleware(['auth']);
 Route::get('/ventas/{warehouse}/dia', SaleDay::class)->name('sales.day')->middleware(['auth']);
 
 Route::get('/cajas', CashBoxIndex::class)->name('cash-boxes.index')->middleware(['auth']);
+
+// Route::get('/dev-operation', DevController::class)->middleware(['auth']);

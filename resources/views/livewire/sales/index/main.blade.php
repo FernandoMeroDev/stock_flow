@@ -1,9 +1,5 @@
 @use('App\Models\Warehouse')
 <div>
-    <livewire:sales.index.calc-sales />
-
-    <hr class="my-10" />
-
     <form action="{{route('sales.download-multiple')}}" class="space-y-4">
         <div>
             <flux:heading size="lg">Consultar Ventas</flux:heading>

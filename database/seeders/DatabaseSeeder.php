@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ProductSeeder::class,
             WarehouseSeeder::class,
-            MovementSeeder::class,
             InventorySeeder::class,
             SaleSeeder::class,
         ], parameters: ['seed_fake_data' => $this->create_fake_data]);

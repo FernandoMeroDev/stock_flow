@@ -37,9 +37,6 @@
                     <flux:navlist.item :href="route('products.index')" :current="request()->routeIs('products.index')">
                         Productos
                     </flux:navlist.item>
-                    <flux:navlist.item :href="route('movements.index')" :current="request()->routeIs('movements.index')">
-                        Movimientos
-                    </flux:navlist.item>
                     <flux:navlist.item :href="route('sales.index')" :current="request()->routeIs('sales.index')">
                         Ventas
                     </flux:navlist.item>

@@ -2,107 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CashBox;
 use App\Models\Presentation;
 use App\Models\Product;
 use ErrorException;
-use Illuminate\Http\Request;
 
 class DevController extends Controller
 {
+    private array $products = [
+        ['AGUARDIENTE CRISTAL 750ML', 10.00],
+        ['AGUARDIENTE CRISTAL 375ML', 5.25],
+        ['AGUARDIENTE CRISTAL PEACH 700ML', 4.50],
+        ['AGUARDIENTE CRISTAL SECO 750ML', 4.50],
+        ['AGUARDIENTE TRÓPICO SECO 750ML', 9.00],
+        ['AGUARDIENTE TRÓPICO SECO 375ML', 4.50],
+        ['AGUARDIENTE ANTIOQUEÑO 1000ML', 17.00],
+        ['AGUARDIENTE ANTIOQUEÑO 750ML', 15.00],
+        ['AGUARDIENTE ANTIOQUEÑO ETIQUETA BLANCA 700ML', 9.00],
+        ['AGUARDIENTE ANTIOQUEÑO ETIQUETA VERDE 700ML', 14.00],
+        ['AGUARDIENTE NORTEÑO ESPECIAL 700ML', 7.50],
+        ['AGUARDIENTE NORTEÑO ESPECIAL 375ML', 4.00],
+        ['AGUARDIENTE NORTEÑO BLACK 700ML', 8.50],
+        ['AGUARDIENTE NORTEÑO GOLD 700ML', 8.50],
+        ['AGUARDIENTE CAÑA MANABITA ETIQUETA ROJA 375ML', 4.25],
+        ['AGUARDIENTE CAÑA MANABITA ETIQUETA NEGRA 375ML', 4.00],
+        ['AGUARDIENTE CAÑA MANABITA ETIQUETA ROJA 700ML', 8.50],
+        ['AGUARDIENTE CAÑA MANABITA ETIQUETA ROJA TUBO 700ML', 12.00],
+        ['AGUARDIENTE CAÑA MANABITA ETIQUETA NEGRA TUBO 700ML', 12.00],
+        ['AGUARDIENTE CAÑA MANABITA ETIQUETA NEGRA 700ML', 7.50],
+        ['AGUARDIENTE CAÑA MANABITA ROSE 700ML', 6.00],
+        ['AGUARDIENTE CAÑA MANABITA VERDE 700ML', 6.00],
+    ];
+
     public function __invoke()
     {
-        // $this->create_whiskys();
-        // $this->create_beers();
-    }
-
-    public function create_beers()
-    {
-        $path = database_path('seeders/data/beers.csv');
-
-        try {
-            if(($handle = fopen($path, "r")) !== false){
-
-                $headers = fgetcsv($handle);
-
-                while (($row = fgetcsv($handle)) !== false) {
-                    $data = array_combine($headers, $row);
-                    $name = $data["\xEF\xBB\xBFProducto"];
-                    $product = Product::create(['name' => $name, 'cash_box_id' => 2]);
-                    $presentations_data = [
-                        'UNIDAD' => 1,
-                        'SIX PAC' => 6,
-                        'LATAX6' => 6,
-                        'LATAX12' => 12,
-                        'CHANCLETAX6' => 6,
-                        'CHANCLETAX12' => 12,
-                        'CAJAX24' => 24,
-                    ];
-                    foreach($presentations_data as $name => $units){
-                        $price = floatval($data[$name]);
-                        if($price > 0){
-                            Presentation::create([
-                                'name' => $name,
-                                'units' => intval($units),
-                                'price' => $price,
-                                'base' => $name == 'UNIDAD',
-                                'product_id' => $product->id
-                            ]);
-                        }
-                    }
-                }
-
-                fclose($handle);
-            }
-        } catch(ErrorException $error) {
-            dump($error->getMessage());
+        foreach($this->products as $data){
+            $name = $data[0]; $price = $data[1];
+            $product = Product::create([
+                'name' => $name,
+                'cash_box_id' => CashBox::where('name', 'LIKE', '%Whiskys%')->first()->id
+            ]);
+            Presentation::create([
+                'name' => 'UNIDAD',
+                'units' => 1,
+                'price' => $price,
+                'base' => true,
+                'product_id' => $product->id
+            ]);
         }
-    }
 
-    public function create_whiskys()
-    {
-        $path = database_path('seeders/data/whiskys.csv');
-
-        try {
-            if(($handle = fopen($path, "r")) !== false){
-
-                $headers = fgetcsv($handle);
-
-                while (($row = fgetcsv($handle)) !== false) {
-                    $data = array_combine($headers, $row);
-                    $name = $data["\xEF\xBB\xBFProducto"];
-                    $product = Product::where('name', $name)->first();
-                    $price = floatval($data['UNIDAD']);
-                    if($price > 0)
-                        $product->presentations->get(0)->update(['price' => $price]);
-                    $presentations_data = [
-                        'X2UNIDADES' => 2,
-                        'CAJAX12' => 12,
-                        'CAJAX24' => 24,
-                        'PROMOX1' => 1,
-                        'PROMOX2' => 2,
-                        'PROMOX3' => 3,
-                        'PROMOX4' => 4,
-                        'PROMOX6' => 6,
-                        'PROMOX12' => 12,
-                    ];
-                    foreach($presentations_data as $name => $units){
-                        $price = floatval($data[$name]);
-                        if($price > 0){
-                            Presentation::create([
-                                'name' => $name,
-                                'units' => intval($units),
-                                'price' => $name == 'X2UNIDADES' ? $price * intval($units) : $price,
-                                'base' => false,
-                                'product_id' => $product->id
-                            ]);
-                        }
-                    }
-                }
-
-                fclose($handle);
-            }
-        } catch(ErrorException $error) {
-            dump($error->getMessage());
-        }
+        echo 'Operacion Ejecutada!';
     }
 }
