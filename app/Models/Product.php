@@ -14,7 +14,7 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'img', 'barcode', 'cash_box_id'];
+    protected $fillable = ['name', 'img', 'barcode', 'cash_box_id', 'created_by', 'deleted_by'];
 
     public function presentations(): HasMany
     {

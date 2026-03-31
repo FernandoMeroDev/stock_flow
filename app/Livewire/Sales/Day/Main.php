@@ -10,6 +10,7 @@ use DateMalformedStringException;
 use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use IntlDateFormatter;
 use Livewire\Attributes\Locked;
@@ -188,13 +189,16 @@ class Main extends Component
             'paid_in_cash' => $this->paid_in_cash,
             'saved_at' => $datetime,
             'presentation_id' => $presentation->id,
-            'warehouse_id' => $this->warehouse_id
+            'warehouse_id' => $this->warehouse_id,
+            'created_by' => Auth::user()->id
         ]);
     }
 
     public function deleteSale($id)
     {
-        if($sale = Sale::find($id))
+        if($sale = Sale::find($id)){
+            $sale->update(['deleted_by' => Auth::user()->id]);
             $sale->delete();
+        }
     }
 }

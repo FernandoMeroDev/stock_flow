@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms\Products;
 
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Locked;
 use Livewire\Form;
@@ -74,6 +75,7 @@ class UpdateForm extends Form
     public function delete()
     {
         if($this->product){
+            $this->product->update(['deleted_by' => Auth::user()->id]);
             Storage::delete('products/'.$this->product->img);
             $this->product->delete();
         }

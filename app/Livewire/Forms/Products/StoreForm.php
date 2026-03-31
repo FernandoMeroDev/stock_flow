@@ -4,6 +4,7 @@ namespace App\Livewire\Forms\Products;
 
 use App\Models\Presentation;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Form;
 
 class StoreForm extends Form
@@ -55,6 +56,7 @@ class StoreForm extends Form
         $inputs = $this->except(['img']);
         $inputs['barcode'] = $inputs['barcode'] === '' ? null : $inputs['barcode'];
         $inputs['img'] = $this->saveImg();
+        $inputs['created_by'] = Auth::user()->id;
         $product = Product::create($inputs);
         Presentation::create([
             'name' => '1 Unidad',

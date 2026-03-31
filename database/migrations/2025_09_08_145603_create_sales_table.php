@@ -21,6 +21,12 @@ return new class extends Migration
 
             $table->bigInteger('presentation_id', unsigned: true);
             $table->foreignId('warehouse_id')->constrained('warehouses')->onDelete('cascade');
+
+            $table->softDeletes();
+
+            // Audit
+            $table->bigInteger('created_by');
+            $table->bigInteger('deleted_by')->nullable();
         });
     }
 

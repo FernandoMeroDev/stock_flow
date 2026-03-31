@@ -18,6 +18,10 @@ return new class extends Migration
             $table->string('barcode', 50)->nullable()->unique();
             $table->timestamps();
             $table->softDeletes();
+
+            // Audit
+            $table->bigInteger('created_by');
+            $table->bigInteger('deleted_by')->nullable();
         });
     }
 
