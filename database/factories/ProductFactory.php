@@ -18,6 +18,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'created_by' => 1
         ];
     }
 }
