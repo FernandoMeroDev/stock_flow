@@ -39,29 +39,36 @@ Route::middleware(['auth'])->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/productos', ProductIndex::class)->name('products.index')->middleware(['auth']);
+Route::middleware(['auth', 'can:products'])->group(function(){
+    Route::get('/productos', ProductIndex::class)->name('products.index');
 
-Route::get('/products/img/{file}', function($file){
-    return Storage::get("products/$file");
-})->name('products.img')->middleware(['auth']);
+    Route::get('/products/img/{file}', function($file){
+        return Storage::get("products/$file");
+    })->name('products.img');
+});
 
-Route::get('/bodegas', WarehouseIndex::class)->name('warehouses.index')->middleware(['auth']);
-Route::get('/bodegas/{warehouse}/editar', WarehouseEdit::class)->name('warehouses.edit')->middleware(['auth']);
+Route::middleware(['auth', 'can:warehouses'])->group(function(){
+    Route::get('/bodegas', WarehouseIndex::class)->name('warehouses.index');
+    Route::get('/bodegas/{warehouse}/editar', WarehouseEdit::class)->name('warehouses.edit');
+    Route::get('/bodegas/{warehouse}/editar/perchas/crear', ShelfCreate::class)->name('shelves.create');
+    Route::get('/perchas/{shelf}/editar', ShelfEdit::class)->name('shelves.edit');
+    Route::get('/niveles/{level}/editar', LevelEdit::class)->name('levels.edit');
+});
 
-Route::get('/bodegas/{warehouse}/editar/perchas/crear', ShelfCreate::class)->name('shelves.create')->middleware(['auth']);
-Route::get('/perchas/{shelf}/editar', ShelfEdit::class)->name('shelves.edit')->middleware(['auth']);
+Route::middleware(['auth', 'can:inventories'])->group(function(){
+    Route::get('/inventarios', InventoryIndex::class)->name('inventories.index');
+    Route::post('/inventarios', InventoryStore::class)->name('inventories.store');
+    Route::get('/inventarios/{inventory}/editar', InventoryEdit::class)->name('inventories.edit');
+    Route::get('/inventarios/{inventory}/descargar', InventoryDownload::class)->name('inventories.download');
+});
 
-Route::get('/niveles/{level}/editar', LevelEdit::class)->name('levels.edit')->middleware(['auth']);
+Route::middleware(['auth', 'can:sales'])->group(function(){
+    Route::get('/ventas', SaleIndex::class)->name('sales.index');
+    Route::get('/ventas/descargar', [SaleDownload::class, 'single'])->name('sales.download-single');
+    Route::get('/ventas/descargar/multiples', [SaleDownload::class, 'multiple'])->name('sales.download-multiple');
+    Route::livewire('/ventas/{warehouse}/dia', SaleDay::class)->name('sales.day');
+});
 
-Route::get('/inventarios', InventoryIndex::class)->name('inventories.index')->middleware(['auth']);
-Route::post('/inventarios', InventoryStore::class)->name('inventories.store')->middleware(['auth']);
-Route::get('/inventarios/{inventory}/editar', InventoryEdit::class)->name('inventories.edit')->middleware(['auth']);
-Route::get('/inventarios/{inventory}/descargar', InventoryDownload::class)->name('inventories.download')->middleware(['auth']);
-Route::get('/ventas', SaleIndex::class)->name('sales.index')->middleware(['auth']);
-Route::get('/ventas/descargar', [SaleDownload::class, 'single'])->name('sales.download-single')->middleware(['auth']);
-Route::get('/ventas/descargar/multiples', [SaleDownload::class, 'multiple'])->name('sales.download-multiple')->middleware(['auth']);
-Route::livewire('/ventas/{warehouse}/dia', SaleDay::class)->name('sales.day')->middleware(['auth']);
-
-Route::get('/cajas', CashBoxIndex::class)->name('cash-boxes.index')->middleware(['auth']);
+Route::middleware(['auth', 'can:cash-boxes'])->get('/cajas', CashBoxIndex::class)->name('cash-boxes.index');
 
 // Route::get('/dev-operation', DevController::class)->middleware(['auth']);

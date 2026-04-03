@@ -34,21 +34,31 @@
                             </flux:dropdown>
                         </div>
                     </x-slot:heading>
+                    @can('products')
                     <flux:navlist.item :href="route('products.index')" :current="request()->routeIs('products.index')">
                         Productos
                     </flux:navlist.item>
+                    @endcan
+                    @can('sales')
                     <flux:navlist.item :href="route('sales.index')" :current="request()->routeIs('sales.index')">
                         Ventas
                     </flux:navlist.item>
+                    @endcan
+                    @can('inventories')
                     <flux:navlist.item :href="route('inventories.index')" :current="request()->routeIs('inventories.index')">
                         Inventarios
                     </flux:navlist.item>
+                    @endcan
+                    @can('warehouses')
                     <flux:navlist.item :href="route('warehouses.index')" :current="request()->routeIs('warehouses.index')">
                         Bodegas
                     </flux:navlist.item>
+                    @endcan
+                    @can('cash-boxes')
                     <flux:navlist.item :href="route('cash-boxes.index')" :current="request()->routeIs('cash-boxes.index')">
                         Cajas
                     </flux:navlist.item>
+                    @endcan
                 </flux:navlist.group>
             </flux:navlist>
 

@@ -24,10 +24,10 @@ class PermissionSeeder extends Seeder
             Permission::create(['name' => $name]);
         }
         $adminRole = Role::create(['name' => 'Administrador']);
-        $sellerRole = Role::create(['name' => 'Vendedor']);
-        $sellerRole->givePermissionTo(['products', 'sales']);
         User::find(1)->assignRole($adminRole);
         User::find(2)->assignRole($adminRole);
+        $sellerRole = Role::create(['name' => 'Vendedor']);
+        $sellerRole->givePermissionTo(['products', 'sales']);
         foreach(User::where('name', 'LIKE', 'vendedor%')->get() as $seller){
             $seller->assignRole($sellerRole);
         }
