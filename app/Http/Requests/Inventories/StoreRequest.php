@@ -16,7 +16,6 @@ class StoreRequest extends FormRequest
         $today = date('Y-m-d H:i:s');
         return [
             'saved_at' => "required|date|before_or_equal:{$today}",
-            'empty_movements' => 'sometimes|accepted'
         ];
     }
 
@@ -24,7 +23,6 @@ class StoreRequest extends FormRequest
     {
         return [
             'saved_at' => 'Fecha',
-            'empty_movements' => 'Vaciar Movimientos'
         ];
     }
 }

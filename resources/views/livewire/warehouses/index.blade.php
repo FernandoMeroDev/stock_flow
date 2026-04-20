@@ -44,11 +44,6 @@
             x-on:focus="clearInputInterval()"
         />
 
-        <div title="Elimina todos los movimientos." class="mt-2 flex items-center space-x-2">
-            <input type="checkbox" name="empty_movements" id="empty_movements_input" class="size-5" />
-            <label for="empty_movements_input">Vaciar Movimientos</label>
-        </div>
-
         <flux:button type="submit" variant="primary">
             Guardar
         </flux:button>
