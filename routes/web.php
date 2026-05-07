@@ -73,4 +73,4 @@ Route::middleware(['auth', 'can:cash-boxes'])->get('/cajas', CashBoxIndex::class
 
 // Route::get('/dev-operation', DevController::class)->middleware(['auth']);
 
-# Test commit 3
+# Test commit 4
