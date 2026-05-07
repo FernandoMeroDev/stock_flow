@@ -72,3 +72,5 @@ Route::middleware(['auth', 'can:sales'])->group(function(){
 Route::middleware(['auth', 'can:cash-boxes'])->get('/cajas', CashBoxIndex::class)->name('cash-boxes.index');
 
 // Route::get('/dev-operation', DevController::class)->middleware(['auth']);
+
+# Test commit
