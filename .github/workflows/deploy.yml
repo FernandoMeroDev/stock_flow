@@ -1,0 +1,28 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+steps:
+  - name: Connect and Deploy
+    uses: appleboy/ssh-action@v1
+
+    with:
+      host: ${{ secrets.HOST }}
+      username: ${{ secrets.USER }}
+      key: ${{ secrets.SSH_KEY }}
+
+      script: |
+        cd /srv/stock_flow
+        git pull origin main
+        composer install --no-dev --optimize-autoloader
+        php artisan migrate --force
+        php artisan config:cache
+        npm ci
+        npm run build
