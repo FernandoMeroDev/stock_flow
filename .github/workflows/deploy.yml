@@ -15,13 +15,11 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
-      
-      - name: Deploy
-        script: |
-          cd /srv/stock_flow
-          git pull origin main
-          composer install --no-dev --optimize-autoloader
-          php artisan migrate --force
-          php artisan config:cache
-          npm ci
-          npm run build
+          script: |
+            cd /srv/stock_flow
+            git pull origin main
+            npm ci
+            npm run build
+            composer install --no-dev --optimize-autoloader
+            php artisan migrate --force
+            php artisan config:cache
