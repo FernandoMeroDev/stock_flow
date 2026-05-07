@@ -9,13 +9,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Connect and Deploy
+      - name: Connect
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
-        run: |
+      
+      - name: Deploy
+        script: |
           cd /srv/stock_flow
           git pull origin main
           composer install --no-dev --optimize-autoloader
