@@ -14,8 +14,6 @@
         </flux:modal.trigger>
     </div>
 
-    <livewire:products.create @created="$refresh" />
-
     @script
     <script>
         Alpine.data('searchByBarcodeInput', () => ({
@@ -35,8 +33,6 @@
         <x-pagination :paginator="$presentations" />
     @endif
 
-    <livewire:products.edit @edited="$js.refreshWithParent" />
-
     @script
     <script>
         $js('refreshWithParent', () => {
@@ -45,4 +41,10 @@
         });
     </script>
     @endscript
+
+    <div wire:ignore>
+        <livewire:products.create @created="$refresh" />
+
+        <livewire:products.edit @edited="$js.refreshWithParent" />
+    </div>
 </div>

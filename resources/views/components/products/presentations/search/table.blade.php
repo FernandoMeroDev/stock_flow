@@ -3,7 +3,7 @@
 <x-table class="w-full mb-3">
     @forelse ($presentations as $presentation)
         @if($presentation->product)
-            <x-table.tr wire:key="{{$presentation->id}}">
+            <x-table.tr>
                 <td class="p-3 max-w-60 break-words" x-on:click="$dispatch('edit-product', { product_id: {{$presentation->product->id}} })">
                     {{$presentation->complete_name()}}
                 </td>
