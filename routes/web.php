@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\DevController;
 use App\Http\Controllers\Inventories\StoreController as InventoryStore;
 use App\Http\Controllers\Inventories\DownloadController as InventoryDownload;
 use App\Http\Controllers\Sales\DownloadController as SaleDownload;
@@ -70,7 +69,3 @@ Route::middleware(['auth', 'can:sales'])->group(function(){
 });
 
 Route::middleware(['auth', 'can:cash-boxes'])->get('/cajas', CashBoxIndex::class)->name('cash-boxes.index');
-
-// Route::get('/dev-operation', DevController::class)->middleware(['auth']);
-
-# Test commit 4
