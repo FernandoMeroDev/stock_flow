@@ -26,7 +26,10 @@ class PermissionSeeder extends Seeder
         }
         $adminRole = Role::create(['name' => 'Administrador']);
         User::find(1)->assignRole($adminRole);
-        User::find(2)->assignRole($adminRole);
+        $managerRole = Role::create(['name' => 'Manager']);
+        $managerRole->givePermissionTo(['products', 'providers']);
+        User::find(2)->assignRole($managerRole);
+        User::find(3)->assignRole($managerRole);
         $sellerRole = Role::create(['name' => 'Vendedor']);
         $sellerRole->givePermissionTo(['products', 'sales']);
         foreach(User::where('name', 'LIKE', 'vendedor%')->get() as $seller){

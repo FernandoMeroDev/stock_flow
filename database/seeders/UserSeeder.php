@@ -15,19 +15,18 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $users = [
-            'patricia',
+            'manager1',
+            'manager2',
             'vendedor1',
             'vendedor2',
             'vendedor3',
-            'vendedor4',
-            'vendedor5',
         ];
 
         foreach($users as $name){
             User::create([
                 'name' => $name,
-                'email' => $name . '@ellicenciado.app',
-                'password' => Hash::make('licenciado')
+                'email' => $name . '@stockflow.test',
+                'password' => Hash::make('password')
             ]);
         }
     }
