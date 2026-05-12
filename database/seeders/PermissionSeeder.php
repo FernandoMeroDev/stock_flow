@@ -19,6 +19,7 @@ class PermissionSeeder extends Seeder
             'inventories',
             'warehouses',
             'cash-boxes',
+            'providers'
         ];
         foreach($permissions as $name){
             Permission::create(['name' => $name]);

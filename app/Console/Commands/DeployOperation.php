@@ -25,8 +25,9 @@ class DeployOperation extends Command
      */
     public function handle()
     {
-        $this->call('permission:create-permission', [
-            'name' => 'providers'
-        ]);
+        // Old
+        // $this->call('permission:create-permission', [
+        //     'name' => 'providers'
+        // ]);
     }
 }

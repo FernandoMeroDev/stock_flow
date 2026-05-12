@@ -12,6 +12,7 @@ use App\Livewire\Warehouses\Shelves\Edit as ShelfEdit;
 use App\Livewire\Warehouses\Shelves\Levels\Edit\Main as LevelEdit;
 use App\Livewire\Inventories\Index as InventoryIndex;
 use App\Livewire\Inventories\Edit\Main as InventoryEdit;
+use App\Livewire\Providers\Index as ProviderIndex;
 use App\Livewire\Sales\Index\Main as SaleIndex;
 use App\Livewire\Sales\Day\Main as SaleDay;
 use App\Livewire\Settings\Appearance;
@@ -69,3 +70,5 @@ Route::middleware(['auth', 'can:sales'])->group(function(){
 });
 
 Route::middleware(['auth', 'can:cash-boxes'])->get('/cajas', CashBoxIndex::class)->name('cash-boxes.index');
+
+Route::middleware(['auth', 'can:providers'])->get('/proveedores', ProviderIndex::class)->name('providers.index');

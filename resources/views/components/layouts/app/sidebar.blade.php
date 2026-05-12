@@ -59,6 +59,11 @@
                         Cajas
                     </flux:navlist.item>
                     @endcan
+                    @can('providers')
+                    <flux:navlist.item :href="route('providers.index')" :current="request()->routeIs('providers.index')">
+                        Proveedores
+                    </flux:navlist.item>
+                    @endcan
                 </flux:navlist.group>
             </flux:navlist>
 
