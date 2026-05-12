@@ -10,21 +10,13 @@ use Illuminate\Database\Seeder;
 
 class SaleSeeder extends Seeder
 {
-    private bool $seed_fake_data = true;
-
     private int $sales_count = 30;
 
     /**
      * Run the database seeds.
      */
-    public function __invoke(array $parameters = [])
+    public function run()
     {
-        if(isset($parameters['seed_fake_data']))
-            $this->seed_fake_data = $parameters['seed_fake_data'];
-
-        if( ! $this->seed_fake_data )
-            return;
-        
         $max_products_id = Product::all()->count();
         $max_warehouses_id = Warehouse::all()->count();
         $datetime = now();

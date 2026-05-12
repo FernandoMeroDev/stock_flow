@@ -11,7 +11,7 @@ use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
-    public static function create()
+    public function run()
     {
         $permissions = [
             'products',
@@ -31,13 +31,5 @@ class PermissionSeeder extends Seeder
         foreach(User::where('name', 'LIKE', 'vendedor%')->get() as $seller){
             $seller->assignRole($sellerRole);
         }
-    }
-
-    /**
-     * Run the database seeds.
-     */
-    public function __invoke(array $parameters = [])
-    {
-        static::create();
     }
 }

@@ -6,21 +6,15 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Specifies if create fake data in the Data Base for testing
-     */
-    private $create_fake_data = false;
-
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         User::factory()->create([
             'name' => 'Administrador',
             'email' => config('app.admin.email'),
@@ -34,6 +28,7 @@ class DatabaseSeeder extends Seeder
             WarehouseSeeder::class,
             InventorySeeder::class,
             SaleSeeder::class,
-        ], parameters: ['seed_fake_data' => $this->create_fake_data]);
+            ProviderSeeder::class
+        ]);
     }
 }

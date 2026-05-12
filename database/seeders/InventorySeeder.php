@@ -12,8 +12,6 @@ use Illuminate\Database\Seeder;
 
 class InventorySeeder extends Seeder
 {
-    private bool $seed_fake_data = true;
-
     /**
      * Create many inventories registers with no data
      */
@@ -24,14 +22,8 @@ class InventorySeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function __invoke(array $parameters = [])
+    public function run(array $parameters = [])
     {
-        if(isset($parameters['seed_fake_data']))
-            $this->seed_fake_data = $parameters['seed_fake_data'];
-
-        if( ! $this->seed_fake_data )
-            return;
-
         $products_max_id = Product::all()->count();
         $warehouses = Warehouse::all();
         

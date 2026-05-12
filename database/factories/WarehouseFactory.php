@@ -17,7 +17,7 @@ class WarehouseFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->firstName()
+            'name' => mb_ucfirst(fake()->word()) . ' ' . mb_ucfirst(fake()->word())
         ];
     }
 }

@@ -1,2 +1,3 @@
 *.sqlite*
 seeders/data/*.csv
+!seeders/data/products.csv
