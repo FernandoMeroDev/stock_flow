@@ -19,4 +19,6 @@
             <p class="text-center">Bodegas</p>
         </x-dashboard.card>
     </div>
+
+    <p>Test</p>
 </x-layouts.app>
