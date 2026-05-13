@@ -8,13 +8,9 @@
     </div>
 
     <div wire:ignore class="m-0">
-        <flux:modal name="create-provider">
-            <div class="py-6">
-                <livewire:providers.create
-                    @created-provider="$refresh; $flux.modal('create-provider').close()" 
-                />
-            </div>
-        </flux:modal>
+        <livewire:providers.create />
+
+        <livewire:providers.edit />
     </div>
 
     <x-table class="w-full">
@@ -26,12 +22,25 @@
         </x-slot:thead>
         @forelse($providers as $provider)
             <x-table.tr wire:key="{{$provider->id}}">
-                <td class="p-3">
+                <td class="p-3 break-words">
                     {{$provider->name}}
                 </td>
-                <td class="text-center">
-                    <flux:button icon="pencil" size="sm" class="mr-1" />
-                    <flux:button icon="trash" wire:click="destroy({{$provider->id}})" size="sm" variant="danger" />
+                <td>
+                    <div x-data="{ deleting: false }" class="p-1">
+                        <div class="flex items-center">
+                            <flux:button icon="pencil" wire:click="$dispatch('edit-provider', { id: {{$provider->id}} } )" size="sm" class="mr-1" />
+                            <flux:button icon="trash" x-on:click="deleting = true" size="sm" variant="danger"/>
+                        </div>
+                        <div x-show="deleting" class="mt-1">
+                            <div>¿Eliminar?</div>
+                            <flux:button x-on:click="deleting = false" size="xs">
+                                No
+                            </flux:button>
+                            <flux:button wire:click="destroy({{$provider->id}})" size="xs" variant="danger">
+                                Si
+                            </flux:button>
+                        </div>
+                    </div>
                 </td>
             </x-table.tr>
         @empty

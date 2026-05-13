@@ -4,23 +4,16 @@ namespace App\Livewire\Providers;
 
 use App\Livewire\Traits\Pagination\CanPaginateManually;
 use App\Models\Provider;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Index extends Component
 {
-    use WithPagination, CanPaginateManually;
+    use WithPagination, CanPaginateManually, ValidateProvider;
 
     public int $perPage = 5;
 
-    private User $user;
-
-    public function boot()
-    {
-        $this->user = Auth::user();
-    }
+    public int $providerid = 0;
 
     public function render()
     {
@@ -41,15 +34,7 @@ class Index extends Component
 
     public function destroy(int $id)
     {
-        if($provider = Provider::find($id)){
-            if($this->user->hasRole('Administrador')){
-                $provider->delete();
-            } else {
-                if($provider->user_id == $this->user->id){
-                    $provider->delete();
-                } else
-                    abort(403); 
-            }
-        }
+        $provider = $this->validate_provider_id($id);
+        $provider->delete();
     }
 }

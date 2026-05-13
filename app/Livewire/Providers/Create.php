@@ -24,6 +24,7 @@ class Create extends Component
             'name' => $this->name,
             'user_id' => Auth::user()->id
         ]);
-        $this->dispatch('created-provider');
+        $this->reset();
+        $this->modal('create-provider')->close();
     }
 }
