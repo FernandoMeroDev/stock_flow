@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Movements\Purchase;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -69,5 +71,10 @@ class User extends Authenticatable
     public function providers(): HasMany
     {
         return $this->hasMany(Provider::class);
+    }
+
+    public function purchases(): HasMany
+    {
+        return $this->hasMany(Purchase::class);
     }
 }
