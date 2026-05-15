@@ -1,4 +1,8 @@
 <div class="space-y-3">
+    <flux:heading size="xl">
+        Proveedores
+    </flux:heading>
+
     <div>
         <flux:modal.trigger name="create-provider">
             <flux:button>
@@ -16,7 +20,7 @@
     <x-table class="w-full">
         <x-slot:thead>
             <x-table.th>
-                Proveedores
+                Nombre
             </x-table.th>
             <x-table.th></x-table.th>
         </x-slot:thead>

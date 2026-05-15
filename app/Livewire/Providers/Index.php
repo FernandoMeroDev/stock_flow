@@ -3,13 +3,14 @@
 namespace App\Livewire\Providers;
 
 use App\Livewire\Traits\Pagination\CanPaginateManually;
+use App\Livewire\Traits\Validation\Ownership as ValidateOwnership;
 use App\Models\Provider;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Index extends Component
 {
-    use WithPagination, CanPaginateManually, ValidateProvider;
+    use WithPagination, CanPaginateManually, ValidateOwnership;
 
     public int $perPage = 5;
 
@@ -34,7 +35,7 @@ class Index extends Component
 
     public function destroy(int $id)
     {
-        $provider = $this->validate_provider_id($id);
+        $provider = $this->validate_ownership($id, Provider::class);
         $provider->delete();
     }
 }

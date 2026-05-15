@@ -64,6 +64,11 @@
                         Proveedores
                     </flux:navlist.item>
                     @endcan
+                    @can('purchases')
+                    <flux:navlist.item :href="route('purchases.index')" :current="request()->routeIs('purchases.index')">
+                        Compras
+                    </flux:navlist.item>
+                    @endcan
                 </flux:navlist.group>
             </flux:navlist>
 

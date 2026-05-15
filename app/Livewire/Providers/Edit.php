@@ -6,10 +6,11 @@ use App\Models\Provider;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use App\Livewire\Traits\Validation\Ownership as ValidateOwnership;
 
 class Edit extends Component
 {
-    use ValidateProvider;
+    use ValidateOwnership;
 
     public Provider $provider;
 
@@ -24,14 +25,14 @@ class Edit extends Component
     #[On('edit-provider')]
     public function editProvider(mixed $id)
     {
-        $this->provider = $this->validate_provider_id($id);
+        $this->provider = $this->validate_ownership($id, Provider::class);
         $this->name = $this->provider->name;
         $this->modal('edit-provider')->show();
     }
 
     public function update()
     {
-        $this->provider = $this->validate_provider_id($this->provider->id);
+        $this->provider = $this->validate_ownership($this->provider->id, Provider::class);
         $this->validate();
         $this->provider->update(['name' => $this->name]);
         $this->modal('edit-provider')->close();
