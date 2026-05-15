@@ -6,10 +6,14 @@ use App\Models\Presentation;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Movement extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'count',
         'unitary_price',
@@ -32,5 +36,10 @@ class Movement extends Model
     public function movementable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function balance(): HasOne
+    {
+        return $this->hasOne(Balance::class);
     }
 }
