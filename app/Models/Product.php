@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Movements\Movement;
 use App\Models\Shelves\Level;
 use App\Models\Shelves\LevelProduct;
 use Illuminate\Database\Eloquent\Collection;
@@ -49,5 +50,10 @@ class Product extends Model
     public function sales(): HasMany
     {
         return $this->hasMany(Sale::class);
+    }
+
+    public function movements(): HasMany
+    {
+        return $this->hasMany(Movement::class);
     }
 }
