@@ -9,11 +9,11 @@ trait Ownership
 {
     use SetUser;
 
-    protected function validate_ownership(int $id, string $class): Model
+    protected function validate_ownership(int $id, string $class, string $column = 'user_id'): Model
     {
         if($model = $class::find($id)){
             if( ! $this->user->hasRole('Administrador')){
-                if($model->user_id !== $this->user->id){
+                if($model->{$column} !== $this->user->id){
                     abort(403);
                 }
             }

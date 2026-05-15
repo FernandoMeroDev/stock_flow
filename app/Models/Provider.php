@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Movements\Purchase;
+use App\Models\Traits\QueryOwnModels;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Provider extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, QueryOwnModels;
 
     protected $fillable = ['name', 'user_id'];
 

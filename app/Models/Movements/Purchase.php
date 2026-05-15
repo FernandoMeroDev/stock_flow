@@ -3,6 +3,7 @@
 namespace App\Models\Movements;
 
 use App\Models\Provider;
+use App\Models\Traits\QueryOwnModels;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Purchase extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, QueryOwnModels;
 
     protected $fillable = ['invoice_number', 'provider_id', 'user_id'];
 

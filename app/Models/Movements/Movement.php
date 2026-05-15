@@ -4,6 +4,7 @@ namespace App\Models\Movements;
 
 use App\Models\Presentation;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -22,6 +23,15 @@ class Movement extends Model
         'presentation_id',
         'product_id'
     ];
+
+    protected function totalPrice(): Attribute
+    {
+        return Attribute::make(
+            get: function(mixed $value, array $attributes) {
+                return $attributes['count'] * $attributes['unitary_price'];
+            }
+        );
+    }
     
     public function presentation(): BelongsTo
     {

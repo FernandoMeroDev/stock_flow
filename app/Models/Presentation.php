@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Movements\Movement;
+use App\Models\Traits\QueryOwnModels;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Presentation extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, QueryOwnModels;
 
     protected $table = 'presentations';
 

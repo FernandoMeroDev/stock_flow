@@ -23,11 +23,6 @@ class Index extends Component
 
     protected function query()
     {
-        if($this->user->hasRole('Administrador')){
-            $purchases = Purchase::get();
-        } else {
-            $purchases = Purchase::where('user_id', $this->user->id)->get();
-        }
-        return $this->paginate($purchases, $this->perPage);
+        return $this->paginate(Purchase::queryOwnModels()->get(), $this->perPage);
     }
 }

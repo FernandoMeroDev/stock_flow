@@ -1,7 +1,8 @@
 @props([
     'paginator',
     'perPage' => null,
-    'onlySimple' => false
+    'onlySimple' => false,
+    'wirePerPageVar' => 'perPage'
 ])
 
 <div class="mt-2">
@@ -57,7 +58,7 @@
     @if( ! is_null($perPage))
     <div class="mt-2 flex w-36">
         <span class="mr-1">Mostrar: </span>
-        <flux:select wire:model.change.live="perPage" size="xs" required>
+        <flux:select wire:model.change.live="{{$wirePerPageVar}}" size="xs" required>
             <flux:select.option value="5">5</flux:select.option>
             <flux:select.option value="15">15</flux:select.option>
             <flux:select.option value="30">30</flux:select.option>

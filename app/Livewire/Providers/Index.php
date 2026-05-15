@@ -25,12 +25,7 @@ class Index extends Component
 
     private function query()
     {
-        if($this->user->hasRole('Administrador')){
-            $providers = Provider::get();
-        } else {
-            $providers = Provider::where('user_id', $this->user->id)->get();
-        }
-        return $this->paginate($providers, $this->perPage);
+        return $this->paginate(Provider::queryOwnModels()->get(), $this->perPage);
     }
 
     public function destroy(int $id)

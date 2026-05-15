@@ -4,7 +4,7 @@
     </flux:heading>
 
     <div>
-        <flux:button href="{{route('dashboard')}}">
+        <flux:button href="{{route('purchases.create')}}">
             Agregar Nueva
         </flux:button>
     </div>

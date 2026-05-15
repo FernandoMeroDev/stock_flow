@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Movements\Movement;
 use App\Models\Shelves\Level;
 use App\Models\Shelves\LevelProduct;
+use App\Models\Traits\QueryOwnModels;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, QueryOwnModels;
 
     protected $fillable = ['name', 'img', 'barcode', 'cash_box_id', 'created_by', 'deleted_by'];
 
