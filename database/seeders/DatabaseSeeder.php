@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\Movements\PurchaseSeeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
@@ -28,7 +29,8 @@ class DatabaseSeeder extends Seeder
             WarehouseSeeder::class,
             InventorySeeder::class,
             SaleSeeder::class,
-            ProviderSeeder::class
+            ProviderSeeder::class,
+            PurchaseSeeder::class
         ]);
     }
 }

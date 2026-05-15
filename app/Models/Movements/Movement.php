@@ -19,7 +19,7 @@ class Movement extends Model
         'unitary_price',
         'movementable_id',
         'movementable_type',
-        'provider_id',
+        'presentation_id',
         'product_id'
     ];
     

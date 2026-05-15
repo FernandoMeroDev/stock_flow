@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('movementable_id');
             $table->string('movementable_type', 1000);
 
-            $table->foreignId('provider_id');
+            $table->foreignId('presentation_id');
             $table->foreignId('product_id');
         });
     }
