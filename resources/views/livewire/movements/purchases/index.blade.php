@@ -22,7 +22,10 @@
             </x-table.th>
         </x-slot:thead>
         @forelse($purchases as $purchase)
-            <x-table.tr wire:key="{{$purchase->id}}">
+            <x-table.tr 
+                x-on:click="open('{{route('purchases.edit', $purchase->id)}}')" wire:key="{{$purchase->id}}" 
+                class="cursor-pointer hover:bg-blue-500"
+            >
                 <td class="p-3">
                     {{$purchase->created_at}}
                 </td>

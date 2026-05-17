@@ -41,7 +41,7 @@ class CreateForm extends Form
             'provider_id' => 'Proveedor',
             'movements' => 'Movimientos',
             'movements.*' => 'Movimiento #:position',
-            'movements.*.product_id' => 'Producto',
+            'movements.*.presentation_id' => 'Producto',
             'movements.*.count' => 'Cantidad',
             'movements.*.unitary_price' => 'Precio Unitario',
         ];

@@ -23,6 +23,9 @@ class Index extends Component
 
     protected function query()
     {
-        return $this->paginate(Purchase::queryOwnModels()->get(), $this->perPage);
+        return $this->paginate(
+            Purchase::queryOwnModels()->orderBy('created_at', 'desc')->get(),
+            $this->perPage
+        );
     }
 }
