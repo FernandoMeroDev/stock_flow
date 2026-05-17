@@ -12,9 +12,9 @@
     </div>
 
     <div wire:ignore class="m-0">
-        {{-- <livewire:providers.create />
+        <livewire:clients.create />
 
-        <livewire:providers.edit /> --}}
+        <livewire:clients.edit />
     </div>
 
     <x-table class="w-full">
