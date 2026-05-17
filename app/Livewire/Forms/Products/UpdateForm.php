@@ -77,6 +77,10 @@ class UpdateForm extends Form
         if($this->product){
             $this->product->update(['deleted_by' => Auth::user()->id]);
             Storage::delete('products/'.$this->product->img);
+            $presentations = $this->product->presentations;
+            foreach($presentations as $presentation){
+                $presentation->delete();
+            }
             $this->product->delete();
         }
     }

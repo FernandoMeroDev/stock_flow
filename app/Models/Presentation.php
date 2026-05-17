@@ -27,7 +27,7 @@ class Presentation extends Model
 
     public function complete_name(): string
     {
-        return $this->name . ' ' . $this->product->name;
+        return $this->name . ' ' . $this->product()->withTrashed()->first()->name;
     }
 
     public function product(): BelongsTo
