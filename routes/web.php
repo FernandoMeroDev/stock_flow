@@ -4,6 +4,7 @@ use App\Http\Controllers\Inventories\StoreController as InventoryStore;
 use App\Http\Controllers\Inventories\DownloadController as InventoryDownload;
 use App\Http\Controllers\Sales\DownloadController as SaleDownload;
 use App\Livewire\CashBoxes\Index as CashBoxIndex;
+use App\Livewire\Clients\Index as ClientIndex;
 use App\Livewire\Products\Index as ProductIndex;
 use App\Livewire\Warehouses\Index as WarehouseIndex;
 use App\Livewire\Warehouses\Edit as WarehouseEdit;
@@ -81,3 +82,5 @@ Route::middleware(['auth', 'can:purchases'])->group(function() {
     Route::get('/compras/crear', PurchaseCreate::class)->name('purchases.create');
     Route::get('/compras/{purchase}/editar', PurchaseEdit::class)->name('purchases.edit');
 });
+
+Route::middleware(['auth', 'can:clients'])->get('/clientes', ClientIndex::class)->name('clients.index');
