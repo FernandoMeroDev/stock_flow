@@ -20,7 +20,8 @@ class PermissionSeeder extends Seeder
             'warehouses',
             'cash-boxes',
             'providers',
-            'purchases'
+            'purchases',
+            'clients'
         ];
         foreach($permissions as $name){
             Permission::create(['name' => $name]);
@@ -28,7 +29,7 @@ class PermissionSeeder extends Seeder
         $adminRole = Role::create(['name' => 'Administrador']);
         User::find(1)->assignRole($adminRole);
         $managerRole = Role::create(['name' => 'Manager']);
-        $managerRole->givePermissionTo(['products', 'providers', 'purchases']);
+        $managerRole->givePermissionTo(['products', 'providers', 'purchases', 'clients']);
         User::find(2)->assignRole($managerRole);
         User::find(3)->assignRole($managerRole);
         $sellerRole = Role::create(['name' => 'Vendedor']);

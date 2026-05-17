@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Movements\Purchase;
 use App\Models\Traits\QueryOwnModels;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Provider extends Model
+class Client extends Model
 {
     use SoftDeletes, QueryOwnModels;
 
@@ -18,10 +16,5 @@ class Provider extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function purchases(): HasMany
-    {
-        return $this->hasMany(Purchase::class);
     }
 }
