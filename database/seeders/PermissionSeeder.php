@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Http\Controllers\PermissionController;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -29,11 +28,11 @@ class PermissionSeeder extends Seeder
         $adminRole = Role::create(['name' => 'Administrador']);
         User::find(1)->assignRole($adminRole);
         $managerRole = Role::create(['name' => 'Manager']);
-        $managerRole->givePermissionTo(['products', 'providers', 'purchases', 'clients']);
+        $managerRole->givePermissionTo(['products', 'sales', 'cash-boxes', 'providers', 'purchases']);
         User::find(2)->assignRole($managerRole);
         User::find(3)->assignRole($managerRole);
         $sellerRole = Role::create(['name' => 'Vendedor']);
-        $sellerRole->givePermissionTo(['products', 'sales']);
+        $sellerRole->givePermissionTo(['sales']);
         foreach(User::where('name', 'LIKE', 'vendedor%')->get() as $seller){
             $seller->assignRole($sellerRole);
         }
