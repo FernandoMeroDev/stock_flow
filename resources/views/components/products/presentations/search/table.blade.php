@@ -4,11 +4,19 @@
     @forelse ($presentations as $presentation)
         @if($presentation->product)
             <x-table.tr>
-                <td class="p-3 max-w-60 break-words" x-on:click="$dispatch('edit-product', { product_id: {{$presentation->product->id}} })">
+                <td class="cursor-pointer p-3 max-w-60 break-words" x-on:click="$dispatch('edit-product', { product_id: {{$presentation->product->id}} })">
                     {{$presentation->complete_name()}}
                 </td>
+                <td class="p-3">
+                    <p wire:loading.remove>{{$presentation->total_stock}}</p>
+                    <p wire:loading>...</p>
+                </td>
                 <td class="py-3 flex justify-end">
-                    <flux:button icon="plus" x-on:click="$dispatch('add-presentation', { id: {{$presentation->id}} })"/>
+                    <flux:button 
+                        icon="plus" 
+                        wire:click="$dispatch('add-presentation', { id: {{$presentation->id}} })"
+                        :disabled="$presentation->total_stock < $presentation->units"
+                    />
                 </td>
             </x-table.tr>
         @endif

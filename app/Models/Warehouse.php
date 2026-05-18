@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Movements\Disposal;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -26,5 +27,10 @@ class Warehouse extends Model
     public function sales(): HasMany
     {
         return $this->hasMany(Sale::class);
+    }
+
+    public function disposals(): HasMany
+    {
+        return $this->hasMany(Disposal::class);
     }
 }

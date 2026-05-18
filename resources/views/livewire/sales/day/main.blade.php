@@ -85,13 +85,15 @@
                             <flux:input
                                 wire:model.live.debounce.600ms="sales.{{$key}}.count"
                                 icon="square-3-stack-3d"
+                                readonly
                             />
                             <div class="flex">
                                 <flux:input
                                     wire:model.live.debounce.600ms="sales.{{$key}}.cash"
                                     icon="currency-dollar"
+                                    readonly
                                 />
-                                <flux:button wire:click="deleteSale({{$sale['id']}})" icon="trash" />
+                                {{-- <flux:button wire:click="deleteSale({{$sale['id']}})" icon="trash" /> --}}
                             </div>
                             <div class="col-span-2">
                                 @error("sales.{$key}.*")

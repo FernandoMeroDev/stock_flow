@@ -1,4 +1,4 @@
-<div>
+<div x-on:sale-created.window="$wire.$refresh">
     <flux:input 
         placeholder="Codigo de barras..." class="mb-1"
         x-data="searchByBarcodeInput" name="barcode" x-on:change="addProduct($event)"

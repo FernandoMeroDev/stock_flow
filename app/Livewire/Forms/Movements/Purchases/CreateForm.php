@@ -101,6 +101,9 @@ class CreateForm extends Form
             'unitary_price' => $new_unitary_price,
             'movement_id' => $movement->id
         ]);
+        $presentation->product->update([
+            'total_stock' => $presentation->product->total_stock + $count
+        ]);
     }
 
     protected function createInitial(
@@ -108,13 +111,14 @@ class CreateForm extends Form
         array $movement,
     )
     {
+        $count = $presentation->units * $movement['count'];
         $purchase = Purchase::create([
             'invoice_number' => $this->invoice_number,
             'provider_id' => $this->provider_id,
             'user_id' => Auth::user()->id,
         ]);
         $movement = Movement::create([
-            'count' => $presentation->units * $movement['count'],
+            'count' => $count,
             'unitary_price' => $movement['unitary_price'] / $presentation->units,
             'movementable_id' => $purchase->id,
             'movementable_type' => Purchase::class,
@@ -122,9 +126,12 @@ class CreateForm extends Form
             'product_id' => $presentation->product->id
         ]);
         Balance::create([
-            'units' => $presentation->units * $movement['count'],
+            'units' => $count,
             'unitary_price' => $movement['unitary_price'],
             'movement_id' => $movement->id
+        ]);
+        $presentation->product->update([
+            'total_stock' => $presentation->product->total_stock + $count
         ]);
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Livewire\Sales\Day;
 
+use App\Models\Movements\Balance;
+use App\Models\Movements\Disposal;
+use App\Models\Movements\Movement;
 use App\Models\Presentation;
 use App\Models\Product;
 use App\Models\Sale;
@@ -39,7 +42,7 @@ class Main extends Component
     {
         return [
             'paid_in_cash' => 'required|boolean',
-            'date' => 'required|date_format:Y-m-d|before_or_equal:today',
+            'date' => 'required|date_format:Y-m-d|after_or_equal:today|before_or_equal:today',
             'sales.*.id' => 'required|exists:sales,id',
             'sales.*.count' => 'required|integer|min:0|max:9999',
             'sales.*.cash' => 'required|decimal:0,2|min:0.01|max:99999.99'
@@ -160,45 +163,83 @@ class Main extends Component
                 $presentation = $product?->presentations->get(0); break;
         }
         if($presentation){
-            $present =  $this->date == date('Y-m-d');
-            $last_sale = $this->querySales()->orderBy('saved_at', 'desc');
-            if( ! $present ) $last_sale->orderBy('id', 'desc');
-            $last_sale = $last_sale->first();
+            if($presentation->product->total_stock < $presentation->units){
+                abort(403);
+            }
+            $last_sale = $this->querySales()->orderBy('saved_at', 'desc')->first();
             if($last_sale?->presentation_id == $presentation->id){
                 // Update Sale adding
-                $last_sale->update([
-                    'count' => $last_sale->count + 1,
-                    'cash' => $last_sale->cash + ($presentation->price)
-                ]);
+                $this->updateSale($last_sale, $presentation);
             } else {
-                $this->createSale($presentation, $present);
+                $this->createSale($presentation);
             }
+            $this->dispatch('sale-created');
         } else {
             if($type === 'barcode')
                 $this->addError('barcode', 'El Código del producto no esta registrado.');
         }
     }
 
-    private function createSale(Presentation $presentation, bool $present): void
+    private function updateSale(Sale $last_sale, Presentation $presentation)
     {
-        $datetime =  $present ? now() : date('Y-m-d', strtotime($this->date)) . ' 23:59:59';
+        // Update Sale
+        $last_sale->update([
+            'count' => $last_sale->count + 1,
+            'cash' => $last_sale->cash + ($presentation->price)
+        ]);
+        // Create Disposal
+        $this->createDisposal($presentation);
+    }
+
+    private function createSale(Presentation $presentation): void
+    {
         Sale::create([
             'name' => $presentation->complete_name(),
             'count' => 1,
             'cash' => $presentation->price,
             'paid_in_cash' => $this->paid_in_cash,
-            'saved_at' => $datetime,
+            'saved_at' => now(),
             'presentation_id' => $presentation->id,
             'warehouse_id' => $this->warehouse_id,
             'created_by' => Auth::user()->id
         ]);
+        // Create Disposal
+        $this->createDisposal($presentation);
     }
 
-    public function deleteSale($id)
+    private function createDisposal(Presentation $presentation)
     {
-        if($sale = Sale::find($id)){
-            $sale->update(['deleted_by' => Auth::user()->id]);
-            $sale->delete();
-        }
+        $disposal = Disposal::create([
+            'paid_in_cash' => true,
+            'warehouse_id' => $this->warehouse_id,
+            'user_id' => Auth::user()->id,
+        ]);
+        $lastMovement = Movement::where('product_id', $presentation->product->id)
+            ->orderBy('created_at', 'desc')
+            ->first();
+        $movement = Movement::create([
+            'count' => $presentation->units,
+            'unitary_price' => $lastMovement->balance->unitary_price,
+            'movementable_id' => $disposal->id,
+            'movementable_type' => Disposal::class,
+            'presentation_id' => $presentation->id,
+            'product_id' => $presentation->product->id
+        ]);
+        Balance::create([
+            'units' => $lastMovement->balance->units - $movement->count,
+            'unitary_price' => $movement->unitary_price,
+            'movement_id' => $movement->id
+        ]);
+        $presentation->product->update([
+            'total_stock' => $presentation->product->total_stock - $movement->count
+        ]);
     }
+
+    // public function deleteSale($id)
+    // {
+    //     if($sale = Sale::find($id)){
+    //         $sale->update(['deleted_by' => Auth::user()->id]);
+    //         $sale->delete();
+    //     }
+    // }
 }

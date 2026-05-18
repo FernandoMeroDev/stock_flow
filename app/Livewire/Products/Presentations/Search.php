@@ -21,7 +21,7 @@ class Search extends Component
             $query = Presentation::where('id', 0); // Empty Eloquent collection
         else {
             $query = Presentation::join('products', 'products.id', '=', 'presentations.product_id')
-                ->select('presentations.*')
+                ->select('presentations.*', 'products.total_stock')
                 ->whereRaw(
                     "CONCAT(presentations.name, ' ', products.name) LIKE ?", ["%$this->search%"]
                 )->orderBy('name');
