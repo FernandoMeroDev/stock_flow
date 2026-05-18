@@ -16,6 +16,7 @@ use App\Livewire\Inventories\Edit\Main as InventoryEdit;
 use App\Livewire\Movements\Purchases\Index as PurchaseIndex;
 use App\Livewire\Movements\Purchases\Create as PurchaseCreate;
 use App\Livewire\Movements\Purchases\Edit as PurchaseEdit;
+use App\Livewire\Products\Kardex;
 use App\Livewire\Providers\Index as ProviderIndex;
 use App\Livewire\Sales\Index\Main as SaleIndex;
 use App\Livewire\Sales\Day\Main as SaleDay;
@@ -46,9 +47,11 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth', 'can:products'])->group(function(){
     Route::get('/productos', ProductIndex::class)->name('products.index');
 
-    Route::get('/products/img/{file}', function($file){
+    Route::get('/productos/img/{file}', function($file){
         return Storage::get("products/$file");
     })->name('products.img');
+
+    Route::get('/productos/{product}/kardex', Kardex::class)->name('products.kardex');;
 });
 
 Route::middleware(['auth', 'can:warehouses'])->group(function(){

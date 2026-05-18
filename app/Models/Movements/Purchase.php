@@ -16,6 +16,11 @@ class Purchase extends Model
 
     protected $fillable = ['invoice_number', 'provider_id', 'user_id'];
 
+    public function get_readable_type_name(): string
+    {
+        return 'Compra';
+    }
+
     public function provider(): BelongsTo
     {
         return $this->belongsTo(Provider::class);

@@ -10,7 +10,7 @@ class Index extends Component
 {
     use WithPagination;
 
-    public $search;
+    public string $search = '';
 
     public function render()
     {

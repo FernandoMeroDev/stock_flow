@@ -14,6 +14,7 @@
             <x-table.th>
                 Productos
             </x-table.th>
+            <x-table.th></x-table.th>
         </x-slot:thead>
 
         @forelse ($products as $product)
@@ -23,6 +24,9 @@
                 </td>
                 <td class="p-3">
                     {{$product->name}}
+                </td>
+                <td class="p-3">
+                    <flux:button icon="table-cells" href="{{route('products.kardex', $product->id)}}" />
                 </td>
             </x-table.tr>
         @empty

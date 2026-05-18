@@ -18,6 +18,11 @@ class Disposal extends Model
         'warehouse_id',
         'user_id',
     ];
+    
+    public function get_readable_type_name(): string
+    {
+        return 'Venta';
+    }
 
     public function user(): BelongsTo
     {
