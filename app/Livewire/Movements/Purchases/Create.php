@@ -53,8 +53,7 @@ class Create extends Component
 
     protected function searchPresentations()
     {
-        $presentations = Presentation::queryOwnModels()
-            ->select('presentations.*')
+        $presentations = Presentation::select('presentations.*')
             ->join('products', 'products.id', '=', 'presentations.product_id')
             ->whereRaw(
                     "CONCAT(presentations.name, ' ', products.name) LIKE ?", ["%$this->search%"]
