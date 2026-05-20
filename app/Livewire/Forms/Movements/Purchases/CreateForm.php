@@ -2,19 +2,15 @@
 
 namespace App\Livewire\Forms\Movements\Purchases;
 
-use App\Livewire\Traits\Validation\Ownership as ValidateOwnership;
 use App\Models\Movements\Balance;
 use App\Models\Movements\Movement;
 use App\Models\Movements\Purchase;
 use App\Models\Presentation;
-use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Form;
 
 class CreateForm extends Form
 {
-    use ValidateOwnership;
-
     public string $invoice_number = '';
 
     public int $provider_id = 0;
@@ -49,7 +45,6 @@ class CreateForm extends Form
 
     public function addMovement(Presentation $presentation)
     {
-        $this->validate_ownership($presentation->product_id, Product::class, 'created_by');
         $this->movements[] = [
             'presentation_id' => $presentation->id,
             'count' => 1,
@@ -60,20 +55,26 @@ class CreateForm extends Form
     public function store()
     {
         $this->validate();
+        $purchase = Purchase::create([
+            'invoice_number' => $this->invoice_number,
+            'provider_id' => $this->provider_id,
+            'user_id' => Auth::user()->id,
+        ]);
         foreach($this->movements as $movement){
             $presentation = Presentation::find($movement['presentation_id']);
             $product = $presentation->product;
             $lastMovement = $product->movements()->orderBy('created_at', 'desc')->first();
             if($lastMovement){
-                $this->addNew($lastMovement, $presentation, $movement);
+                $this->addNew($purchase, $lastMovement, $presentation, $movement);
             } else {
-                $this->createInitial($presentation, $movement);
+                $this->createInitial($purchase, $presentation, $movement);
             }
         }
         $this->reset();
     }
 
     protected function addNew(
+        Purchase $purchase,
         Movement $lastMovement,
         Presentation $presentation,
         array $movement,
@@ -83,11 +84,6 @@ class CreateForm extends Form
         $unitary_price = $movement['unitary_price'] / $presentation->units;
         $total_price = $count * $unitary_price;
         $new_unitary_price = ($lastMovement->balance->total_price + $total_price) / ($lastMovement->balance->units + $count);
-        $purchase = Purchase::create([
-            'invoice_number' => $this->invoice_number,
-            'provider_id' => $this->provider_id,
-            'user_id' => Auth::user()->id,
-        ]);
         $movement = Movement::create([
             'count' => $count,
             'unitary_price' => $unitary_price,
@@ -107,16 +103,12 @@ class CreateForm extends Form
     }
 
     protected function createInitial(
+        Purchase $purchase,
         Presentation $presentation,
         array $movement,
     )
     {
         $count = $presentation->units * $movement['count'];
-        $purchase = Purchase::create([
-            'invoice_number' => $this->invoice_number,
-            'provider_id' => $this->provider_id,
-            'user_id' => Auth::user()->id,
-        ]);
         $movement = Movement::create([
             'count' => $count,
             'unitary_price' => $movement['unitary_price'] / $presentation->units,
