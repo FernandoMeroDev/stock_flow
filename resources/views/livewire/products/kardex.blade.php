@@ -1,10 +1,17 @@
-<div>
+<div class="space-y-3">
     <flux:heading size="xl">
         Kardex
     </flux:heading>
+
     <flux:text>
         {{$product->name}}
     </flux:text>
+    
+    <flux:select label="Bodega" wire:model.live="warehouse_id">
+        @foreach($warehouses as $warehouse)
+            <flux:select.option :selected="$warehouse->id == $warehouse_id" value="{{$warehouse->id}}">{{$warehouse->name}}</flux:select.option>
+        @endforeach
+    </flux:select>
 
     <x-table class="w-full">
         <x-slot:thead>

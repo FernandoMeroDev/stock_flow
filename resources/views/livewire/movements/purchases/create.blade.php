@@ -6,6 +6,13 @@
     </flux:heading>
 
     <form wire:submit="store" class="space-y-3">
+        <flux:select label="Bodega" wire:model="form.warehouse_id">
+            <flux:select.option value="0">Seleccione...</flux:select.option>
+            @foreach($warehouses as $warehouse)
+                <flux:select.option value="{{$warehouse->id}}">{{$warehouse->name}}</flux:select.option>
+            @endforeach
+        </flux:select>
+
         <flux:input 
             label="Número de Factura"
             wire:model="form.invoice_number" 

@@ -7,6 +7,7 @@ use App\Livewire\Traits\Pagination\CanPaginateManually;
 use App\Livewire\Traits\SetUser;
 use App\Models\Presentation;
 use App\Models\Provider;
+use App\Models\Warehouse;
 use Flux\Flux;
 use Livewire\Component;
 use Livewire\WithoutUrlPagination;
@@ -25,6 +26,7 @@ class Create extends Component
     public function render()
     {
         return view('livewire.movements.purchases.create', [
+            'warehouses' => Warehouse::all(),
             'providers' => Provider::queryOwnModels()->get(),
             'presentations' => $this->searchPresentations()
         ]);

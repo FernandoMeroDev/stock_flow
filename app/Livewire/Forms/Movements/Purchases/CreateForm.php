@@ -11,6 +11,8 @@ use Livewire\Form;
 
 class CreateForm extends Form
 {
+    public int $warehouse_id = 0;
+
     public string $invoice_number = '';
 
     public int $provider_id = 0;
@@ -20,6 +22,7 @@ class CreateForm extends Form
     protected function rules(): array
     {
         return [
+            'warehouse_id' => 'required|exists:warehouses,id',
             'invoice_number' => 'required|string|max:255',
             'provider_id' => 'required|exists:providers,id',
             'movements' => 'required|array|max:50',
@@ -33,6 +36,7 @@ class CreateForm extends Form
     protected function validationAttributes(): array
     {
         return [
+            'warehouse_id' => 'Bodega',
             'invoice_number' => 'Número de Factura',
             'provider_id' => 'Proveedor',
             'movements' => 'Movimientos',
@@ -63,14 +67,16 @@ class CreateForm extends Form
         foreach($this->movements as $movement){
             $presentation = Presentation::find($movement['presentation_id']);
             $product = $presentation->product;
-            $lastMovement = $product->movements()->orderBy('created_at', 'desc')->first();
+            $lastMovement = $product->movements()
+                ->where('warehouse_id', $this->warehouse_id)
+                ->orderBy('created_at', 'desc')->first();
             if($lastMovement){
                 $this->addNew($purchase, $lastMovement, $presentation, $movement);
             } else {
                 $this->createInitial($purchase, $presentation, $movement);
             }
         }
-        $this->reset();
+        $this->resetExcept('warehouse_id', 'provider_id');
     }
 
     protected function addNew(
@@ -90,7 +96,8 @@ class CreateForm extends Form
             'movementable_id' => $purchase->id,
             'movementable_type' => Purchase::class,
             'presentation_id' => $presentation->id,
-            'product_id' => $presentation->product->id
+            'product_id' => $presentation->product->id,
+            'warehouse_id' => $this->warehouse_id
         ]);
         Balance::create([
             'units' => $lastMovement->balance->units + $count,
@@ -115,7 +122,8 @@ class CreateForm extends Form
             'movementable_id' => $purchase->id,
             'movementable_type' => Purchase::class,
             'presentation_id' => $presentation->id,
-            'product_id' => $presentation->product->id
+            'product_id' => $presentation->product->id,
+            'warehouse_id' => $this->warehouse_id
         ]);
         Balance::create([
             'units' => $count,

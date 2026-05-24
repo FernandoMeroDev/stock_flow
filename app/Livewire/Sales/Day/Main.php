@@ -223,7 +223,8 @@ class Main extends Component
             'movementable_id' => $disposal->id,
             'movementable_type' => Disposal::class,
             'presentation_id' => $presentation->id,
-            'product_id' => $presentation->product->id
+            'product_id' => $presentation->product->id,
+            'warehouse_id' => $this->warehouse_id
         ]);
         Balance::create([
             'units' => $lastMovement->balance->units - $movement->count,

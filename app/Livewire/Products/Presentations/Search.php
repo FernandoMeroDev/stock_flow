@@ -13,6 +13,13 @@ class Search extends Component
     use WithPagination, WithoutUrlPagination;
 
     public $search;
+
+    public int $warehouse_id = 0;
+
+    public function mount(int $warehouseId)
+    {
+        $this->warehouse_id = $warehouseId;
+    }
     
     private function searchPresentations(): Paginator
     {

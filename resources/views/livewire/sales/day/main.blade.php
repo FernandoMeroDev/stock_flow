@@ -64,7 +64,10 @@
         </p>
         @enderror
 
-        <livewire:products.presentations.search @add-presentation="addPresentation($event.detail.id, 'id')" />
+        <livewire:products.presentations.search 
+            @add-presentation="addPresentation($event.detail.id, 'id')" 
+            :warehouse-id="$warehouse_id"
+        />
     </div>
 
     <x-table class="w-full mb-3">

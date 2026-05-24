@@ -21,7 +21,8 @@ class Movement extends Model
         'movementable_id',
         'movementable_type',
         'presentation_id',
-        'product_id'
+        'product_id',
+        'warehouse_id'
     ];
 
     protected function totalPrice(): Attribute
