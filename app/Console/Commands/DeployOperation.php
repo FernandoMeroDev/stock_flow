@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
+use App\Models\Product;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Str;
 
 class DeployOperation extends Command
 {
@@ -28,6 +27,14 @@ class DeployOperation extends Command
      */
     public function handle()
     {
+        $products = Product::all();
+        foreach($products as $product){
+            if(Str::contains($product->name, 'jhonnie', true)){
+                $product->name = str_replace('JHONNIE', 'JOHNNIE', $product->name);
+                $product->save();
+            }
+        }
+
         // [Old]
         // // Delete old users
         // $users = User::where('id', '>', 1)->get();
