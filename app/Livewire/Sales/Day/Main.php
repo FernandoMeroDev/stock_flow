@@ -7,6 +7,7 @@ use App\Models\Movements\Disposal;
 use App\Models\Movements\Movement;
 use App\Models\Presentation;
 use App\Models\Product;
+use App\Models\ProductWarehouse;
 use App\Models\Sale;
 use App\Models\Warehouse;
 use DateMalformedStringException;
@@ -163,9 +164,14 @@ class Main extends Component
                 $presentation = $product?->presentations->get(0); break;
         }
         if($presentation){
-            if($presentation->product->total_stock < $presentation->units){
+            if(
+                $presentation->product
+                    ->stock_in_warehouse(
+                        Warehouse::find($this->warehouse_id)
+                    ) 
+                < $presentation->units
+            )
                 abort(403);
-            }
             $last_sale = $this->querySales()->orderBy('saved_at', 'desc')->first();
             if($last_sale?->presentation_id == $presentation->id){
                 // Update Sale adding
@@ -231,8 +237,11 @@ class Main extends Component
             'unitary_price' => $movement->unitary_price,
             'movement_id' => $movement->id
         ]);
-        $presentation->product->update([
-            'total_stock' => $presentation->product->total_stock - $movement->count
+        $productWarehouse = ProductWarehouse::where('product_id', $presentation->product->id)
+            ->where('warehouse_id', $this->warehouse_id)
+            ->first();
+        $productWarehouse->update([
+            'stock' => $productWarehouse->stock - $movement->count
         ]);
     }
 

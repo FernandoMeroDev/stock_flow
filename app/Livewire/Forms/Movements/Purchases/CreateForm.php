@@ -6,6 +6,7 @@ use App\Models\Movements\Balance;
 use App\Models\Movements\Movement;
 use App\Models\Movements\Purchase;
 use App\Models\Presentation;
+use App\Models\ProductWarehouse;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Form;
 
@@ -104,8 +105,11 @@ class CreateForm extends Form
             'unitary_price' => $new_unitary_price,
             'movement_id' => $movement->id
         ]);
-        $presentation->product->update([
-            'total_stock' => $presentation->product->total_stock + $count
+        $productWarehouse = ProductWarehouse::where('product_id', $presentation->product->id)
+            ->where('warehouse_id', $this->warehouse_id)
+            ->first();
+        $productWarehouse->update([
+            'stock' => $productWarehouse->stock + $count
         ]);
     }
 
@@ -130,8 +134,10 @@ class CreateForm extends Form
             'unitary_price' => $movement['unitary_price'],
             'movement_id' => $movement->id
         ]);
-        $presentation->product->update([
-            'total_stock' => $presentation->product->total_stock + $count
+        ProductWarehouse::create([
+            'stock' => $count,
+            'product_id' => $presentation->product->id,
+            'warehouse_id' => $this->warehouse_id
         ]);
     }
 }

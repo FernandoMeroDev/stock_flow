@@ -6,6 +6,7 @@ use App\Models\Movements\Balance;
 use App\Models\Movements\Movement;
 use App\Models\Movements\Purchase;
 use App\Models\Product;
+use App\Models\ProductWarehouse;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -33,12 +34,18 @@ class PurchaseSeeder extends Seeder
                 'movementable_id' => $purchase->id,
                 'movementable_type' => $purchase::class,
                 'presentation_id' => $presentation->id,
-                'product_id' => $presentation->product->id
+                'product_id' => $presentation->product->id,
+                'warehouse_id' => 1
             ]);
             Balance::create([
                 'units' => 5,
                 'unitary_price' => $presentation->price,
                 'movement_id' => $movement->id
+            ]);
+            ProductWarehouse::create([
+                'stock' => 5,
+                'warehouse_id' => 1,
+                'product_id' => $presentation->product->id
             ]);
             $n++;
         }

@@ -43,6 +43,14 @@ class Product extends Model
             ->get();
     }
 
+    public function stock_in_warehouse(Warehouse $warehouse): int
+    {
+        $productWarehouse = ProductWarehouse::where('product_id', $this->id)
+            ->where('warehouse_id', $warehouse->id)
+            ->first();
+        return $productWarehouse->stock;
+    }
+
     public function inventories(): BelongsToMany
     {
         return $this->belongsToMany(Inventory::class);
@@ -56,5 +64,10 @@ class Product extends Model
     public function movements(): HasMany
     {
         return $this->hasMany(Movement::class);
+    }
+
+    public function productWarehouse(): HasMany
+    {
+        return $this->hasMany(ProductWarehouse::class);
     }
 }
