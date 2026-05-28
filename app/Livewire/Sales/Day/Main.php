@@ -221,6 +221,7 @@ class Main extends Component
             'user_id' => Auth::user()->id,
         ]);
         $lastMovement = Movement::where('product_id', $presentation->product->id)
+            ->where('warehouse_id', $this->warehouse_id)
             ->orderBy('created_at', 'desc')
             ->first();
         $movement = Movement::create([
