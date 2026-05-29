@@ -68,6 +68,9 @@
                     <flux:navlist.item :href="route('purchases.index')" :current="request()->routeIs('purchases.index')">
                         Compras
                     </flux:navlist.item>
+                    <flux:navlist.item :href="route('purchase-devolutions.index')" :current="request()->routeIs('purchase-devolutions.index')">
+                        Devoluciones de Compras
+                    </flux:navlist.item>
                     @endcan
                     @can('clients')
                     <flux:navlist.item :href="route('clients.index')" :current="request()->routeIs('clients.index')">

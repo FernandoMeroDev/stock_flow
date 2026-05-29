@@ -14,6 +14,9 @@ use App\Livewire\Warehouses\Shelves\Levels\Edit\Main as LevelEdit;
 use App\Livewire\Inventories\Index as InventoryIndex;
 use App\Livewire\Inventories\Edit\Main as InventoryEdit;
 use App\Livewire\Movements\Purchases\Index as PurchaseIndex;
+use App\Livewire\Movements\Purchases\Devolutions\Index as PurchaseDevolutionIndex;
+use App\Livewire\Movements\Purchases\Devolutions\Create as PurchaseDevolutionCreate;
+use App\Livewire\Movements\Purchases\Devolutions\Edit as PurchaseDevolutionEdit;
 use App\Livewire\Movements\Purchases\Create as PurchaseCreate;
 use App\Livewire\Movements\Purchases\Edit as PurchaseEdit;
 use App\Livewire\Products\Kardex;
@@ -84,6 +87,10 @@ Route::middleware(['auth', 'can:purchases'])->group(function() {
     Route::get('/compras', PurchaseIndex::class)->name('purchases.index');
     Route::get('/compras/crear', PurchaseCreate::class)->name('purchases.create');
     Route::get('/compras/{purchase}/editar', PurchaseEdit::class)->name('purchases.edit');
+
+    Route::get('/devoluciones-compras', PurchaseDevolutionIndex::class)->name('purchase-devolutions.index');
+    Route::get('/devoluciones-compras/crear', PurchaseDevolutionCreate::class)->name('purchase-devolutions.create');
+    Route::get('/devoluciones-compras/{purchaseDevolution}/editar', PurchaseDevolutionEdit::class)->name('purchase-devolutions.edit');
 });
 
 Route::middleware(['auth', 'can:clients'])->get('/clientes', ClientIndex::class)->name('clients.index');
