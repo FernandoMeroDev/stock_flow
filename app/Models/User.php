@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Movements\DisposalDevolution;
 use App\Models\Movements\Purchase;
 use App\Models\Movements\PurchaseDevolution;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -87,5 +88,10 @@ class User extends Authenticatable
     public function purchaseDevolutions(): HasMany
     {
         return $this->hasMany(PurchaseDevolution::class);
+    }
+
+    public function disposalDevolutions(): HasMany
+    {
+        return $this->hasMany(DisposalDevolution::class);
     }
 }

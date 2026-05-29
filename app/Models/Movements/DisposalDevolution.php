@@ -2,27 +2,27 @@
 
 namespace App\Models\Movements;
 
+use App\Models\Traits\QueryOwnModels;
 use App\Models\User;
-use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Disposal extends Model
+class DisposalDevolution extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, QueryOwnModels;
+
+    protected $table = 'disposal_devolutions';
 
     protected $fillable = [
-        'paid_in_cash',
-        'warehouse_id',
-        'user_id',
-        'devolution_id'
+        'user_id'
     ];
-    
+
     public function get_readable_type_name(): string
     {
-        return 'Venta';
+        return 'Devolución de Venta';
     }
 
     public function user(): BelongsTo
@@ -35,13 +35,8 @@ class Disposal extends Model
         return $this->morphMany(Movement::class, 'movementable');
     }
 
-    public function warehouse(): BelongsTo
+    public function disposals(): HasMany
     {
-        return $this->belongsTo(Warehouse::class);
-    }
-
-    public function devolution(): BelongsTo
-    {
-        return $this->belongsTo(DisposalDevolution::class, 'devolution_id');
+        return $this->hasMany(Disposal::class, 'devolution_id');
     }
 }

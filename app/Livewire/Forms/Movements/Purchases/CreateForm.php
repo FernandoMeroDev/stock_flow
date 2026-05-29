@@ -70,7 +70,9 @@ class CreateForm extends Form
             $product = $presentation->product;
             $lastMovement = $product->movements()
                 ->where('warehouse_id', $this->warehouse_id)
-                ->orderBy('created_at', 'desc')->first();
+                ->orderBy('created_at', 'desc')
+                ->orderBy('id', 'desc')
+                ->first();
             if($lastMovement){
                 $this->addNew($purchase, $lastMovement, $presentation, $movement);
             } else {

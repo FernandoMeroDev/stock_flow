@@ -38,6 +38,7 @@ class Kardex extends Component
         $movements = Movement::where('product_id', $this->product->id)
             ->where('warehouse_id', $this->warehouse_id)
             ->orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc')
             ->get();
         return $this->paginate($movements, $this->perPage);
     }

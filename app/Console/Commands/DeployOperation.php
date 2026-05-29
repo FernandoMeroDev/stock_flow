@@ -28,22 +28,6 @@ class DeployOperation extends Command
      */
     public function handle()
     {
-        $products = Product::where('total_stock', '>', 0)->get();
-        foreach($products as $product){
-            ProductWarehouse::create([
-                'stock' => $product->total_stock,
-                'warehouse_id' => 1,
-                'product_id' => $product->id
-            ]);
-        }
-
-        // [OLD]
-        // $products = Product::all();
-        // foreach($products as $product){
-        //     if(Str::contains($product->name, 'jhonnie', true)){
-        //         $product->name = str_replace('JHONNIE', 'JOHNNIE', $product->name);
-        //         $product->save();
-        //     }
-        // }
+        //
     }
 }

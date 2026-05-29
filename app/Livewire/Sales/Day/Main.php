@@ -172,7 +172,9 @@ class Main extends Component
                 < $presentation->units
             )
                 abort(403);
-            $last_sale = $this->querySales()->orderBy('saved_at', 'desc')->first();
+            $last_sale = $this->querySales()
+                ->orderBy('saved_at', 'desc')
+                ->orderBy('id', 'desc')->first();
             if($last_sale?->presentation_id == $presentation->id){
                 // Update Sale adding
                 $this->updateSale($last_sale, $presentation);

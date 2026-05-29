@@ -17,6 +17,8 @@ use App\Livewire\Movements\Purchases\Index as PurchaseIndex;
 use App\Livewire\Movements\Purchases\Devolutions\Index as PurchaseDevolutionIndex;
 use App\Livewire\Movements\Purchases\Devolutions\Create as PurchaseDevolutionCreate;
 use App\Livewire\Movements\Purchases\Devolutions\Edit as PurchaseDevolutionEdit;
+use App\Livewire\Movements\Disposals\Devolutions\Index as DisposalDevolutionIndex;
+use App\Livewire\Movements\Disposals\Devolutions\Create as DisposalDevolutionCreate;
 use App\Livewire\Movements\Purchases\Create as PurchaseCreate;
 use App\Livewire\Movements\Purchases\Edit as PurchaseEdit;
 use App\Livewire\Products\Kardex;
@@ -77,6 +79,9 @@ Route::middleware(['auth', 'can:sales'])->group(function(){
     Route::get('/ventas/descargar', [SaleDownload::class, 'single'])->name('sales.download-single');
     Route::get('/ventas/descargar/multiples', [SaleDownload::class, 'multiple'])->name('sales.download-multiple');
     Route::livewire('/ventas/{warehouse}/dia', SaleDay::class)->name('sales.day');
+
+    Route::get('/devoluciones-ventas', DisposalDevolutionIndex::class)->name('disposal-devolutions.index');
+    Route::get('/devoluciones-ventas/crear', DisposalDevolutionCreate::class)->name('disposal-devolutions.create');
 });
 
 Route::middleware(['auth', 'can:cash-boxes'])->get('/cajas', CashBoxIndex::class)->name('cash-boxes.index');
