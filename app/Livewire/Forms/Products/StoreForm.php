@@ -59,7 +59,7 @@ class StoreForm extends Form
         $inputs['created_by'] = Auth::user()->id;
         $product = Product::create($inputs);
         Presentation::create([
-            'name' => '1 Unidad',
+            'name' => 'UNIDAD',
             'units' => 1,
             'price' => $inputs['price'],
             'base' => true,
