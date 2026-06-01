@@ -6,7 +6,11 @@
         </flux:modal.trigger>
     </div>
 
-    <livewire:products.create @created="$refresh" />
+    <div wire:ignore>
+        <livewire:products.create @created="$refresh" />
+
+        <livewire:products.edit @edited="$refresh" />
+    </div>
 
     <x-table class="w-full mb-3">
         <x-slot:thead>
@@ -18,7 +22,7 @@
         </x-slot:thead>
 
         @forelse ($products as $product)
-            <x-table.tr>
+            <x-table.tr wire:key="{{$product->id}}">
                 <td class="w-5 px-3 py-1">
                     <flux:button icon="pencil" x-on:click="$dispatch('edit-product', { product_id: {{$product->id}} })"></flux:button>
                 </td>
@@ -40,6 +44,4 @@
     </x-table>
 
     <x-pagination :paginator="$products" />
-
-    <livewire:products.edit @edited="$refresh" />
 </div>

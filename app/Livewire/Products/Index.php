@@ -3,6 +3,7 @@
 namespace App\Livewire\Products;
 
 use App\Models\Product;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -10,6 +11,7 @@ class Index extends Component
 {
     use WithPagination;
 
+    #[Url('buscar')]
     public string $search = '';
 
     public function render()
