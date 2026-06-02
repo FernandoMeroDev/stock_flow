@@ -11,9 +11,12 @@ use App\Models\Warehouse;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Create extends Component
 {
+    use WithPagination;
+
     public $warehouse_id = 0;
 
     public string $date_from;
