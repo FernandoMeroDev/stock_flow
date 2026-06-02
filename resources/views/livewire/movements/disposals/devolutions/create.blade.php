@@ -78,7 +78,7 @@
                 @endforelse
             </x-table>
 
-            {{ $disposals->links() }}
+            {{ $disposals->links(data: ['scrollTo' => false]) }}
         </div>
 
         <flux:label>

@@ -47,6 +47,8 @@ class Create extends Component
             ->where('warehouse_id', $this->warehouse_id)
             ->where('created_at', '>=', $this->date_from . ' 00:00:00')
             ->where('created_at', '<=', $this->date_to . ' 23:59:59')
+            ->orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc')
             ->paginate(15);
     }
 
