@@ -82,10 +82,41 @@ class CreateForm extends Form
                 ->where('warehouse_id', $this->warehouse_to_id)
                 ->orderBy('created_at', 'desc')
                 ->orderBy('id', 'desc')->first();
-            $this->createIncomeMovement($income, $lastMovement, $presentation, $movement);
+            if(is_null($lastMovement))
+                $this->createInitialInventory($income, $presentation, $movement);
+            else
+                $this->createIncomeMovement($income, $lastMovement, $presentation, $movement);
         }
         $outcome->update([
             'income_id' => $income->id
+        ]);
+    }
+
+    protected function createInitialInventory(
+        WarehouseChange $income,
+        Presentation $presentation,
+        array $movement,
+    )
+    {
+        $count = $presentation->units * $movement['count'];
+        $movement = Movement::create([
+            'count' => $count,
+            'unitary_price' => $presentation->price,
+            'movementable_id' => $income->id,
+            'movementable_type' => WarehouseChange::class,
+            'presentation_id' => $presentation->id,
+            'product_id' => $presentation->product->id,
+            'warehouse_id' => $this->warehouse_to_id
+        ]);
+        Balance::create([
+            'units' => $count,
+            'unitary_price' => $presentation->price,
+            'movement_id' => $movement->id
+        ]);
+        ProductWarehouse::create([
+            'stock' => $count,
+            'product_id' => $presentation->product->id,
+            'warehouse_id' => $this->warehouse_to_id
         ]);
     }
 
