@@ -19,6 +19,7 @@ use App\Livewire\Movements\Purchases\Devolutions\Create as PurchaseDevolutionCre
 use App\Livewire\Movements\Purchases\Devolutions\Edit as PurchaseDevolutionEdit;
 use App\Livewire\Movements\Disposals\Devolutions\Index as DisposalDevolutionIndex;
 use App\Livewire\Movements\Disposals\Devolutions\Create as DisposalDevolutionCreate;
+use App\Livewire\Movements\Disposals\Devolutions\Edit as DisposalDevolutionEdit;
 use App\Livewire\Movements\Purchases\Create as PurchaseCreate;
 use App\Livewire\Movements\Purchases\Edit as PurchaseEdit;
 use App\Livewire\Products\Kardex;
@@ -82,6 +83,7 @@ Route::middleware(['auth', 'can:sales'])->group(function(){
 
     Route::get('/devoluciones-ventas', DisposalDevolutionIndex::class)->name('disposal-devolutions.index');
     Route::get('/devoluciones-ventas/crear', DisposalDevolutionCreate::class)->name('disposal-devolutions.create');
+    Route::get('/devoluciones-ventas/{disposalDevolution}/editar', DisposalDevolutionEdit::class)->name('disposal-devolutions.edit');
 });
 
 Route::middleware(['auth', 'can:cash-boxes'])->get('/cajas', CashBoxIndex::class)->name('cash-boxes.index');

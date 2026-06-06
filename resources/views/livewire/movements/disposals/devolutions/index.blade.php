@@ -20,7 +20,7 @@
         </x-slot:thead>
         @forelse($disposals as $disposal)
             <x-table.tr 
-                {{-- x-on:click="open('{{route('disposal-devolutions.edit', $disposal->id)}}')" wire:key="{{$disposal->id}}"  --}}
+                x-on:click="open('{{route('disposal-devolutions.edit', $disposal->id)}}')" wire:key="{{$disposal->id}}" 
                 class="cursor-pointer hover:bg-blue-500"
             >
                 <td class="p-3">

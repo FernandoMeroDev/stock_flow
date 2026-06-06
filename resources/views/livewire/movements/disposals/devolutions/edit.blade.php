@@ -2,19 +2,19 @@
 
 <div class="space-y-3">
     <flux:heading size="xl">
-        Editar Devolución de Compra
+        Editar Devolución de Venta
     </flux:heading>
 
     <form wire:submit="store" class="space-y-3">
         <flux:input 
             label="Creado Por"
-            value="{{$form->purchaseDevolution->user->name}}"
+            value="{{$form->disposalDevolution->user->name}}"
             readonly
         />
 
         <flux:input 
             label="Fecha de creación"
-            value="{{$form->purchaseDevolution->created_at}}"
+            value="{{$form->disposalDevolution->created_at}}"
             readonly
         />
 
@@ -36,7 +36,7 @@
                     <x-table.th></x-table.th>
                 </x-slot:thead>
                 @forelse($form->movements as $key => $movement)
-                    @php $presentation = Presentation::find($movement['presentation_id']); @endphp
+                    @php $presentation = Presentation::withTrashed()->find($movement['presentation_id']); @endphp
                     <x-table.tr 
                         wire:key="{{$presentation->id . '-' . $key}}"
                     >
