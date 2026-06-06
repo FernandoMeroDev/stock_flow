@@ -46,6 +46,9 @@
                     <flux:navlist.item :href="route('disposal-devolutions.index')" :current="request()->routeIs('disposal-devolutions.index')">
                         Devoluciones de Ventas
                     </flux:navlist.item>
+                    <flux:navlist.item :href="route('warehouse-changes.create')" :current="request()->routeIs('warehouse-changes.create')">
+                        Cambio de Bodega
+                    </flux:navlist.item>
                     @endcan
                     @can('inventories')
                     <flux:navlist.item :href="route('inventories.index')" :current="request()->routeIs('inventories.index')">
