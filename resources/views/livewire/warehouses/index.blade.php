@@ -30,14 +30,14 @@
     <x-pagination :paginator="$warehouses" />
 
     <form wire:ignore action="{{route('inventories.store')}}" method="POST" class="my-10 space-y-3">
+        @csrf
+
         <div>
             <flux:heading size="lg">Guardar Inventario</flux:heading>
             <flux:text>
                 Capture el inventario actual en la base de datos.
             </flux:text>
         </div>
-
-        @csrf
 
         <flux:input 
             x-data="liveDatetimeInput" x-model="datetime" label="Fecha" type="datetime" name="saved_at" value="{{now()}}"
@@ -46,6 +46,21 @@
 
         <flux:button type="submit" variant="primary">
             Guardar
+        </flux:button>
+    </form>
+
+    <form wire:ignore action="{{route('inventories.create-initial')}}" method="POST" class="my-10 space-y-3">
+        @csrf
+
+        <div>
+            <flux:heading size="lg">Crear Inventario Inicial</flux:heading>
+            <flux:text>
+                Se creará el inventario inicial para los productos que se hayan encontrado en las bodegas pero que aún no tienen registros en el kardex.
+            </flux:text>
+        </div>
+
+        <flux:button type="submit" variant="primary">
+            Crear Inventario
         </flux:button>
     </form>
 

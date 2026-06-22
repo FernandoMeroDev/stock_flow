@@ -14,6 +14,10 @@ class ProviderSeeder extends Seeder
      */
     public function run(): void
     {
+        Provider::create([
+            'name' => 'Inventario Inicial',
+            'user_id' => 1
+        ]);
         for($i = 0; $i < 5; $i++)
             Provider::create([
                 'name' => fake()->name(),
@@ -21,6 +25,10 @@ class ProviderSeeder extends Seeder
             ]);
         $managers = Role::findByName('Manager')->users;
         foreach($managers as $manager)
+            Provider::create([
+                'name' => 'Inventario Inicial',
+                'user_id' => $manager->id
+            ]);
             for($i = 0; $i < 5; $i++)
                 Provider::create([
                     'name' => fake()->name(),
