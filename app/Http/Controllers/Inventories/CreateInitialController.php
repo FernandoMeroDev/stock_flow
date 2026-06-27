@@ -19,6 +19,7 @@ class CreateInitialController extends Controller
     {
         DB::table('movements')->delete();
         DB::table('balances')->delete();
+        DB::table('product_warehouse')->delete();
         DB::table('purchases')->delete();
         DB::table('disposals')->delete();
         DB::table('purchase_devolutions')->delete();
