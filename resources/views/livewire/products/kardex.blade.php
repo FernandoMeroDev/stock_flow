@@ -32,7 +32,7 @@
                     {{$movement->created_at}}
                 </td>
                 <td class="p-3">
-                    {{-- Fix 1 --}}
+                    {{-- Fix 2 --}}
                     {{$movement->presentation?->complete_name() ?? 'No Registrado'}}
                 </td>
                 <td class="p-3 border-r-1 border-zinc-200 dark:border-zinc-700">
