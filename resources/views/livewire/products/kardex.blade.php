@@ -33,7 +33,7 @@
                 </td>
                 <td class="p-3">
                     {{-- Fix 2 --}}
-                    {{$movement->presentation?->complete_name() ?? 'No Registrado'}}
+                    {{$movement->presentation()->withTrashed()->first()->complete_name()}}
                 </td>
                 <td class="p-3 border-r-1 border-zinc-200 dark:border-zinc-700">
                     {{$movement->movementable->get_readable_type_name()}}
