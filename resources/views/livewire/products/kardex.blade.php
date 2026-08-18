@@ -48,13 +48,13 @@
                     ${{$movement->total_price}}
                 </td>
                 <td class="p-3">
-                    {{$movement->balance->units}}
+                    {{$movement->balance?->units ?? "No registrado"}}
                 </td>
                 <td class="p-3">
-                    ${{$movement->balance->unitary_price}}
+                    ${{$movement->balance?->unitary_price ?? "No registrado"}}
                 </td>
                 <td class="p-3 border-r-1 border-zinc-200 dark:border-zinc-700">
-                    ${{$movement->balance->total_price}}
+                    ${{$movement->balance?->total_price ?? "No registrado"}}
                 </td>
             </x-table.tr>
         @empty
