@@ -56,7 +56,7 @@
                             {{$disposal->user->name}}
                         </td>
                         <td class="p-3">
-                            {{$disposal->movements->get(0)->presentation()->withTrashed()->first()->complete_name()}}
+                            {{$disposal->movements->get(0)?->presentation()?->withTrashed()?->first()?->complete_name() ?? "No registrado"}}
                         </td>
                         <td class="p-3">
                             {{$disposal->movements->get(0)->count}}

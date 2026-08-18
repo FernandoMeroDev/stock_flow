@@ -236,7 +236,7 @@ class Main extends Component
             'warehouse_id' => $this->warehouse_id
         ]);
         Balance::create([
-            'units' => $lastMovement->balance->units - $movement->count,
+            'units' => $lastMovement?->balance?->units ?? 0 - $movement->count,
             'unitary_price' => $movement->unitary_price,
             'movement_id' => $movement->id
         ]);
