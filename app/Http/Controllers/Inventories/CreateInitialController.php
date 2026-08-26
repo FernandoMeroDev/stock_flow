@@ -17,40 +17,40 @@ class CreateInitialController extends Controller
 {
     public function __invoke()
     {
-        DB::table('movements')->delete();
-        DB::table('balances')->delete();
-        DB::table('product_warehouse')->delete();
-        DB::table('purchases')->delete();
-        DB::table('disposals')->delete();
-        DB::table('purchase_devolutions')->delete();
-        DB::table('disposal_devolutions')->delete();
-        DB::table('warehouse_changes')->delete();
-        // Loop into products to create inventory_product records
-        $products = Product::all();
-        foreach($products as $product){
-            $warehouses = Warehouse::all();
-            foreach($warehouses as $warehouse){
-                $count = $product->warehouse_existences($warehouse)->sum('count');
-                if($count > 0){
-                    // Checkear si el producto tiene registros en el kardex de esa bodega
-                    $movements = Movement::where('product_id', $product->id)
-                        ->where('warehouse_id', $warehouse->id)
-                        ->orderBy('created_at', 'desc')
-                        ->orderBy('id', 'desc')
-                        ->get();
-                    if($movements->isEmpty()){
-                        $this->registerInitialInventory($product, $warehouse, $count);
-                        dump('Inventario Inicial Registrado!');
-                        dump([
-                            'producto' => $product->name,
-                            'bodega' => $warehouse->name,
-                            'cantidad' => $count
-                        ]);
-                    }
-                }
-            }
-        }
-        return 'Ejecutado!';
+        // DB::table('movements')->delete();
+        // DB::table('balances')->delete();
+        // DB::table('product_warehouse')->delete();
+        // DB::table('purchases')->delete();
+        // DB::table('disposals')->delete();
+        // DB::table('purchase_devolutions')->delete();
+        // DB::table('disposal_devolutions')->delete();
+        // DB::table('warehouse_changes')->delete();
+        // // Loop into products to create inventory_product records
+        // $products = Product::all();
+        // foreach($products as $product){
+        //     $warehouses = Warehouse::all();
+        //     foreach($warehouses as $warehouse){
+        //         $count = $product->warehouse_existences($warehouse)->sum('count');
+        //         if($count > 0){
+        //             // Checkear si el producto tiene registros en el kardex de esa bodega
+        //             $movements = Movement::where('product_id', $product->id)
+        //                 ->where('warehouse_id', $warehouse->id)
+        //                 ->orderBy('created_at', 'desc')
+        //                 ->orderBy('id', 'desc')
+        //                 ->get();
+        //             if($movements->isEmpty()){
+        //                 $this->registerInitialInventory($product, $warehouse, $count);
+        //                 dump('Inventario Inicial Registrado!');
+        //                 dump([
+        //                     'producto' => $product->name,
+        //                     'bodega' => $warehouse->name,
+        //                     'cantidad' => $count
+        //                 ]);
+        //             }
+        //         }
+        //     }
+        // }
+        // return 'Ejecutado!';
     }
 
     private function registerInitialInventory(

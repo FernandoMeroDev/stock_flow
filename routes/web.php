@@ -73,7 +73,7 @@ Route::middleware(['auth', 'can:warehouses'])->group(function(){
 Route::middleware(['auth', 'can:inventories'])->group(function(){
     Route::get('/inventarios', InventoryIndex::class)->name('inventories.index');
     Route::post('/inventarios', InventoryStore::class)->name('inventories.store');
-    Route::post('/inventarios/crear-inicial', InventoryCreateInitial::class)->name('inventories.create-initial');
+    // Route::post('/inventarios/crear-inicial', InventoryCreateInitial::class)->name('inventories.create-initial');
     Route::get('/inventarios/{inventory}/editar', InventoryEdit::class)->name('inventories.edit');
     Route::get('/inventarios/{inventory}/descargar', InventoryDownload::class)->name('inventories.download');
 });

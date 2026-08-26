@@ -49,7 +49,7 @@
         </flux:button>
     </form>
 
-    <form wire:ignore action="{{route('inventories.create-initial')}}" method="POST" class="my-10 space-y-3">
+    {{-- <form wire:ignore action="{{route('inventories.create-initial')}}" method="POST" class="my-10 space-y-3">
         @csrf
 
         <div>
@@ -62,7 +62,7 @@
         <flux:button type="submit" variant="primary">
             Crear Inventario
         </flux:button>
-    </form>
+    </form> --}}
 
     <div class="mb-3">
         <flux:heading size="lg">Inventarios</flux:heading>
