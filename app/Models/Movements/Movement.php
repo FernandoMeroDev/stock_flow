@@ -4,6 +4,7 @@ namespace App\Models\Movements;
 
 use App\Models\Presentation;
 use App\Models\Product;
+use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -52,5 +53,10 @@ class Movement extends Model
     public function balance(): HasOne
     {
         return $this->hasOne(Balance::class);
+    }
+
+    public function warehouse(): BelongsTo
+    {
+        return $this->belongsTo(Warehouse::class);
     }
 }

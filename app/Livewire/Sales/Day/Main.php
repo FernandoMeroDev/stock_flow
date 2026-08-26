@@ -217,15 +217,18 @@ class Main extends Component
 
     private function createDisposal(Presentation $presentation)
     {
+        $lastMovement = Movement::where('product_id', $presentation->product->id)
+            ->where('warehouse_id', $this->warehouse_id)
+            ->orderBy('created_at', 'desc')
+            ->first();
+        if(is_null($lastMovement)){
+            abort(500, 'Error ultimo Movimiento no encontrado.');
+        }
         $disposal = Disposal::create([
             'paid_in_cash' => true,
             'warehouse_id' => $this->warehouse_id,
             'user_id' => Auth::user()->id,
         ]);
-        $lastMovement = Movement::where('product_id', $presentation->product->id)
-            ->where('warehouse_id', $this->warehouse_id)
-            ->orderBy('created_at', 'desc')
-            ->first();
         $movement = Movement::create([
             'count' => $presentation->units,
             'unitary_price' => $lastMovement->balance->unitary_price,
@@ -236,7 +239,7 @@ class Main extends Component
             'warehouse_id' => $this->warehouse_id
         ]);
         Balance::create([
-            'units' => $lastMovement?->balance?->units ?? 0 - $movement->count,
+            'units' => $lastMovement->balance->units - $movement->count,
             'unitary_price' => $movement->unitary_price,
             'movement_id' => $movement->id
         ]);

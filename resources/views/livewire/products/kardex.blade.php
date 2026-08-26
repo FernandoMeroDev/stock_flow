@@ -32,7 +32,6 @@
                     {{$movement->created_at}}
                 </td>
                 <td class="p-3">
-                    {{-- Fix 2 --}}
                     {{$movement->presentation()->withTrashed()->first()->complete_name()}}
                 </td>
                 <td class="p-3 border-r-1 border-zinc-200 dark:border-zinc-700">
@@ -42,19 +41,19 @@
                     {{$movement->count}}
                 </td>
                 <td class="p-3">
-                    ${{$movement->unitary_price}}
+                    {{$movement->unitary_price}}
                 </td>
                 <td class="p-3 border-r-1 border-zinc-200 dark:border-zinc-700">
-                    ${{$movement->total_price}}
+                    {{$movement->total_price}}
                 </td>
                 <td class="p-3">
-                    {{$movement->balance?->units ?? "No registrado"}}
+                    {{$movement->balance->units}}
                 </td>
                 <td class="p-3">
-                    ${{$movement->balance?->unitary_price ?? "No registrado"}}
+                    {{$movement->balance->unitary_price}}
                 </td>
                 <td class="p-3 border-r-1 border-zinc-200 dark:border-zinc-700">
-                    ${{$movement->balance?->total_price ?? "No registrado"}}
+                    {{$movement->balance->total_price}}
                 </td>
             </x-table.tr>
         @empty

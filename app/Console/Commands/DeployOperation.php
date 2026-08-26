@@ -2,10 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Product;
-use App\Models\ProductWarehouse;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 
 class DeployOperation extends Command
 {
