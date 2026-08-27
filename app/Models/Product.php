@@ -48,7 +48,7 @@ class Product extends Model
         $productWarehouse = ProductWarehouse::where('product_id', $this->id)
             ->where('warehouse_id', $warehouse->id)
             ->first();
-        return $productWarehouse->stock;
+        return $productWarehouse?->stock ?? 0;
     }
 
     public function inventories(): BelongsToMany

@@ -1,5 +1,23 @@
 <div>
-    <div class="space-y-6">
+    <div class="space-y-3 mb-6">
+        <flux:heading size="xl">
+            Cuadre de inventario
+        </flux:heading>
+
+        <flux:text>
+            Genera un reporte con las diferencias entre el inventario de la bodega y los balances del kardex.
+        </flux:text>
+
+        <flux:button :href="route('inventories.audit-report')" variant="primary">
+            Descargar Reporte
+        </flux:button>
+    </div>
+
+    <div class="space-y-3">
+        <flux:heading size="xl">
+            Inventarios
+        </flux:heading>
+
         <div class="grid gap-2 sm:grid-cols-2">
             <flux:input wire:model.live="date_from" label="Consultar desde:" type="date" />
             <flux:input wire:model.live="date_to" label="Consultar hasta:" type="date" />

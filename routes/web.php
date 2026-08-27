@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Inventories\StoreController as InventoryStore;
-use App\Http\Controllers\Inventories\CreateInitialController as InventoryCreateInitial;
+// use App\Http\Controllers\Inventories\CreateInitialController as InventoryCreateInitial;
 use App\Http\Controllers\Inventories\DownloadController as InventoryDownload;
+use App\Http\Controllers\Inventories\AuditController as InventoryAudit;
 use App\Http\Controllers\Sales\DownloadController as SaleDownload;
 use App\Livewire\CashBoxes\Index as CashBoxIndex;
 use App\Livewire\Clients\Index as ClientIndex;
@@ -75,6 +76,7 @@ Route::middleware(['auth', 'can:inventories'])->group(function(){
     Route::post('/inventarios', InventoryStore::class)->name('inventories.store');
     // Route::post('/inventarios/crear-inicial', InventoryCreateInitial::class)->name('inventories.create-initial');
     Route::get('/inventarios/{inventory}/editar', InventoryEdit::class)->name('inventories.edit');
+    Route::get('/inventarios/auditoria/descargar', InventoryAudit::class)->name('inventories.audit-report');
     Route::get('/inventarios/{inventory}/descargar', InventoryDownload::class)->name('inventories.download');
 });
 
