@@ -176,9 +176,11 @@ class Main extends Component
                 ->orderBy('saved_at', 'desc')
                 ->orderBy('id', 'desc')->first();
             if($last_sale?->presentation_id == $presentation->id){
+                $this->createDisposal($presentation);
                 // Update Sale adding
                 $this->updateSale($last_sale, $presentation);
             } else {
+                $this->createDisposal($presentation);
                 $this->createSale($presentation);
             }
             $this->dispatch('sale-created');
@@ -195,8 +197,6 @@ class Main extends Component
             'count' => $last_sale->count + 1,
             'cash' => $last_sale->cash + ($presentation->price)
         ]);
-        // Create Disposal
-        $this->createDisposal($presentation);
     }
 
     private function createSale(Presentation $presentation): void
@@ -211,8 +211,6 @@ class Main extends Component
             'warehouse_id' => $this->warehouse_id,
             'created_by' => Auth::user()->id
         ]);
-        // Create Disposal
-        $this->createDisposal($presentation);
     }
 
     private function createDisposal(Presentation $presentation)
@@ -223,6 +221,10 @@ class Main extends Component
             ->first();
         if(is_null($lastMovement)){
             abort(500, 'Error ultimo Movimiento no encontrado.');
+        } elseif(
+            ($lastMovement->balance->units - $presentation->units) < 0
+        ) {
+            abort(400, 'El saldo no puede ser menor a cero.');
         }
         $disposal = Disposal::create([
             'paid_in_cash' => true,
@@ -238,7 +240,7 @@ class Main extends Component
             'product_id' => $presentation->product->id,
             'warehouse_id' => $this->warehouse_id
         ]);
-        Balance::create([
+        $balance = Balance::create([
             'units' => $lastMovement->balance->units - $movement->count,
             'unitary_price' => $movement->unitary_price,
             'movement_id' => $movement->id
@@ -247,7 +249,7 @@ class Main extends Component
             ->where('warehouse_id', $this->warehouse_id)
             ->first();
         $productWarehouse->update([
-            'stock' => $productWarehouse->stock - $movement->count
+            'stock' => $balance->units
         ]);
     }
 
