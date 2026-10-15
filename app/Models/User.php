@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\Loans\Loan;
 use App\Models\Movements\DisposalDevolution;
 use App\Models\Movements\Purchase;
 use App\Models\Movements\PurchaseDevolution;
@@ -93,5 +94,25 @@ class User extends Authenticatable
     public function disposalDevolutions(): HasMany
     {
         return $this->hasMany(DisposalDevolution::class);
+    }
+
+    public function loans(): HasMany
+    {
+        return $this->hasMany(Loan::class, 'lender_id', 'id');
+    }
+
+    public function loans_guaranteed(): HasMany
+    {
+        return $this->hasMany(Loan::class, 'guarantor_id', 'id');
+    }
+
+    public function loans_created(): HasMany
+    {
+        return $this->hasMany(Loan::class, 'created_by', 'id');
+    }
+
+    public function loans_updated(): HasMany
+    {
+        return $this->hasMany(Loan::class, 'updated_by', 'id');
     }
 }

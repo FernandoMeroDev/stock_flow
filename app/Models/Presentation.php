@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Loans\Loan;
 use App\Models\Movements\Movement;
 use App\Models\Traits\QueryOwnModels;
 use Illuminate\Database\Eloquent\Model;
@@ -38,5 +39,10 @@ class Presentation extends Model
     public function movements(): HasMany
     {
         return $this->hasMany(Movement::class);
+    }
+
+    public function loans_involved(): HasMany
+    {
+        return $this->hasMany(Loan::class);
     }
 }
