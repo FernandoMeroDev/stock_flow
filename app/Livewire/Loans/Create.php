@@ -48,7 +48,7 @@ class Create extends Component
                 'required',
                 'date',
                 Rule::date()->after(today()),
-                Rule::date()->beforeOrEqual(today()->addDays(14))
+                Rule::date()->beforeOrEqual(today()->addDays(30))
             ],
             'presentations' => ['required', 'array', 'max:50', new HasStock()],
             'presentations.*' => ['required', 'array:presentation_id,count,total_price'],
