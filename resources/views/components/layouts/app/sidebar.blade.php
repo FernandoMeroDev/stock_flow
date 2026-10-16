@@ -35,7 +35,7 @@
                         </div>
                     </x-slot:heading>
                     <flux:navlist.item :href="route('loans.index')" :current="request()->routeIs('loans.index')">
-                        Préstamos
+                        Créditos
                     </flux:navlist.item>
                     @can('products')
                     <flux:navlist.item :href="route('products.index')" :current="request()->routeIs('products.index')">

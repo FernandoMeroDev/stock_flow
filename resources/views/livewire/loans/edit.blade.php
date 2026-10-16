@@ -40,7 +40,7 @@
     
     <div class="my-6"></div>
     
-    <flux:input label='Préstamista' :value="$loan->lender->name" disabled />
+    <flux:input label='Vendedor' :value="$loan->lender->name" disabled />
 
     <flux:select label="Bodega" readonly>
         <flux:select.option :selected="true">

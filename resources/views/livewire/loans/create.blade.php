@@ -3,7 +3,7 @@
 <div>
     {{-- Always remember that you are absolutely unique. Just like everyone else. - Margaret Mead --}}
     
-    <flux:input label='Préstamista' :value="Auth::user()->name" disabled />
+    <flux:input label='Vendedor' :value="Auth::user()->name" disabled />
 
     <flux:select label="Bodega" wire:model.live="warehouse_id" :disabled="$warehouse_id ? true : false" x-on:change="$el.disabled = true">
         <flux:select.option value="">Elije una bodega...</flux:select.option>

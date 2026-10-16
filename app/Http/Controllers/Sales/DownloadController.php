@@ -143,21 +143,25 @@ class DownloadController extends Controller
         }
 
         $content .= ",,\n";
-        $content .= "Pagos de Préstamos,,\n";
-        $content .= "Préstamo,Valor Pagado,\n";
+        $content .= "Pagos de Créditos,,\n";
+        $content .= "Credito,Valor Pagado,\n";
 
         $loans_payments = LoanPayment::whereBetween('created_at', [
             $day . ' 00:00:01',
             $day . ' 23:59:59',
         ])->get();
 
+        $loans_payments_cash = 0.0;
+
         foreach($loans_payments as $payment){
             $content .= "[ID: " . $payment->loan->id . "] ("
                 . date('Y-m-d', strtotime($payment->loan->created_at)) 
                 . ") Cliente: " . $payment->loan->client->name 
                 . ",$" . $payment->value . ",\n";
+            $loans_payments_cash += $payment->value;
             $total_cash += $payment->value;
         }
+        $content .= "Total:,{$loans_payments_cash},\n";
 
         $content .= ",,\n";
         $content .= ",Total del día:,{$total_cash}\n";

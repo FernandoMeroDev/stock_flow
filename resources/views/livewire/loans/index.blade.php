@@ -15,7 +15,7 @@
     <x-table class="w-full mb-3">
         <x-slot:thead>
             <x-table.th>Creación</x-table.th>
-            <x-table.th>Préstamista</x-table.th>
+            <x-table.th>Vendedor</x-table.th>
             <x-table.th>Garante</x-table.th>
             <x-table.th>Cliente</x-table.th>
             <x-table.th class="!text-right">Valor Total</x-table.th>
@@ -23,7 +23,10 @@
         </x-slot:thead>
 
         @forelse ($loans as $loan)
-            <x-table.tr x-on:click="open('{{route('loans.edit', $loan->id)}}')" :bg="$loan->statusColor()" wire:key="{{$loan->id}}">
+            <x-table.tr 
+                x-on:click="open('{{route('loans.edit', $loan->id)}}')" wire:key="{{$loan->id}}"
+                :bg="$loan->statusColor()" class="cursor-pointer"
+            >
                 <td class="p-3">
                     {{$loan->created_at}}
                 </td>
