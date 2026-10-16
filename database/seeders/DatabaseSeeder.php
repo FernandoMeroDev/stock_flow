@@ -30,7 +30,9 @@ class DatabaseSeeder extends Seeder
             InventorySeeder::class,
             SaleSeeder::class,
             ProviderSeeder::class,
-            // PurchaseSeeder::class
+            PurchaseSeeder::class,
+            ClientSeeder::class,
+            LoanSeeder::class
         ]);
     }
 }

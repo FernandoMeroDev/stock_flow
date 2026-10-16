@@ -16,10 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('lender_id');
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('guarantor_id');
+            $table->unsignedBigInteger('warehouse_id');
+            $table->date('dead_line');
             $table->boolean('finished');
             $table->timestamps();
             $table->unsignedBigInteger('created_by_id');
-            $table->unsignedBigInteger('updated_by_id');
+            $table->unsignedBigInteger('updated_by_id')->nullable()->default(null);
         });
     }
 

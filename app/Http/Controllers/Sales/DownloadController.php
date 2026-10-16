@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sales;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Sales\Download\MultipleRequest;
 use App\Http\Requests\Sales\Download\SingleRequest;
+use App\Models\Loans\Payments\Payment as LoanPayment;
 use App\Models\Sale;
 use App\Models\Warehouse;
 use Carbon\Carbon;
@@ -139,6 +140,23 @@ class DownloadController extends Controller
                 }
             }
             $content .= ",Total:,{$cash_box_total}\n";
+        }
+
+        $content .= ",,\n";
+        $content .= "Pagos de Préstamos,,\n";
+        $content .= "Préstamo,Valor Pagado,\n";
+
+        $loans_payments = LoanPayment::whereBetween('created_at', [
+            $day . ' 00:00:01',
+            $day . ' 23:59:59',
+        ])->get();
+
+        foreach($loans_payments as $payment){
+            $content .= "[ID: " . $payment->loan->id . "] ("
+                . date('Y-m-d', strtotime($payment->loan->created_at)) 
+                . ") Cliente: " . $payment->loan->client->name 
+                . ",$" . $payment->value . ",\n";
+            $total_cash += $payment->value;
         }
 
         $content .= ",,\n";

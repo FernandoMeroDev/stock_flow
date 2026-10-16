@@ -25,9 +25,24 @@ class HasStock implements ValidationRule, DataAwareRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+        $products_found = collect([]);
         foreach($value as $movement){
             $presentation = Presentation::find($movement['presentation_id']);
             $product = $presentation->product;
+            $key = $products_found->search(function (array $item, int $key) use($product) {
+                return $item['product']->id == $product->id;
+            });
+            if(is_int($key)){
+                $value = $products_found->get($key);
+                $movement['count'] += $value['count'];
+                $value['count'] = $movement['count'];
+                $products_found->put($key, $value);
+            } else {
+                $products_found->add([
+                    'product' => $product,
+                    'count' => $movement['count'],
+                ]);
+            }
             $productWarehouse = ProductWarehouse::where('product_id', $product->id)
                 ->where('warehouse_id', $this->data['warehouse_id'])
                 ->first();

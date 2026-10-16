@@ -25,6 +25,9 @@ use App\Livewire\Movements\Disposals\Devolutions\Edit as DisposalDevolutionEdit;
 use App\Livewire\Movements\Purchases\Create as PurchaseCreate;
 use App\Livewire\Movements\Purchases\Edit as PurchaseEdit;
 use App\Livewire\Movements\WarehouseChanges\Create as WarehouseChangeCreate;
+use App\Livewire\Loans\Index as LoanIndex;
+use App\Livewire\Loans\Create as LoanCreate;
+use App\Livewire\Loans\Edit as LoanEdit;
 use App\Livewire\Products\Kardex;
 use App\Livewire\Providers\Index as ProviderIndex;
 use App\Livewire\Sales\Index\Main as SaleIndex;
@@ -108,3 +111,7 @@ Route::middleware(['auth', 'can:purchases'])->group(function() {
 });
 
 Route::middleware(['auth', 'can:clients'])->get('/clientes', ClientIndex::class)->name('clients.index');
+
+Route::middleware(['auth'])->get('/prestamos', LoanIndex::class)->name('loans.index');
+Route::middleware(['auth'])->get('/prestamos/crear', LoanCreate::class)->name('loans.create');
+Route::middleware(['auth'])->get('/prestamos/{loan}/editar', LoanEdit::class)->name('loans.edit');

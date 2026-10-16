@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('loan_id');
             $table->unsignedBigInteger('presentation_id');
+            $table->unsignedInteger('count');
+            $table->decimal('unitary_price', 5, 2);
             $table->timestamps();
         });
     }
